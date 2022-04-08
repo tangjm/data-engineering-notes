@@ -21,6 +21,3 @@ graph LR
 	Install -- Install to sign up rate --> Signup;
 	Click -- Click to sign up rate --> Signup;
 ```
-
-The lablels 
-

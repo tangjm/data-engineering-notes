@@ -1,17 +1,20 @@
 # Section 2: AWS S3 (Simple Storage Service)
 
+![S3](images/s3.png)
+
 A durable object-level storage service that stores data as objects in buckets
 
 Each object is limited to around 5TB which provides you with practically unlimited storage
 
-Buckets are logical containers that can store almost all data types including images, videos and server log.
+Buckets are logical containers that can store almost all data types including images, videos and server logs.
 
-Buckets are be accessed through HTTP(S) through urls REST endpoints or through VPC endpoints.
+Buckets are be accessed through HTTP(S) similar to how you would access REST endpoints or through VPC endpoints.
 
+AWS S3 manages scales your bucket storage and requests for you
 
 ### Data durability and security
 
-By default, buckets are replicated across Regions and across multiple facilities.
+By default, buckets are replicated across at least 3 accessibility zones.
 
 You can configure security options for individual buckets.
 
@@ -27,6 +30,18 @@ You can set up event notifications to trigger events when an object is uploaded 
 
 There are a range of different object-level storage classes:
 
+- Amazon S3 Standard	
+  - standard durable, performant and highly available object-level stoage
+- Amazon S3 Intelligent-Tiering
+  - designed to optimise costs by analysing your data access and moving infrequently accessed data into the infrequent access tier
+- Amazon S3 Standard-Infrequent Access (Amazon S3 Standard-IA)
+  - stores infrequently accessed data that can be retrieved with low latency 
+- Amazon S3 One Zone-Infrequent Access (Amazon S3 One zone-IA)
+  - Same as the Standard Infrequent Access class but doesn't replicate data across availability zones
+- Amazon S3 Glacier 
+  - stores data unlikely to be accessed with slow retrieval times.
+- Amazon S3 Glacier Deep Archive
+  - cheapest storage class that stores data accessed a couple of times a year
 
 
 ### S3 bucket URLs
@@ -35,11 +50,11 @@ There are two URL formats for S3 buckets
 
 1. Bucket path-styyle URL endpoint
 
-https://s3.<region>.amazonaws.com/<bucket_name>
+`https://s3.<region_name>.amazonaws.com/<bucket_name>`
 
 2. Bucket virtual hosted-style URL endpoint
 
-https://<bucket_name>.s3<region>.amazonaws.com
+`https://<bucket_name>.s3<region_name>.amazonaws.com`
 
 Bucket names must be globally unique and DNS compliant. This is because they form part of the URL address through which the bucket is accessed and URLs must be globally unique.
 
@@ -48,3 +63,17 @@ Uploaded files are referred to as objects because they get wrapped with metadata
 Folders are logical separators for organising files/objects in your S3 bucket.
 
 You can configure the permissions for each uploaded file.
+
+### Pricing
+
+You pay for:
+- GBs per month
+- Outbound data transfers to other Regions
+- PUT, COPY, POST, LIST, GET requests
+
+This would mean that data transfers out of S3 to EC2 instances in the same region would incur no costs.
+
+- Storage class type
+- Amount of storage - number and size of your buckets
+- Number and type of HTTP requests
+- Data egress fees for cross regional data transfers
