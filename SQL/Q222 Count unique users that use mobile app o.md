@@ -1,0 +1,10 @@
+Count unique users that use mobile app on an iPhone device.
+
+```sql
+
+SELECT 
+	COUNT(DISTINCT(user_id)) AS unique_iphone_users
+FROM devices
+WHERE version ~ '^iPhone'
+
+```

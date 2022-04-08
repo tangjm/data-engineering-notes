@@ -1,0 +1,37 @@
+-- how many unique visitors who clicked the adjust link installed the app?
+-- number of install events / number of Adjust link click events
+SELECT
+	COUNT(
+		DISTINCT(
+			CASE
+				WHEN activity_kind = 'click' THEN label
+			END
+		)
+	) AS signup_link_clicks,
+	COUNT(
+		DISTINCT(
+			CASE
+				WHEN activity_kind = 'install' THEN label
+			END
+		)
+	) AS unique_installs,
+	100 * COUNT(
+		DISTINCT(
+			CASE
+				WHEN activity_kind = 'install' THEN label
+			END
+		)
+	) / COUNT(
+		DISTINCT(
+			CASE
+				WHEN activity_kind = 'click' THEN label
+			END
+		)
+	) :: float AS conversion_rate
+FROM
+	adjust.callbacks 
+WHERE 
+	adgroup_name = 'website'
+	AND tracker = 'gxel3d1' -- we only consider website Adjust activity (this actually makes no difference for the given bindle data set)
+
+-- The same result is obtained if we aggregated the 'id' instead of 'label' column and removed the DISTINCT since 'id's are unique.

@@ -1,0 +1,93 @@
+calculate an uplift in soft activation rate for longer_onboarding_201803 AB-test.
+
+Uplift is the difference between the non-control variation and the control variation metric divided by the control variation metric
+
+\[ \frac{\text{non-control variation metric} - \text{control variation metric}}{\text{control variation metric}} \]
+
+In this case, the metric is the soft activation rate
+
+The trick to ensure that the control variation cohort always remains at the top of the is to use this:
+
+```sql 
+ORDER BY CASE WHEN variation = 'control' THEN 0 ELSE 1 END 
+```
+
+### First pass
+
+```sql
+WITH ab_test_categorisation AS (
+  SELECT 
+    user_id,
+    custom_parameters ->> 'ab_test_name' AS ab_test_name,
+    custom_parameters ->> 'ab_test_variation' AS ab_test_variation,
+    created_at AS categorisation_date
+  FROM mobile_analytics.events
+  WHERE custom_parameters ->> 'ab_test_name' IS NOT NULL
+    AND action = 'signup'
+),
+ab_funnel AS (
+	SELECT 
+		ab_test_variation AS variation,
+		COUNT(DISTINCT(a.user_id)) AS cohort_size,
+		COUNT(DISTINCT(b.user_id)) AS users_with_books,
+		100.0 * COUNT(DISTINCT(b.user_id)) / COUNT(DISTINCT(a.user_id)) AS soft_activation_rate
+	FROM ab_test_categorisation a
+	LEFT JOIN books_users b
+		ON a.user_id = b.user_id
+	WHERE ab_test_name = 'longer_onboarding_201803'
+	GROUP BY 1
+)
+
+SELECT 
+	variation,
+	cohort_size,
+	ROUND(soft_activation_rate, 2) AS soft_activation_rate,
+	ROUND(100.0 * (soft_activation_rate - FIRST_VALUE(soft_activation_rate) over ()) / FIRST_VALUE(soft_activation_rate) over (), 2) AS soft_activation_rate_uplift
+FROM ab_funnel
+
+```
+
+### Model answer
+
+```sql
+WITH ab_test_categorisation AS (
+  SELECT 
+    user_id,
+    custom_parameters ->> 'ab_test_name' AS ab_test_name,
+    custom_parameters ->> 'ab_test_variation' AS ab_test_variation,
+    created_at AS categorisation_date
+  FROM mobile_analytics.events
+  WHERE custom_parameters ->> 'ab_test_name' IS NOT NULL
+    AND action = 'signup'
+),
+ab_funnel AS (
+	SELECT 
+		ab_test_variation AS variation,
+		COUNT(DISTINCT(a.user_id)) AS cohort_size,
+		COUNT(DISTINCT(b.user_id)) AS users_with_books,
+		100.0 * COUNT(DISTINCT(b.user_id)) / COUNT(DISTINCT(a.user_id)) AS soft_activation_rate
+	FROM ab_test_categorisation a
+	LEFT JOIN books_users b
+		ON a.user_id = b.user_id
+	WHERE ab_test_name = 'longer_onboarding_201803'
+	GROUP BY 1
+),
+ab_activation_metrics AS (
+	SELECT
+		variation,
+		cohort_size,
+		100.0 * users_with_books / cohort_size AS soft_activation_rate,
+		FIRST_VALUE(100.0 * users_with_books / cohort_size) over () AS control_cohort_soft_activation_rate
+	FROM ab_funnel
+	ORDER BY 
+		CASE WHEN variation = 'control' THEN 0 ELSE 1 END
+)
+
+SELECT 
+	variation,
+	cohort_size,
+	ROUND(soft_activation_rate, 2),
+	ROUND(100.0 * (soft_activation_rate - control_cohort_soft_activation_rate) / control_cohort_soft_activation_rate, 2) AS soft_activation_rate_uplift
+FROM ab_activation_metrics
+
+```

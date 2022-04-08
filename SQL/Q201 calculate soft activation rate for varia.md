@@ -1,0 +1,35 @@
+calculate soft activation rate for variations of longer_onboarding_201803 AB-test. Submit activation rate of the control variation as the answer.
+
+In other words, for each AB test variation cohort, what percentage of them added a book to their library?
+
+Make use of the `action = 'add-library-entry'` mobile_analytics.event
+Alternatively, look for users who appear in the books_users join table.
+
+```sql
+
+WITH ab_test_categorisation AS (
+	SELECT 
+		e.user_id AS categorised_users,
+		e.custom_parameters ->> 'ab_test_name' AS ab_test_name,
+		e.custom_parameters ->> 'ab_test_variation' AS ab_test_variation,
+		e.created_at AS categorisation_date,
+		b.user_id AS soft_users
+	FROM mobile_analytics.events e
+	LEFT JOIN mobile_analytics.events b
+		ON e.user_id = b.user_id
+			AND b.action = 'add-library-entry'
+	WHERE e.custom_parameters ->> 'ab_test_name' IS NOT NULL 
+		AND e.action = 'signup'
+)
+
+SELECT
+	ab_test_variation,
+	COUNT(DISTINCT(categorised_users)) AS cohort_size,
+	COUNT(DISTINCT(soft_users)) AS soft_users,
+	100.0 * COUNT(DISTINCT(soft_users)) / COUNT(DISTINCT(categorised_users)) AS soft_activation_rate
+FROM ab_test_categorisation
+WHERE ab_test_name = 'longer_onboarding_201803'
+GROUP BY 1
+
+```
+
