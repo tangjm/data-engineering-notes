@@ -1,0 +1,25 @@
+Calculate the soft activation rate for all mobile signups.
+
+2.num of unique signups 
+3.num of unique 'add-library-entry' events 
+For each signed up user, we want to know if they have performed an 'add-library-entry' event
+adjust.callbacks LEFT JOIN mobile_analytics.events ON user_id 
+
+```sql
+WITH signups_and_book_interactions AS (
+	SELECT
+		COUNT(DISTINCT(a.user_id)) AS signups,
+		COUNT(DISTINCT(e.user_id)) AS users_added_book_to_library
+	FROM
+		adjust.callbacks a
+		LEFT JOIN mobile_analytics.events e ON a.user_id = e.user_id
+		AND e.action = 'add-library-entry'
+	WHERE
+		a.activity_kind = 'event'
+		AND a.event_name = 'signup'
+)
+SELECT
+	100.0 * users_added_book_to_library / signups AS soft_activation_rate
+FROM
+	signups_and_book_interactions
+```
