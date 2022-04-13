@@ -1,4 +1,4 @@
-# Section 1
+# Section 1: Shared responsibility
 ### Shared responsibility
 
 AWS is responsible for the security of the cloud infrastructure. This includes the hardware, software, networking, and facilities running the AWS Cloud services
@@ -70,7 +70,7 @@ Enterprise Support or Business Support from AWS Support.
 - amazon's version of teams or zoom
 - It is a pay-as-you-go communications service with no upfront fees, commitments, or long-term contracts
 
-# Section 2
+# Section 2: IAM
 ### Identity and Access Management
 
 IAM User - person/application that can authenticate with an AWS account

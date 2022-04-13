@@ -1,5 +1,8 @@
 # Data Engineering notes
 
 - AWS notes
-- SQL learning log
+- Data warehousing notes
+- SQL learning log (SQLHabit)
+- NoSQL notes (MongoDB)
+- Quizzes
 

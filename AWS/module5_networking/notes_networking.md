@@ -4,7 +4,9 @@
 - we can partition networks into subnets(subnetworks)
 - routers or switches are needed to connect client machines together for networking
 
-### IP addresses (Internet Protocol address)
+IP addresses (Internet Protocol address)
+---
+
 
 - unique identifiers for client machines
 - numeric label in decimal format which is converted into binary format

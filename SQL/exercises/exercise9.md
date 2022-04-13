@@ -1,5 +1,5 @@
 ### 9. Counting subcategories in an online store
-Topic: JOINS
+Topics: JOINS
 
 Group by root categories and count the number of entries that reference the root category as its parent_id
 

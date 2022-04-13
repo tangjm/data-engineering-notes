@@ -1,4 +1,5 @@
 ### 5. Distribution of users by country
+Topics: COUNT, GROUP BY, IN
 
 Count users from English speaking countries
 

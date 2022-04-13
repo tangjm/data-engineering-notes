@@ -3,7 +3,7 @@ Topics: Regex, LIKE
 
 Number of users from a specific company 
 
-calculate the number of users with an email from boogle.com domain like alex@boogle.com or vanessa@boogle.com.
+Calculate the number of users with an email from boogle.com domain like alex@boogle.com or vanessa@boogle.com.
 
 ```sql
 SELECT 

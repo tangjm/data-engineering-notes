@@ -2,4 +2,4 @@
 
 - General notes
 - SQLHabit chapter exercise notes
-- SQLHabit practice exercise solutions and planning
+- SQLHabit practice exercise solutions

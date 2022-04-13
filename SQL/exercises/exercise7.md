@@ -1,6 +1,7 @@
 ### 7. Total number of transactions 
+Topics: COUNT, CASE statement
 
-calculate the total number of income transactions
+Calculate the total number of income transactions
 
 In other words, count the total number of positive transactions
 

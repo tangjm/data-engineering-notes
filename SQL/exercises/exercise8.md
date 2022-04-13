@@ -1,11 +1,12 @@
 ### 8. Percentage of refunded purchases 
+Topics: COUNT
 
-calculate the refund rate based on all purchases.
+Calculate the refund rate based on all purchases.
 
-Plan
+Plan:
 
-count all records by 'id' where 'refunded = TRUE' and divide by all records
-We don't count by 'user_id' because a user could make more than one purchase.
+Count all records by 'id' where 'refunded = TRUE' and divide by all records.
+We don't count by the 'user_id' field because a user could make more than one purchase.
 
 ```sql
 SELECT 

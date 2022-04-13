@@ -1,6 +1,7 @@
 ### 41. Calculating purchase rate 
+Topics: COUNT
 
-calculate overall purchase rate (percentage of customers among all users)
+Calculate overall purchase rate (percentage of customers among all users)
 
 ```sql
 

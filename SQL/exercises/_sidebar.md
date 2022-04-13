@@ -1,0 +1,7 @@
+* [Exercise 5](/SQL/exercises/exercise5)
+* [Exercise 6](/SQL/exercises/exercise6)
+* [Exercise 7](/SQL/exercises/exercise7)
+* [Exercise 8](/SQL/exercises/exercise8)
+* [Exercise 9](/SQL/exercises/exercise9)
+* [Exercise 41](/SQL/exercises/exercise41)
+* [Exercise 51](/SQL/exercises/exercise51)

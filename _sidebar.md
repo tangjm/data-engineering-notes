@@ -1,2 +1,6 @@
 * [Home](/)
-* [Guide](/SQL/_sidebar.md)
+* [SQL notes](/SQL/)
+* [AWS notes](/AWS/)
+* [NoSQL notes](/NoSQL/)
+* [Data in the cloud](/Data%20in%20the%20cloud/)
+* [Quiz](/Week3_quiz/)
