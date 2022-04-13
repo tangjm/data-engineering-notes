@@ -26,7 +26,7 @@ COALESCE(value1, non_null_value)
 NULLIF(value1, non_null_value)
 
 -- If value1 is NULL, then COALESCE will return the non_null_value.
--- If value1 is the non_null_value, it's not NULL, and so NULLIF will return NULL.
+-- If value1 is the non_null_value, then it's not NULL, and so NULLIF will return NULL.
 ```
 
 In short:

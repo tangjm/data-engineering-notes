@@ -1,0 +1,8 @@
+* [Guide to marketing funnels](/SQL/notes/marketing_funnels.md)
+* [Guide to null functions](/SQL/notes/null_functions.md)
+* [Question on filters and joins](/SQL/notes/filter_join_question.md)
+* [Question on ARPU](/SQL/notes/q_arpu.md)
+* [Question on CROSS JOIN](/SQL/notes/q_cross_join.md)
+* [Question on INNER JOIN vs LEFT JOIN](/SQL/notes/q_inner_vs_left_join.md)
+* [Question on INNER, LEFT JOIN and ROI](/SQL/notes/q_roi_inner_left_join.md)
+* [Question on INNER JOIN](/SQL/notes/question_on_inner_join.md)
