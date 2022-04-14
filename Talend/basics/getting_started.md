@@ -9,7 +9,7 @@ Create a Job
 Add, connect, and configure components 
 
 Redesign a Job following best practices 
-
+git
 ### Key terms
 Component - a predefined unit of Java code that performs specific operations on data (implementation is hidden)
 Job - one or more SubJobs
