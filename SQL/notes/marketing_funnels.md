@@ -1,6 +1,6 @@
-# Marketing Funnels
+# Marketing funnels
 
-**Mobile analytics marketing funnel**
+#### Mobile analytics marketing funnel
 
 **Steps**
 1. View link
@@ -8,7 +8,7 @@
 3. Install app
 4. Sign up
 
-**Visual diagram of funnel steps**
+#### Flowchart diagram of funnel steps
 ```mermaid
 graph LR
 	Enter_Website --> 1.View_Link
@@ -22,17 +22,17 @@ graph LR
 	style id2b fill:#92e9c1,stroke:#333,stroke-width:2px
 ```
 
-Between Steps 2 and 3 the user is redirected to the adjust link which then takes the user to the App/Play store.
+Between Steps 2 and 3 the user is redirected to the adjust link which then takes the user to the app/play store.
 
 
-**Marketing funnels in terms of venn diagrams**
+#### Marketing funnels in terms of venn diagrams
 
 ```mermaid
 flowchart
   subgraph View Link 
     subgraph Click
 			subgraph Install
-				Sign_Up
+				v(Sign Up)
     	end
     end
   end
@@ -41,42 +41,45 @@ flowchart
 
 
 Click Through Rate (CTR)
-```latex {cmd: true}
-\documentclass[border=0.2cm]{standalone}
- 
-% Required package
-\usepackage{tikz}
 
-\begin{document}
- 
-\begin{tikzpicture}
- 
-% Circle with label at 225 deg.
-\node[draw,
-    circle,
-    minimum size =2cm,
-    fill=cyan!50,
-    label={225:$A$}] (circle1) at (0,0){};
- 
-% Circle with label at 45 deg.
-\node[draw,
-    circle,
-    minimum size =2cm,
-    fill=yellow!50,
-    label={45:$B$}] (circle2) at (3,0){};
- 
-\end{tikzpicture}
- 
-\end{document}
-```
 
 ```mermaid
 flowchart
-  subgraph View Link 
-    Click
+  subgraph Views 
+    Clicks
+  end
+```
+
+#### Left joins
+#### Example funnel - VueJS
+
+#### Activation rates
+
+
+```mermaid
+graph LR
+  4.Sign_Up --> 5.Added_book_to_library
+  5.Added_book_to_library --> 6.Started_Reading
+```
+
+Soft activation rate
+```mermaid
+flowchart
+  subgraph Sign Up 
+    v(Added book to library)
+  end
+```
+
+Activation rate
+```mermaid
+flowchart 
+  subgraph Sign Up 
+    v(Started reading a book)
   end
 
 ```
 
+Ch.148
+Calculate the percentage of users who started reading a book 1 hour after landing on a library page.
 
 
