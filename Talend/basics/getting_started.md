@@ -210,23 +210,26 @@ Tag is the Job version (lets you distinguish between different versions of a Doc
 
 
 Docker CLI 
-```cmd
-<!-- view docker host info -->
+```bash
+# view docker host info
 docker -H dockerhost info
 
-<!-- view docker images -->
+# view docker images
 docker -H dockerhost images
 
-<!-- view running containers -->
+# view running containers
 docker -H dockerhost ps
 
-<!-- running docker images -->
+# running docker images
+# context flag is optional
 docker -H dockerhost run <image_name> [--context=selectcontext]
 ```
 
-Control execution
+### Control execution
 
-![Working with iterations](images/iteration_flow_component.png)
+![Working with iterations](images/iteration.png)
+![tIterateToFlow component](images/iterate_to_flow_component.png)
+
 
 tFileList - iterates over files in a directory
 Use iterate connection with tFileList to loop a process on files stored in a directory
@@ -234,7 +237,7 @@ Use iterate connection with tFileList to loop a process on files stored in a dir
 ![Component variables](images/component_variables.png)
 
 
-Error handling
+### Error handling
 
 Die-on error - stops the Job when an error is encountered in the component
 Triggers - tranfer control based on subjob and component status
@@ -244,14 +247,14 @@ log4jlevel - configure which messages to log to the console
 
 ![kill a job](images/kill_a_job.png)
 
-Web services
+### Web services
 
 tESBConsumer - for accessing web services
 tXMLMap - mapping the XML response and configuring it to be used in data integration flow
 
 ![tESBComponent](images/esbComponent.png)
 
-Case Study: Sales, Products and Customers
+### Case Study: Sales, Products and Customers
 
 ![Data processing components](images/data_processing_components.png)
 ![Components covered](images/database_connection_and_data_processing_components.png)
