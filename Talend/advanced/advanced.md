@@ -1,3 +1,12 @@
+---
+html:
+  embed_local_images: true
+  embed_svg: true
+  offline: false
+  toc: true
+
+print_background: false
+---
 # Talend Data Integration Advanced 
 
 ### Using Git in Talend Studio
@@ -207,3 +216,54 @@ Many situations require that you keep two or more databases synchronized with ea
 In this lesson, you configure a change data capture (CDC) database that monitors a separate database containing customer data for changes—record updates, deletions, and insertions.
 
 The CDC database stores a list of indexes of records that have changed, the types of changes, and timestamps for them, but not the changes themselves. You then create a Job that uses that list to update the master database with just the modified records from the subsidiary database:
+
+tDBCDC
+
+The tDBCDC component extracts changed data from the subscribed table (monitored by CDC process) and makes it available for processing. 
+
+Comments: The tDBCDC component pulls change events to be processed and applied from a CDC table to a target database table.
+
+![tDBCDC component](images/tDBCDC_component.png)
+
+Subscriber tables
+
+- A subscriber uses information captured in a CDC database to later update other databases.
+
+Setting up a subscriber table
+
+- Right-click CDC Foundation -> Create CDC -> Select the database that you want to monitor
+
+The tsubscribers table
+
+![cdc subscriber table](images/cdc_subscriber_table.png)
+
+TABLE_TO_WATCH refers to the table being monitored.
+SUBSCRIBER_NAME refers to the table that is doing the monitoring.
+CREATION_DATE refers to the creation date of this record
+
+CDC table
+
+![cdc table](images/cdc_table.png)
+
+TALEND_CDC_SUBSCRIBERS_NAME: the name of the subscriber as listed in the tsubscribers table. In this exercise, Customers is the subscriber name and identifies the table being monitored.
+TALEND_CDC_STATE: a flag indicating whether or not this change has been applied.
+TALEND_CDC_TYPE: one of U, D, or I specifying the type of change (update, delete, or insert, respectively).
+TALEND_CDC_CREATION_DATE: a time stamp specifying when the record changed.
+id: the key value identifying the changed record. Notice that the name of this column is specific to the table being monitored. Remember that earlier, when retrieving the schema, you learned that the column id is the primary key for the customers table.
+
+Creating a CDC table
+
+1. Right-click the schema of the table that you want to monitor/create a CDC table for.
+2. Select 'add CDC'
+3. In the 'Subscriber name' textbox, input the name of your CDC table
+4. Execute the query - this will do 2 things
+   1. Creates a new table and a new view in the CDC database that records changes to the monitored table in your production database
+   2. The subscriber table is populated with a record showing that this CDC table monitors the monitored table
+
+![cdc Db Connections metadata directory structure](images/cdc_directory_structure.png)
+
+Supported databases and CDC modes
+
+![cdc supported databases](images/cdc_supported_databases.png)
+![cdc](images/cdc_supported_modes.png)
+
