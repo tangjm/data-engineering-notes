@@ -201,7 +201,7 @@ A standalone job contains:
 - BAT files (batch execution files for starting Jobs on Windows)
 - SH files (Linux shell scripts for launching Jobs)
 
-Building a Docker images requires:
+Building a Docker images requires:gi
 - Connection to Docker host
 - Image name and tag
 
@@ -229,7 +229,7 @@ docker -H dockerhost run <image_name> [--context=selectcontext]
 
 ![Working with iterations](images/iteration.png)
 ![tIterateToFlow component](images/iterate_to_flow_component.png)
-
+![tUnite component](images/tUnite_component.png)
 
 tFileList - iterates over files in a directory
 Use iterate connection with tFileList to loop a process on files stored in a directory
