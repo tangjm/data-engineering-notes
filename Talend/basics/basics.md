@@ -144,8 +144,9 @@ Schemas logically assemble and group data that will be read and processed by a c
 
 Metadata is stored in the Repository and can be reused across jobs and components.
 
-Built-in data - properties specific to a component
-Repository properties - properties stored in the repository that can be reused
+Built-in metadata - requires you to enter data in the component configuration manually. Let's you set the properties specific to a single component without affecting other components.
+
+Repository properties - properties stored in the repository that can be reused in different components in a single Job and components across different Jobs in the same project. When you change your repository metadata, you have the option to choose which dependent components to propogate your changes to.
 
 Generic schemas - can be used by any component; often  used to configure components of different types with the same schema
 
@@ -180,6 +181,9 @@ Context variables let us configure environment variables so we can set up differ
 tContextLoad - override context variables for a Job
 tContextDump - export context variables
 
+Context param field of the tRunJob component
+- lets you change the values of selected context parameters in the child Job directly from the parent Job
+
 ### Building executables and Docker images from Talend Studio Jobs
 
 Exported jobs can only run on other Talend instances.
@@ -187,6 +191,7 @@ Built jobs are standalone jobs that can run anywhere.
 
 You can build jobs that run on Windows, Linux and in Docker containers.
 Build a job as an executable that can run on Windows or Linux or as a Docker image.
+When building a job, the 'Override parameters' values' button lets you update, add or remove context parameters and values of the Job context you selected in the list.
 
 Docker 
 - The Daemon is the the docker component that manages containers
@@ -258,4 +263,11 @@ tXMLMap - mapping the XML response and configuring it to be used in data integra
 
 ![Data processing components](images/data_processing_components.png)
 ![Components covered](images/database_connection_and_data_processing_components.png)
+
+### Reference projects
+
+Reference projects in Talend Studio
+
+You can reuse items (for example, Jobs, metadata, and Business Modeler) from the referenced project in the main project.
+You can establish references between two projects if you have read/write authorization for both.
 
