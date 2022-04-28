@@ -112,15 +112,8 @@ IAM Policies
 
 How IAM determines permissions
 
-Step 1. Explictly denied?
-- if yes, then deny
-- if no, then goto Step 2
-
-Step 2. Explicity allowed?
-- if yes, then allow
-- if no, then implicitly deny
-
-In short, unless explicitly allowed, permission is denied.
+By default, permission is denied implicitly.
+You can change this by either allowing or denying access/permission explicitly.
 
 IAM group
 - specify permissions for a collection of users
