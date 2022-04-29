@@ -17,25 +17,29 @@ function sqlLinks() {
   })
 }
 
-function sqlExerciseNotes(notes) {
+function createLinksNotes(type, notes) {
   return notes.map(note => {
     return <li>
-      <Link href={`/SQL/exercises/${note}`}>{note.slice(0, note.length - 5)}</Link>
+      <Link href={`/SQL/${type}/${note}`}>{note.slice(0, note.length - 5)}</Link>
     </li>
   })
 }
 
 export async function getStaticProps() {
-  const notes = getNotes(...['SQL', 'exercises'])
+  const generalNotes = getNotes(...['SQL', 'notes'])
+  const chapterNotes = getNotes(...['SQL', 'SQLHabitChapters'])
+  const exerciseNotes = getNotes(...['SQL', 'exercises'])
   return {
     props: {
-      notes
+      generalNotes,
+      chapterNotes,
+      exerciseNotes
     }
   }
 }
 
 
-export default function sqlNotes({ notes }) {
+export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -48,14 +52,20 @@ export default function sqlNotes({ notes }) {
           SQL Notes
         </h1>
 
-        <h2>Exercises</h2>
-        <Link href="/SQL/exercises/exercise10.html">SQLHabit Exercises</Link>
-
-        <h2>General notes</h2>
-        <Link href="/SQL/notes/having_clause.html">The HAVING clause</Link>
+        <h2>SQLHabit Exercises</h2>
+        <p>Solutions and plans to SQLHabit practice questions with detailed explanations where appropriate</p>
         <ul>
-          {sqlExerciseNotes(notes)}
-          {sqlLinks()}
+          {createLinksNotes('exercises', exerciseNotes)}
+        </ul>
+        <h2>General SQL notes</h2>
+        <p>Mostly covering high-level concepts, syntax and selected topics</p>
+        <ul>
+          {createLinksNotes('notes', generalNotes)}
+        </ul>
+        <h2>SQLHabit chapter notes</h2>
+        <p>A learning log on selected chapters from the SQLHabit course</p>
+        <ul>
+          {createLinksNotes('SQLHabitCHapters', chapterNotes)}
         </ul>
       </main>
 
