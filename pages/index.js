@@ -52,6 +52,15 @@ export default function Home() {
             </a>
           </Link>
         </div>
+
+        <div className={styles.grid}>
+          <p><b>How these notes were made</b></p>
+          <ol>
+            <li>Take notes in markdown </li>
+            <li>Use <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/">Markdown Preview Enhanced</a> VSCode plugin to export markdown files to static HTML files</li>
+            <li>Stitch together static HTML files and serve them using <a href="https://nextjs.org/">NextJS</a> for Static Site Generation (SSG)</li>
+          </ol>
+        </div>
       </main>
 
       <footer className={styles.footer}>
