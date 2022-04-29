@@ -1,7 +1,7 @@
-import Link from 'next/Link'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import Head from 'next/Head'
-import Image from 'next/Image'
+import Head from 'next/head'
+import Image from 'next/image'
 import { getNotes } from '../lib/sqlNotes';
 
 function sqlLinks() {
@@ -11,7 +11,7 @@ function sqlLinks() {
   }
   return arr.map(chapt => {
     let chapter = "CH" + chapt
-    return <li>
+    return <li key={chapt}>
       <Link href={`/SQL/SQLHabitChapters/${chapter}.html`}>{chapter}</Link>
     </li>
   })
@@ -19,7 +19,7 @@ function sqlLinks() {
 
 function createLinksNotes(type, notes) {
   return notes.map(note => {
-    return <li>
+    return <li key={note}>
       <Link href={`/SQL/${type}/${note}`}>{note.slice(0, note.length - 5)}</Link>
     </li>
   })
