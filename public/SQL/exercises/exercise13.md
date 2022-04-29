@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 13. The most profitable month
 
 Find out which month historically had the highest profit.

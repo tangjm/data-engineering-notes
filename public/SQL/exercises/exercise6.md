@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 6. Distribution of users email domains 
 Topics: Regex, LIKE
 

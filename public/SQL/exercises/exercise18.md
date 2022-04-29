@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 18. A month with the lowest number of purchases
 
 Find out which month has the lowest number of income transactions.

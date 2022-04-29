@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 16. Demographics data report 
 
 Topics: Grouping and Aggregating

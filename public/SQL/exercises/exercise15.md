@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 15. Count users with identical names 
 
 Topics: Grouping, Sorting, Aggregate functions, Filters

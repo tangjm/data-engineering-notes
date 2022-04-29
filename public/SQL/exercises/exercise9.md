@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 9. Counting subcategories in an online store
 Topics: JOINS
 

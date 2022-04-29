@@ -2,7 +2,6 @@
 export_on_save:
   html: true
 ---
-
 # 22. Top grossing month of the year 
 
 Topics: Joins, Problem solving

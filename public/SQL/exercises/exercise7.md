@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 7. Total number of transactions 
 Topics: COUNT, CASE statement
 

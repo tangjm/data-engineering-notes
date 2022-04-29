@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 41. Calculating purchase rate 
 Topics: COUNT
 

@@ -2,7 +2,6 @@
 export_on_save:
   html: true
 ---
-
 ### 11. Average number of items per cart 
 Topics: JOIN, GROUP BY, aggregate functions
 

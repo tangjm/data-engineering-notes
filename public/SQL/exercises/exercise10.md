@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 10. Percentage of users who leave reviews 
 
 Question: Calculate the percentage of users who wrote at least 1 review.

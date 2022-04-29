@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Favourite exercises
 
 Most valuable exercises

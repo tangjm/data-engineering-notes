@@ -1,6 +1,0 @@
-* [Home](/)
-* [SQL](/SQL/)
-* [AWS](/AWS/)
-* [NoSQL](/NoSQL/)
-* [Data in the cloud](/Data%20in%20the%20cloud/notes_data_in_the_cloud)
-* [Quiz](/Week3_quiz/)

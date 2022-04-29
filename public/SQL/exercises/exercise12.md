@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 12. Categories' items distribution 
 
 Count the number of available items per category.

@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 19. Distribution of countries by purchase rate
 
 Order countries by their purchase rate (percentage of customers or users with at least one non-refunded purchase). 

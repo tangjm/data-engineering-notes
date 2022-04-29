@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 51. Count signups in the last 30 days 
 
 Topics: now() function

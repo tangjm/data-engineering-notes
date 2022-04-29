@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 14. Biggest B2B customer
 
 Topics: Joins, Aggregate functions, Grouping, Sorting

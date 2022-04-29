@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 20. Naive sentiment analysis 
 
 Sentiment Analysis (SA) is a technique for measuring mood of a comment, review or customer support issue.

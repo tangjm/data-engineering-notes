@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 5. Distribution of users by country
 Topics: COUNT, GROUP BY, IN
 

@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 17. Revenue by country 
 
 Calculate the number of non-refunded purchases and total revenue from the USA (country code us) and Canada (country code ca).

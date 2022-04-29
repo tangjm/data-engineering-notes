@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### 8. Percentage of refunded purchases 
 Topics: COUNT
 
