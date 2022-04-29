@@ -6,3 +6,4 @@ Most valuable exercises
 - 18
 - 19
 - 22
+- 23
