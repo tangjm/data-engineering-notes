@@ -4,19 +4,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/sqlNotes';
 
-function sqlLinks() {
-  let arr = [];
-  for (let i = 106; i <= 244; i++) {
-    arr.push(i)
-  }
-  return arr.map(chapt => {
-    let chapter = "CH" + chapt
-    return <li key={chapt}>
-      <Link href={`/SQL/SQLHabitChapters/${chapter}.html`}>{chapter}</Link>
-    </li>
-  })
-}
-
 function createLinksNotes(type, notes) {
   return notes.map(note => {
     return <li key={note}>
