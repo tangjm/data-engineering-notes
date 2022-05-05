@@ -2,12 +2,12 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
-import { getNotes } from '../lib/sqlNotes';
+import { getNotes } from '../lib/getNotes';
 
-function createLinksNotes(type, notes) {
+function createLinksNotes(subdir, notes) {
   return notes.map(note => {
     return <li key={note}>
-      <Link href={`/SQL/${type}/${note}`}>{note.slice(0, note.length - 5)}</Link>
+      <Link href={`/SQL/${subdir}/${note}`}>{note.slice(0, note.length - 5)}</Link>
     </li>
   })
 }
