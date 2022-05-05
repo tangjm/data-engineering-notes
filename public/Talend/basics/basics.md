@@ -1,6 +1,9 @@
+---
+export_on_save:
+  html: true
+---
 # Talend Data Integration - Basics
-
-TASKS:
+### Contents
 
 Jobs, subjobs and components
 
@@ -20,20 +23,20 @@ Databases
 - [x] Read from a MySQL table 
 - [x] Extract out database connections into a single component
 
-Using Repository Metadata
+[Using Repository Metadata](#metadata)
 - [x] Decide when to use metadata
 - [x] Distinguish built-in from Repository properties
 - [x] Use different types of metadata in Jobs: file metadata, database metadata, generic schemas
 - [x] Update metadata from the Repository and propagate the changes
 
-Processing Data
+[Processing Data](#processing-data)
 - [x] Map data input to output using the tMap component
 - [x] Join data and collect join rejects
 - [x] Filter data and collect filter rejects
 - [x] Use expressions and variables in the mapping editor
 - [x] Sort and aggregate data using other data processing components
 
-Context variables
+[Context variables](#context-variables)
 - [x] Create built-in context variables that are specific to a Job
 - [x] Use context variables in the configuration of Talend components
 - [x] Run a Job using context variables
@@ -41,14 +44,14 @@ Context variables
 - [x] Create repository context variables that are available for all Jobs
 - [x] Load context variables from a flow
 
-Building standalone and Docker images from Jobs
+[Building standalone and Docker images from Jobs](#building-executables)
 - [x] Build a stand-alone Job
 - [x] Run a stand-alone Job outside Talend Studio
 - [x] Build a new version of an existing Job
 - [x] Build a Job as a Docker image
 - [x] Run a Job in a Docker container
 
-Control execution
+[Control execution](#execution-control)
 - [x] Use components to list, archive, and delete files from a directory
 - [x] Manage iterations inside a Job
 - [x] Reuse component variables to configure other components
@@ -57,18 +60,18 @@ Control execution
 - [x] Override context variables for subJobs
 - [x] Export a master Job and its dependencies
 
-Error handling
+[Error handling](#error-handling)
 - [ ] Kill a Job on a component error
 - [ ] Implement a specific Job execution path on a component error
 - [ ] Raise a warning in specific conditions
 - [ ] Configure the log level in the console
 
-Web services
+[Web services](#web-services)
 - [ ] Use a Talend component to access a web service method
 - [ ] Extract specific elements from a web service reply
 - [ ] Store Web Services Description Language (WSDL) schemas for use in the tXMLMap component
 
-Case Study: Creating a master sales table from Sales, Product and Customer data
+[Case Study: Creating a master sales table from Sales, Product and Customer data](#case-study)
 - [ ] Use components to open and close a database connection in a Talend Job
 - [ ] Write to and read from a database table
 - [ ] Retrieve table schemas in the repository
@@ -79,11 +82,18 @@ Case Study: Creating a master sales table from Sales, Product and Customer data
 - [ ] Write data to an XML file
 - [ ] Orchestrate several Jobs inside a master Job
 ### Key terms
-Component - a predefined unit of Java code that performs specific operations on data (implementation is hidden by default)
-Job - comprises one or more SubJobs
-SubJob - comprises one or more connected components performing a specific task
-Row - carries data to the next component
-Trigger - transfers proccessing control to the next component or SubJob 
+
+**Components** - predefined units of Java code that performs specific operations on data (implementation is hidden by default)
+**Jobs** - comprises one or more SubJobs
+**SubJobs** - comprises one or more connected components performing a specific task
+**Rows** - carries data to the next component
+**Triggers** - transfers proccessing control to the next component or SubJob 
+**Master Job** - a Job whose SubJobs are Jobs
+**Joblets** - reusable groups of components
+**JobServer** - an agent that runs Talend Jobs on computers
+
+
+**CSV files** - Comma Separated Values files
 ### A simple ETL job
 
 ```mermaid
@@ -99,29 +109,27 @@ Job Designs -> right click -> create job
 
 Adding a component
 
-1. click in the designer and type in the name of a component
-2. drag a component from the palette and place in designer
+1. Click in the designer and type in the name of a component
+2. Drag a component from the palette and place in designer
 
 Linking components
 
-1. rClick first component
+1. Right-click first component
 2. Select row
 3. Select main
 4. Select second component to link to 
 
-
-
 Renaming components
 
 1. Select component
-2. View tab
-3. Label format
+2. Click view tab
+3. Edit Label format
 
 Help page
 1. Click component
-2. F1
+2. Press F1
 
-### Talend components 
+### Common Talend components 
 
 - [ ] tLogRow
 - [ ] tPostjob
@@ -140,7 +148,7 @@ Main rows pass the data flow from one component to another, iterating on each ro
 Schemas
 Schemas logically assemble and group data that will be read and processed by a component.
 
-### Repository Metadata
+### Repository Metadata {#metadata}
 
 Metadata is stored in the Repository and can be reused across jobs and components.
 
@@ -167,14 +175,14 @@ Some types of metadata
 
 
 
-### Processing data
+### Processing data {#processing-data}
 
 tMap - use for joining data, mapping data
 tAggregateRow - use for aggregate functions with group by
 tSortRow - sorting rows
 tSelectRow - selecting n-many rows from a table
 
-### Context variables
+### Context variables {#context-variables}
 
 Context variables let us configure environment variables so we can set up different execution environments like test, development and production environments.
 
@@ -184,7 +192,7 @@ tContextDump - export context variables
 Context param field of the tRunJob component
 - lets you change the values of selected context parameters in the child Job directly from the parent Job
 
-### Building executables and Docker images from Talend Studio Jobs
+### Building executables and Docker images from Talend Studio Jobs {#building-executables}
 
 Exported jobs can only run on other Talend instances.
 Built jobs are standalone jobs that can run anywhere.
@@ -230,7 +238,7 @@ docker -H dockerhost ps
 docker -H dockerhost run <image_name> [--context=selectcontext]
 ```
 
-### Control execution
+### Control execution {#execution-control}
 
 ![Working with iterations](images/iteration.png)
 ![tIterateToFlow component](images/iterate_to_flow_component.png)
@@ -242,7 +250,7 @@ Use iterate connection with tFileList to loop a process on files stored in a dir
 ![Component variables](images/component_variables.png)
 
 
-### Error handling
+### Error handling {#error-handling}
 
 Die-on error - stops the Job when an error is encountered in the component
 Triggers - tranfer control based on subjob and component status
@@ -252,14 +260,14 @@ log4jlevel - configure which messages to log to the console
 
 ![kill a job](images/kill_a_job.png)
 
-### Web services
+### Web services {#web-services}
 
 tESBConsumer - for accessing web services
 tXMLMap - mapping the XML response and configuring it to be used in data integration flow
 
 ![tESBComponent](images/esbComponent.png)
 
-### Case Study: Sales, Products and Customers
+### Case Study: Sales, Products and Customers {#case-study}
 
 ![Data processing components](images/data_processing_components.png)
 ![Components covered](images/database_connection_and_data_processing_components.png)

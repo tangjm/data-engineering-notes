@@ -1,4 +1,7 @@
 ---
+export_on_save:
+  html: true
+
 html:
   embed_local_images: true
   embed_svg: true
@@ -7,6 +10,7 @@ html:
 
 print_background: false
 ---
+
 # Talend Data Integration Advanced 
 
 ### Using Git in Talend Studio
@@ -46,10 +50,10 @@ When stepping through rows after pausing on a breakpoint using Trace Debug, you 
 - [ ] Use a Talend component to run subJobs in parallel
 - [ ] Use Talend components to split your data across multiple threads for multi-threaded execution
 
-Synchronous/Sequential execution
+#### Synchronous/Sequential execution
 ![asynchronous computing](images/asynchronous_computing.png)
 
-Asynchronous/Parellel execution
+#### Asynchronous/Parellel execution
 ![synchronous computing](images/synchronous_computing.png)
 
 Multithreading is one way of achieving parallelisation. Talend has the option to enable multithreading for all unconnected subjobs.
@@ -63,7 +67,7 @@ Many components also have the option of enabling parallel execution.
 Enabling 'multi-thread execution' on a job will decrease performance if the CPU has only a single core
 
 
-nb. "Dynamic" is an opaque data type that allows data to be passed through without the columns in the file or database being known. It captures all columns not explicitly named.
+n.b. "Dynamic" is an opaque data type that allows data to be passed through without the columns in the file or database being known. It captures all columns not explicitly named.
 
 
 The tDepartitioner component regroups the outputs of the processed parallel threads, and the tRecollector component captures the output of a tDepartitioner component and sends data to the next component.
@@ -84,7 +88,7 @@ A more performant method is to prepare your data (usually by sorting and groupin
 ![tMemorizeRows component](images/tMemorizeRows.png)
 ![Using the tMemorizeRows component](images/using_tMemoriseRows.png)
 
-tMemorizeRows component
+#### tMemorizeRows component
 
 ```java
 Product_ID_tMemorizeRows_1[0].equals(Product_ID_tMemorizeRows_1[1]) ? 
@@ -132,7 +136,7 @@ Writing Java code in editable component fields
 
 ![Java code in components](images/javaCodeInComponents.png)
 
-tJava
+#### tJava
 - Executes one or more lines of Java code
 - The code only executes once; it does not run on each row of data, but one time for the entire flow
 - The component cannot access the rows of data in either read or write mode, so it is not suited for any data-processing code
@@ -142,13 +146,14 @@ cf. the tMap component executes all expressions each time it processes a row of 
 
 ![tJava](images/tJava.png)
 
-tJavaRow
+#### tJavaRow
 - custom Java code for processing data rows
 - has access to data rows
 
 ![tJavaRow](images/tJavaRow.png)
 
-tJavaFlex
+#### tJavaFlex
+
 - more complex Java code structured into 3 sections: start, main and end
 - When the 'Data Auto Propogate' is checked, the component will automatically propagate all data from the input row to the corresponding output row. No action is needed in the Java code.
 - 
@@ -159,19 +164,19 @@ tJavaFlex
 String.format("%10s", Numeric.sequence("s1",1,1)+"").replace(' ', '0');
 ```
 
-tJavaRow vs tJavaFlex
+#### tJavaRow vs tJavaFlex
 
 - tJavaRow has one unique block of code and does not propagate data automatically - if an output row does not receive any explicit instruction in the code, it comes out as empty or even null, which may trigger errors.
 - tJavaFlex has three blocks of code (Start code, Main code, and End code) and propagates data automatically
 - Both JavaRow and JavaFlex require you to manually configure the output schema
 
-nb. To access a column in a row, type `name_of_the_row.name_of_the_column`. Here 'row' refers to the data connection between components. If we have a job that looks like this:
+n.b. To access a column in a row, type `name_of_the_row.name_of_the_column`. Here 'row' refers to the data connection between components. If we have a job that looks like this:
 
 ![example tJavaFlex job](images/example_TJavaFlexJob.png)
 
 Then we can write `raw_data.Country` to access the Country column of the raw_data row. Similarly, we can write `enriched_data.Firstname` to access the Firstname column of the output data row.
 
-Java routines
+#### Java routines
 
 ![Java routines](images/javaRoutines.png)
 
@@ -185,13 +190,13 @@ Creating a routine creates a blank Java class file which you can then configure.
 
 Use CDC to update databases/data warehouses by only updating data that has changed (insertions, deletions, updates). By not having to process unchanged data, we are able to save time and money through reducing the time, compute resources, network bandwidth and memory required to keep data warehouses updated and in-sync with production databases.
 
-cf. CDC with loading and updating entire databases
+Contrast CDC with loading and updating entire databases.
 
 CDC is usually implemented by creating a CDC database that tracks changes to production databases and we can then use incremental ETLs based on transactions in our CDC database to synchronise or update data warehouses.
 
 ![Example case of CDC](images/cdc_example.png)
 
-CDC Architecture
+#### CDC Architecture
 
 Step 1 - production database tables are updated - this sets off a trigger which logs the change to the CDC database table
 Step 2 - look up the CDC database table to see what data we need from the production database tables to update our target database.
@@ -207,7 +212,7 @@ Step 3 - our Talend Job applies the changes to our target table in our target da
 ![Step 3](images/cdc_step3.png)
 
 
-Example CDC Job
+#### Example CDC Job
 
 ![Example CDC Job](images/cdc_example_job.png)
 
@@ -225,7 +230,7 @@ Comments: The tDBCDC component pulls change events to be processed and applied f
 
 ![tDBCDC component](images/tDBCDC_component.png)
 
-Subscriber tables
+#### Subscriber tables
 
 - A subscriber uses information captured in a CDC database to later update other databases.
 
@@ -241,7 +246,7 @@ TABLE_TO_WATCH refers to the table being monitored.
 SUBSCRIBER_NAME refers to the table that is doing the monitoring.
 CREATION_DATE refers to the creation date of this record
 
-CDC table
+#### CDC table
 
 ![cdc table](images/cdc_table.png)
 
@@ -251,7 +256,7 @@ TALEND_CDC_TYPE: one of U, D, or I specifying the type of change (update, delete
 TALEND_CDC_CREATION_DATE: a time stamp specifying when the record changed.
 id: the key value identifying the changed record. Notice that the name of this column is specific to the table being monitored. Remember that earlier, when retrieving the schema, you learned that the column id is the primary key for the customers table.
 
-Creating a CDC table
+#### Creating a CDC table
 
 1. Right-click the schema of the table that you want to monitor/create a CDC table for.
 2. Select 'add CDC'
@@ -262,7 +267,7 @@ Creating a CDC table
 
 ![cdc Db Connections metadata directory structure](images/cdc_directory_structure.png)
 
-Supported databases and CDC modes
+### Supported databases and CDC modes
 
 ![cdc supported databases](images/cdc_supported_databases.png)
 ![cdc](images/cdc_supported_modes.png)

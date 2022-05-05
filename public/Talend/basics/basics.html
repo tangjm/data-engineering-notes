@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>getting_started</title>
+      <title>basics</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -263,7 +263,8 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <div><h1 class="mume-header" id="talend-data-integration-basics">Talend Data Integration - Basics</h1>
 
-<p>TASKS:</p>
+<h3 class="mume-header" id="contents">Contents</h3>
+
 <p>Jobs, subjobs and components</p>
 <ul>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Create a Job</li>
@@ -284,20 +285,84 @@ pre[data-line] .line-highlight[data-end]:after {
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Read from a MySQL table</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Extract out database connections into a single component</li>
 </ul>
-<p>Using Repository Metadata</p>
+<p><a href="#metadata">Using Repository Metadata</a></p>
 <ul>
-<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Decide when to use metadata</li>
-<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Distinguish built-in from Repository properties</li>
-<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Use different types of metadata in Jobs: file metadata, database metadata, generic schemas</li>
-<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Update metadata from the Repository and propagate the changes</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Decide when to use metadata</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Distinguish built-in from Repository properties</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Use different types of metadata in Jobs: file metadata, database metadata, generic schemas</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Update metadata from the Repository and propagate the changes</li>
+</ul>
+<p><a href="#processing-data">Processing Data</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Map data input to output using the tMap component</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Join data and collect join rejects</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Filter data and collect filter rejects</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Use expressions and variables in the mapping editor</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Sort and aggregate data using other data processing components</li>
+</ul>
+<p><a href="#context-variables">Context variables</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Create built-in context variables that are specific to a Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Use context variables in the configuration of Talend components</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Run a Job using context variables</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Connect a Job to a database using context variables</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Create repository context variables that are available for all Jobs</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Load context variables from a flow</li>
+</ul>
+<p><a href="#building-executables">Building standalone and Docker images from Jobs</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Build a stand-alone Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Run a stand-alone Job outside Talend Studio</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Build a new version of an existing Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Build a Job as a Docker image</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Run a Job in a Docker container</li>
+</ul>
+<p><a href="#execution-control">Control execution</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Use components to list, archive, and delete files from a directory</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Manage iterations inside a Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Reuse component variables to configure other components</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Use triggers to connect components and subJobs</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Create a master Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Override context variables for subJobs</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked> Export a master Job and its dependencies</li>
+</ul>
+<p><a href="#error-handling">Error handling</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Kill a Job on a component error</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Implement a specific Job execution path on a component error</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Raise a warning in specific conditions</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Configure the log level in the console</li>
+</ul>
+<p><a href="#web-services">Web services</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Use a Talend component to access a web service method</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Extract specific elements from a web service reply</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Store Web Services Description Language (WSDL) schemas for use in the tXMLMap component</li>
+</ul>
+<p><a href="#case-study">Case Study: Creating a master sales table from Sales, Product and Customer data</a></p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Use components to open and close a database connection in a Talend Job</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Write to and read from a database table</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Retrieve table schemas in the repository</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Configure components using metadata</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Join data using the tMap component</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Filter unique data rows</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Aggregate data and perform calculations</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Write data to an XML file</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Orchestrate several Jobs inside a master Job</li>
 </ul>
 <h3 class="mume-header" id="key-terms">Key terms</h3>
 
-<p>Component - a predefined unit of Java code that performs specific operations on data (implementation is hidden by default)<br>
-Job - comprises one or more SubJobs<br>
-SubJob - comprises one or more connected components performing a specific task<br>
-Row - carries data to the next component<br>
-Trigger - transfers proccessing control to the next component or SubJob</p>
+<p><strong>Components</strong> - predefined units of Java code that performs specific operations on data (implementation is hidden by default)<br>
+<strong>Jobs</strong> - comprises one or more SubJobs<br>
+<strong>SubJobs</strong> - comprises one or more connected components performing a specific task<br>
+<strong>Rows</strong> - carries data to the next component<br>
+<strong>Triggers</strong> - transfers proccessing control to the next component or SubJob<br>
+<strong>Master Job</strong> - a Job whose SubJobs are Jobs<br>
+<strong>Joblets</strong> - reusable groups of components<br>
+<strong>JobServer</strong> - an agent that runs Talend Jobs on computers</p>
+<p><strong>CSV files</strong> - Comma Separated Values files</p>
 <h3 class="mume-header" id="a-simple-etl-job">A simple ETL job</h3>
 
 <div class="mermaid">flowchart
@@ -309,12 +374,12 @@ Trigger - transfers proccessing control to the next component or SubJob</p>
 <p>Job Designs -&gt; right click -&gt; create job</p>
 <p>Adding a component</p>
 <ol>
-<li>click in the designer and type in the name of a component</li>
-<li>drag a component from the palette and place in designer</li>
+<li>Click in the designer and type in the name of a component</li>
+<li>Drag a component from the palette and place in designer</li>
 </ol>
 <p>Linking components</p>
 <ol>
-<li>rClick first component</li>
+<li>Right-click first component</li>
 <li>Select row</li>
 <li>Select main</li>
 <li>Select second component to link to</li>
@@ -322,15 +387,15 @@ Trigger - transfers proccessing control to the next component or SubJob</p>
 <p>Renaming components</p>
 <ol>
 <li>Select component</li>
-<li>View tab</li>
-<li>Label format</li>
+<li>Click view tab</li>
+<li>Edit Label format</li>
 </ol>
 <p>Help page</p>
 <ol>
 <li>Click component</li>
-<li>F1</li>
+<li>Press F1</li>
 </ol>
-<h3 class="mume-header" id="talend-components">Talend components</h3>
+<h3 class="mume-header" id="common-talend-components">Common Talend components</h3>
 
 <ul>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> tLogRow</li>
@@ -346,11 +411,11 @@ Trigger - transfers proccessing control to the next component or SubJob</p>
 <p>Main rows pass the data flow from one component to another, iterating on each row and reading input data according to the component&#x2019;s properties setting.</p>
 <p>Schemas<br>
 Schemas logically assemble and group data that will be read and processed by a component.</p>
-<h3 class="mume-header" id="repository-metadata">Repository Metadata</h3>
+<h3 class="mume-header undefined" id="metadata">Repository Metadata</h3>
 
 <p>Metadata is stored in the Repository and can be reused across jobs and components.</p>
-<p>Built-in data - properties specific to a component<br>
-Repository properties - properties stored in the repository that can be reused</p>
+<p>Built-in metadata - requires you to enter data in the component configuration manually. Let&apos;s you set the properties specific to a single component without affecting other components.</p>
+<p>Repository properties - properties stored in the repository that can be reused in different components in a single Job and components across different Jobs in the same project. When you change your repository metadata, you have the option to choose which dependent components to propogate your changes to.</p>
 <p>Generic schemas - can be used by any component; often  used to configure components of different types with the same schema</p>
 <p>Changes to the repository metadata can be selectively propogated to all jobs and components making use of that metadata.</p>
 <p>Changing the Property Type of a component to built-in severs the link between that component and the repository metadata.</p>
@@ -363,16 +428,112 @@ Repository properties - properties stored in the repository that can be reused</
 <li>database metadata</li>
 <li>generic schemas</li>
 </ul>
+<h3 class="mume-header undefined" id="processing-data">Processing data</h3>
+
+<p>tMap - use for joining data, mapping data<br>
+tAggregateRow - use for aggregate functions with group by<br>
+tSortRow - sorting rows<br>
+tSelectRow - selecting n-many rows from a table</p>
+<h3 class="mume-header undefined" id="context-variables">Context variables</h3>
+
+<p>Context variables let us configure environment variables so we can set up different execution environments like test, development and production environments.</p>
+<p>tContextLoad - override context variables for a Job<br>
+tContextDump - export context variables</p>
+<p>Context param field of the tRunJob component</p>
+<ul>
+<li>lets you change the values of selected context parameters in the child Job directly from the parent Job</li>
+</ul>
+<h3 class="mume-header undefined" id="building-executables">Building executables and Docker images from Talend Studio Jobs</h3>
+
+<p>Exported jobs can only run on other Talend instances.<br>
+Built jobs are standalone jobs that can run anywhere.</p>
+<p>You can build jobs that run on Windows, Linux and in Docker containers.<br>
+Build a job as an executable that can run on Windows or Linux or as a Docker image.<br>
+When building a job, the &apos;Override parameters&apos; values&apos; button lets you update, add or remove context parameters and values of the Job context you selected in the list.</p>
+<p>Docker</p>
+<ul>
+<li>The Daemon is the the docker component that manages containers</li>
+<li>The Docker CLI runs on your local machine and lets you interface with the Daemon</li>
+<li>Docker images contain your Job and everything it needs to run (They&apos;re like a template or schema for creating containers)</li>
+<li>A container is a running instance of your Docker image</li>
+</ul>
+<p>A standalone job contains:</p>
+<ul>
+<li>JAR files (which are Java based zip files)</li>
+<li>Files needed for deployment</li>
+<li>Contexts and variables</li>
+<li>BAT files (batch execution files for starting Jobs on Windows)</li>
+<li>SH files (Linux shell scripts for launching Jobs)</li>
+</ul>
+<p>Building a Docker images requires:gi</p>
+<ul>
+<li>Connection to Docker host</li>
+<li>Image name and tag</li>
+</ul>
+<p>Image name is the Job name and location in your Repository<br>
+Tag is the Job version (lets you distinguish between different versions of a Docker image created from the Job)</p>
+<p>Docker CLI</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># view docker host info</span>
+docker -H dockerhost info
+
+<span class="token comment"># view docker images</span>
+docker -H dockerhost images
+
+<span class="token comment"># view running containers</span>
+docker -H dockerhost <span class="token function">ps</span>
+
+<span class="token comment"># running docker images</span>
+<span class="token comment"># context flag is optional</span>
+docker -H dockerhost run <span class="token operator">&lt;</span>image_name<span class="token operator">&gt;</span> <span class="token punctuation">[</span>--context<span class="token operator">=</span>selectcontext<span class="token punctuation">]</span>
+</pre><h3 class="mume-header undefined" id="execution-control">Control execution</h3>
+
+<p><img src="images/iteration.png" alt="Working with iterations"><br>
+<img src="images/iterate_to_flow_component.png" alt="tIterateToFlow component"><br>
+<img src="images/tUnite_component.png" alt="tUnite component"></p>
+<p>tFileList - iterates over files in a directory<br>
+Use iterate connection with tFileList to loop a process on files stored in a directory</p>
+<p><img src="images/component_variables.png" alt="Component variables"></p>
+<h3 class="mume-header undefined" id="error-handling">Error handling</h3>
+
+<p>Die-on error - stops the Job when an error is encountered in the component<br>
+Triggers - tranfer control based on subjob and component status<br>
+Kill a job - use the tKill component to kill a job when a specified condition is met<br>
+Warning - use the tWarn in the same way as you would use a tKill, but you get a warning message instead of killing the job.<br>
+log4jlevel - configure which messages to log to the console</p>
+<p><img src="images/kill_a_job.png" alt="kill a job"></p>
+<h3 class="mume-header undefined" id="web-services">Web services</h3>
+
+<p>tESBConsumer - for accessing web services<br>
+tXMLMap - mapping the XML response and configuring it to be used in data integration flow</p>
+<p><img src="images/esbComponent.png" alt="tESBComponent"></p>
+<h3 class="mume-header undefined" id="case-study">Case Study: Sales, Products and Customers</h3>
+
+<p><img src="images/data_processing_components.png" alt="Data processing components"><br>
+<img src="images/database_connection_and_data_processing_components.png" alt="Components covered"></p>
+<h3 class="mume-header" id="reference-projects">Reference projects</h3>
+
+<p>Reference projects in Talend Studio</p>
+<p>You can reuse items (for example, Jobs, metadata, and Business Modeler) from the referenced project in the main project.<br>
+You can establish references between two projects if you have read/write authorization for both.</p>
 </div>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#talend-data-integration-basics">Talend Data Integration - Basics</a>
 <ul>
+<li><a href="#contents">Contents</a></li>
 <li><a href="#key-terms">Key terms</a></li>
 <li><a href="#a-simple-etl-job">A simple ETL job</a></li>
 <li><a href="#creating-a-job">Creating a Job</a></li>
-<li><a href="#talend-components">Talend components</a></li>
-<li><a href="#repository-metadata">Repository Metadata</a></li>
+<li><a href="#common-talend-components">Common Talend components</a></li>
+<li><a href="#metadata">Repository Metadata</a></li>
+<li><a href="#processing-data">Processing data</a></li>
+<li><a href="#context-variables">Context variables</a></li>
+<li><a href="#building-executables">Building executables and Docker images from Talend Studio Jobs</a></li>
+<li><a href="#execution-control">Control execution</a></li>
+<li><a href="#error-handling">Error handling</a></li>
+<li><a href="#web-services">Web services</a></li>
+<li><a href="#case-study">Case Study: Sales, Products and Customers</a></li>
+<li><a href="#reference-projects">Reference projects</a></li>
 </ul>
 </li>
 </ul>
