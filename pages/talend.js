@@ -1,9 +1,31 @@
 import Link from 'next/link'
-import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
+import styles from '../styles/Home.module.css'
+import { getNotes } from '../lib/getNotes.js'
 
-export default function awsNotes() {
+function createLinksNotes(subdir, notes) {
+  return function withLinkName(name) {
+    return notes.map(note => {
+      return <li key={note}>
+        <Link href={`/Talend/${subdir}/${note}`}>{name}</Link>
+      </li>
+    })
+  }
+}
+
+export async function getStaticProps() {
+  const basicsNotes = getNotes(...['Talend', 'basics'])
+  const advancedNotes = getNotes(...['Talend', 'advanced'])
+  return {
+    props: {
+      basicsNotes,
+      advancedNotes
+    }
+  }
+}
+
+export default function talendNotes({ basicsNotes, advancedNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -16,8 +38,15 @@ export default function awsNotes() {
           Talend notes
         </h1>
 
+        <h2>Data Integration Basics</h2>
+        <ul>
+          {createLinksNotes('basics', basicsNotes)("advanced")}
+        </ul>
+        <h2>Data Integration Advanced</h2>
+        <ul>
+          {createLinksNotes('advanced', advancedNotes)}
+        </ul>
         <p className={styles.description}>
-
         </p>
 
       </main>
