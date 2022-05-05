@@ -15,7 +15,7 @@ export default function awsNotes() {
         <h1 className={styles.title}>
           AWS Notes
         </h1>
-
+        <h2>AWS Academy Cloud Foundations</h2>
         <p className={styles.description}>
           * [Module 1: The Cloud](/AWS/module1_cloud_concepts/notes_on_cloud_concepts)
           * [Module 2: Economics](/AWS/module2_cloud_economics_billing/notes_pricing)
