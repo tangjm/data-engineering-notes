@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 2: Amazon DynamoDB
 
 Managed low-latency NoSQL database

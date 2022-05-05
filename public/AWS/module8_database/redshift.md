@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 3: Amazon Redshift
 
 Managed data warehouse service that lets you run complex analytical SQL queries against huge data sets (petabytes)

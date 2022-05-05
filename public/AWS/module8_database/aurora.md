@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 3: Amazon Aurora
 
 A fully-managed MySQL and PostgreSQL compatible relational database service in the cloud.
@@ -9,13 +13,16 @@ Designed to automate provisioning, patching, backup, recovery, failure detection
 ### Key features
 
 Drop-in compability with MySQL and PostgreSQL engines lets you use familiar database tools and interfaces 
+
 High availability and a fast distributed storage subsystem.
+
 Integrates with AWS Schema Conversion Tool and Database Migration Service to make cloud migration as smooth as possible
+
 Pay as you go pricing model
 
-### High availability
-
 Designed for high avilability and resilience
+
+### High availability
 
 ![High availability](images/aurora_high_availability.png)
 

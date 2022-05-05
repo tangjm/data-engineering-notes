@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 2: AWS S3 (Simple Storage Service)
 
 ![S3](images/s3.png)
@@ -48,7 +52,7 @@ There are a range of different object-level storage classes:
 
 There are two URL formats for S3 buckets
 
-1. Bucket path-styyle URL endpoint
+1. Bucket path-style URL endpoint
 
 `https://s3.<region_name>.amazonaws.com/<bucket_name>`
 
