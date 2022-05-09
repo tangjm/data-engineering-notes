@@ -66,7 +66,7 @@ Key topics
 
 ### Security design principles
 
-1. Iplement a strong identity foundation (give users the minimum amount of access needed to complete their tasks)
+1. Implement a strong identity foundation (give users the minimum amount of access needed to complete their tasks)
 2. Enable traceability (monitor, alert and audit actions and changes to your cloud environment in real time)
 3. Apply security at all layers of your architecture (VPC, subnets, instances, edge networks, load balancer, application)
 4. Automate security best practices

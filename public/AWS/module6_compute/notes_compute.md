@@ -114,11 +114,11 @@ big data, Apache Hadoop or Apache Spark clusters, and other enterprise applicati
 
 Each instance comes with a documented network bandwith(Gbps)
 
-By default AWS EC2 tries to spread out your instnaces across the underlying hardware when you create many instances at once.
+By default AWS EC2 tries to spread out your instances across the underlying hardware when you create many instances at once.
 
 But you can use placement groups to influence the placement of a group of interdependent instances to meet your compute needs.
 
-Some instance types will allow you to configure enhanced networking to get higher packet per second (PPS) performance, lower delay variation in the arrival of packets over the network (network jitter) and lower latencies. Consult the Elastic Network Adapter (ENA) 
+Some instance types will allow you to configure enhanced networking to get higher packet per second (PPS) performance, lower delay variation in the arrival of packets over the network (network jitter) and lower latencies. Consult the Elastic Network Adapter (ENA) for more information.
 
 **Step 3: Specify network settings**
 
@@ -127,7 +127,7 @@ A public IP is automatically assigned when you launch an EC2 instance inside a d
 
 For instances launched in nondefault VPCs, AWS doesn't assign a public IP address in nondefault subnets.
 
-Either modify the public IP addressing attribute of your subnet or enable/disable the public IP addressing feature during instance launch to control whether your instances gets assigned a public IP address from the public IPv4 address pool.
+Either modify the public IP addressing attribute of your subnet or enable/disable the public IP addressing feature during instance launch to control whether your instances get assigned a public IP address from the public IPv4 address pool.
 
 **Step 4: Attach an IAM (Identity Access Management) role (Optional)**
 
@@ -147,7 +147,7 @@ You have the option to pass user data to the instance. User data can be used to 
 
 The user data script runs with root privileges during the final phases of the boot process when the EC2 instance is created.
 
-- Windows instances are fun by EC2config or EC2Launch utility.
+- Windows instances are run by EC2config or EC2Launch utility.
 - Linux instances are run by the cloud-init service.
 
 ![Example User data](images/example_user_data.png)
@@ -174,7 +174,7 @@ Instance Store
 - Temporary storage provided on disks physically attached to host computer where EC2 instance is running
 - Data store is deleted if the instance stops
 - good for temporary data like buffers, caches etc.
-- store data repliacted across multiple instances like a load balanced pool of web servers.
+- store data replicated across multiple instances like a load balanced pool of web servers.
 - If an instance reboots, then the instance store does persist
 
 Other options separate from root volume
@@ -185,7 +185,6 @@ Other options separate from root volume
 
 Tags allow you to attach metadata to EC2 instances
 Tags are key, value pairs where the value is optional.
-
 Tags are case sensitive
 
 **Step 8: Security group settings**
@@ -225,7 +224,7 @@ aws ec2 run-instances \
 
 Necessary conditions for the EC2 instance to be created:
 - well formed syntax
-- required resources already exist like security groups and Amazon Machine Image id
+- required resources already exist like security groups and Amazon Machine Image ID
 - sufficient permissions
 - sufficient capacity in AWS account
 
@@ -305,7 +304,7 @@ EC2 pricing models
   - you pay for the scheduled time
 - Spot instances
   - bid on usnused EC2 instances.
-  - your spot instance runes whenever your bid exceeds the market price which fluctuates each hour depending on supply and demand.
+  - Your Spot Instance runs whenever capacity is available and the maximum price per hour for your request exceeds the Spot price (the hourly price) which fluctuates every hour depending on supply and demand.
   - are interrupted with a 2 minute notification. 
 
 ![Comparing the price model of different EC2 instances](images/ec2_price_model_comparison.png)
@@ -347,4 +346,4 @@ EC2 pricing models
 - Cost optimisation should be done routinely by analysing your systems
 - Use Tagging to identify what each resource is being used for and by whom. Cost allocation tags can be activated in the Billing and Cost Management console. Cost allocation reports can be generated with usage and costs grouped by your tags. Tags enable you to organise costs across multiple AWS services by business category.
 - Incentivise teams to architect for cost.
-- AWS TRusted Advisor can provide real-time guidance on how to provision your resources in accordance with AWS best practices
+- AWS Trusted Advisor can provide real-time guidance on how to provision your resources in accordance with AWS best practices

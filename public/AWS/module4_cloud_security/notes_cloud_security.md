@@ -42,8 +42,7 @@ With more flexbility and control over your IT services comes with greater respon
 
 **IaaS**
 - customer to perform all necessary **security configuration** and **management tasks**
-- e.g. Customers who deploy EC2 instances are responsible for managing the guest operating system (including updates and security patches), any application software that is installed on 
-the instances, and the configuration of the security groups that were provided by AWS.
+- e.g. Customers who deploy EC2 instances are responsible for managing the guest operating system (including updates and security patches), any application software that is installed on the instances, and the configuration of the security groups that were provided by AWS.
 
 **PaaS**
 - With PaaS services, customers 
@@ -63,11 +62,10 @@ service.
 **AWS Shield** 
 - a managed distributed denial of service (DDoS) protection service that safeguards applications running on AWS. 
 - It provides always-on detection and automatic inline mitigations that minimize application downtime and latency, so there is no need to engage AWS Support to benefit from DDoS protection. 
-- AWS Shield Advanced is available to all customers. However, to contact the DDoS Response Team, customers must have either 
-Enterprise Support or Business Support from AWS Support.
+- AWS Shield Advanced is available to all customers. However, to contact the DDoS Response Team, customers must have either Enterprise Support or Business Support from AWS Support.
 
 **Amazon Chime**
-- amazon's version of teams or zoom
+- Amazon's version of teams or zoom
 - It is a pay-as-you-go communications service with no upfront fees, commitments, or long-term contracts
 
 # Section 2: IAM
@@ -152,15 +150,19 @@ Step 4. Enable billing reports (Cost and Usage report)
 
 #### Service control policies
 
-- specifies maximum permisisons for organisations
+- applied at the level of organisational units (OUs)
+- specifies maximum permissions for organisations
 
 #### KMS (Key Management Service)
 - create and manage encryption keys
 - integrates with CloudTrail
-- Uses hardware security modules
+- Uses hardware security modules (HSM)
 
 ### Cognito
+- service for managing user credentials and authentication for your applications.
 - Add sign-up, sign-in and access control to web and mobile applications
+- Amazon Cognito User Pools are used to manage user authentication to web and mobile apps
+- Amazon Cognito Identity Pools are used to provide temporary AWS credentials for accessing AWS services.
 
 ### AWS Shield
 
@@ -202,7 +204,7 @@ AWS Config
 - Compares recorded configurations with configurations rules
 
 AWS Artifact
-- provides access to security and compliance reports and online agreements
+- provides on-demand access to security and compliance reports and online agreements
 - Security -> Identify & Compliance -> Artifact
 - you can accept agreements on behalf of multiple accounts using AWS Organisations
 

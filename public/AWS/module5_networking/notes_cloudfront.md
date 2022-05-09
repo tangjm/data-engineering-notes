@@ -35,6 +35,9 @@ Regional edge cahces - caches less popular content. Has a larger cache than indi
 
 Together they ensure more of your content remains closer to users, reducing the need for CloudFront to fetch data from your origin server, thus improving overall performance for users.
 
+Helps improve performance by using Keep-alive connections between the Edge locations & the origin server.
+
+Can customise content at the Edge location before delivering it to users through the use of Lambda@Edge functions. 
 ### Benefits
 
 - Fast and global

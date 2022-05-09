@@ -53,7 +53,7 @@ AWS requires the boot volume of an EC2 to use an SSD
 
 In short, you pay for the amount of storage and the IOPS (volume of input/outputs per second).
 
-With all EBS volumes, you pay for the amount of storage your provision in GB per month.
+With all EBS volumes, you pay for the amount of storage you provision in GB per month.
 
 Depending on whether you provision a general purpose SSD, provisioned IOPS SSD or a HDD, your IOPS costs will vary.
 

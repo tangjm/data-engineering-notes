@@ -70,7 +70,7 @@ ECS places the 5 containers on the EC2 instances in the ECS cluster. The distrib
 
 ### Kubernetes
 
-Open source container orchestration software
+Open-source container orchestration software
 
 Deploy and manage containerised applications at scale
 

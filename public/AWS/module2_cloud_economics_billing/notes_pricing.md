@@ -62,11 +62,6 @@ More indirect costs to consider for on-premise solutions
 - Increased developer productivity
 - Agile businesses can quickly respond to new and emerging opportunities
 - Increase in global reach 
-
-
-### Case Study on Delaware North
-- They migrated to AWS, removing 205 physical servers
-
 ### Billing
 
 AWS Organisations for grouped billing of multiple accounts 

@@ -37,7 +37,8 @@ There are a range of different object-level storage classes:
 - Amazon S3 Standard	
   - standard durable, performant and highly available object-level stoage
 - Amazon S3 Intelligent-Tiering
-  - designed to optimise costs by analysing your data access and moving infrequently accessed data into the infrequent access tier
+  - designed to optimise costs by analysing your data access and moving infrequently accessed data into the infrequent access tier if unaccessed for 30 consecutive days.
+  - has two storage layers: frequently accessed; infrequently accessed
 - Amazon S3 Standard-Infrequent Access (Amazon S3 Standard-IA)
   - stores infrequently accessed data that can be retrieved with low latency 
 - Amazon S3 One Zone-Infrequent Access (Amazon S3 One zone-IA)
@@ -67,6 +68,12 @@ Uploaded files are referred to as objects because they get wrapped with metadata
 Folders are logical separators for organising files/objects in your S3 bucket.
 
 You can configure the permissions for each uploaded file.
+
+### S3 bucket configurations
+
+[S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/)
+
+Amazon S3 Transfer Acceleration creates fast, easy, and secure transfers of files over long distances between your client and your Amazon S3 bucket. S3 Transfer Acceleration leverages Amazon CloudFront’s globally distributed AWS Edge Locations. As data arrives at an AWS Edge Location, data is routed to your Amazon S3 bucket over an optimized network path.
 
 ### Pricing
 
