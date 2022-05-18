@@ -6,12 +6,16 @@ export_on_save:
 Order of execution for SQL clauses:
 
 ```sql
-  SELECT <columns> 	5.
-  FROM <table> 	1.
-  WHERE <predicate on rows> 	2.
-  GROUP BY <columns> 	3.
-  HAVING <predicate on groups> 	4.
-  ORDER BY <columns> 	6.
-  OFFSET 	7.
-  FETCH FIRST 	8. 
+FROM, JOIN
+WHERE
+GROUP BY
+Aggregate functions
+HAVING
+Window functions
+SELECT
+DISTINCT
+UNION/INTERSECT/EXCEPT
+ORDER BY
+OFFSET
+LIMIT/FETCH/TOP
 ```
