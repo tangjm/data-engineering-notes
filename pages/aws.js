@@ -2,8 +2,58 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
+import { getNotes } from '../lib/getNotes.js'
 
-export default function awsNotes() {
+function createLinksNotes(subdir, notes) {
+  return notes.map(note => {
+    return <li key={note}>
+      <Link href={`/AWS/${subdir}/${note}`}>{note.slice(0, note.length - 5)}</Link>
+    </li>
+  })
+}
+
+const subdirs = {
+  "module1": "module1_cloud_concepts",
+  "module2": "module2_cloud_economics_billing",
+  "module3": "module3_global_infrastructure",
+  "module4": "module4_cloud_security",
+  "module5": "module5_networking",
+  "module6": "module6_compute",
+  "module7": "module7_storage",
+  "module8": "module8_database",
+  "module9": "module9_cloud_architecture",
+  "module10": "module10_auto_scaling_and_monitoring"
+}
+
+export async function getStaticProps() {
+  let upperBound = Object.keys(subdirs).length
+  // a list of integers that correspond to our AWS modules
+  let moduleArr = []
+  for (let i = 1; i <= upperBound; i++) {
+    moduleArr.push(i)
+  }
+
+  // map integers to objects containing subdirectory name and html file name
+  let fileArr = moduleArr.map(n => {
+    let subdir = subdirs["module" + n]
+    return {
+      "subdir": subdir,
+      "fileHTML": getNotes(...["AWS", subdir])
+    }
+  })
+
+  // declare and initialise variables for our html files
+  let m1, m2, m3, m4, m5, m6, m7, m8, m9, m10
+  [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10] = fileArr
+
+  return {
+    props: {
+      modules: [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10]
+    }
+  }
+}
+
+export default function awsNotes(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -57,7 +107,9 @@ export default function awsNotes() {
 
           Module 10: Auto scaling and Monitoring
         </p>
-
+        {props.modules.map(module => {
+          return createLinksNotes(module.subdir, module.fileHTML)
+        })}
       </main>
 
       <footer className={styles.footer}>
