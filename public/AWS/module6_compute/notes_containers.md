@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 4: Container services
 
 ![Containers](images/containers.png)

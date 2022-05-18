@@ -1,26 +1,27 @@
+---
+export_on_save:
+  html: true
+---
 # Section 2: Networking basics
 ### Computer networks
 - two or more client machines connected together for the purpose of sharing resources
 - we can partition networks into subnets(subnetworks)
 - routers or switches are needed to connect client machines together for networking
 
-IP addresses (Internet Protocol address)
----
+### IP addresses (Internet Protocol address)
 
 
 - unique identifiers for client machines
 - numeric label in decimal format which is converted into binary format
 
-IPv4 (32bits)
----
+#### IPv4 (32bits)
 
 - e.g. 192.2.1.0
 - Four numbers separated by dots.
 - Each number is in octal number format
 - Each 8bit number ranges from 0 to 255.
 
-IPv6 (128bits)
----
+#### IPv6 (128bits)
 
 - e.g. fr80::599f:a54f:ab4d:a7gc
 - accommodate more user devices
@@ -280,7 +281,6 @@ AWS recommends numbering rules at 10 step intervals to allow for the insertion o
 ### Security groups vs Network ACLs
 
 <img src="images/security_groups_vs_network_acls.png" alt="security groups vs network ACLs" width=80%>
-
 ### Design a VPC
 
 VPC - 10.0.0.0/16
@@ -295,28 +295,28 @@ Internet gateway
 Route tables 
 - Public subnet route table
 
-| Destination | Target |
-|---|---|
-|0.0.0.0/0 | internet gateway |
+| Destination | Target           |
+| ----------- | ---------------- |
+| 0.0.0.0/0   | internet gateway |
 
 - Private subnet route table
   
-| Destination | Target |
-|---|---|
-|0.0.0.0/0 | NAT gateway |
+| Destination | Target      |
+| ----------- | ----------- |
+| 0.0.0.0/0   | NAT gateway |
 
 Security groups
 - EC2
 
-|Source | Protocol | Port Range | Description |
-| --- | --- | --- | --- |
-| 0.0.0.0/0 | All | All | Allow all inbound HTTP requests from all IPv4 addresses |
+| Source    | Protocol | Port Range | Description                                             |
+| --------- | -------- | ---------- | ------------------------------------------------------- |
+| 0.0.0.0/0 | All      | All        | Allow all inbound HTTP requests from all IPv4 addresses |
 
 Database Server
 
-|Source | Protocol | Port Range | Description |
-| --- | --- | --- | --- |
-| 0.0.0.0/0 | All | All | Allow all outbound HTTP requests from all Classless Inter Domain Routing from Private subnet |
+| Source    | Protocol | Port Range | Description                                                                                  |
+| --------- | -------- | ---------- | -------------------------------------------------------------------------------------------- |
+| 0.0.0.0/0 | All      | All        | Allow all outbound HTTP requests from all Classless Inter Domain Routing from Private subnet |
 
 
 

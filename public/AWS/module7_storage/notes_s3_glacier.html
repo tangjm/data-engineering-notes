@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_s3_glacier</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -7,7 +7,7 @@
       
       
       
-      
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
       
       
       
@@ -261,63 +261,122 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-4-s3-glacier">Section 4: S3 Glacier</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p>A data archiving service designed to be secure, durable and low cost.</p>
+<p>S3 buckets optimised for storing data with high latency but large storage sizes.</p>
+<p>This makes it good for storing archives which tend to be in large volume but infrequently accessed.</p>
+<h3 class="mume-header" id="key-terms">Key terms</h3>
+
+<p><strong>Archives</strong><br>
+Archives are objects (photos, video files, documents ...)<br>
+Archives are the smallest unit of storage.<br>
+Each archive has a unique id</p>
+<p><strong>Vault</strong><br>
+A vault is a container for archives<br>
+Valuts have a name and belong to only one AWS Region.</p>
+<p><strong>Vault access policy</strong><br>
+An access policy at the level of vaults which determines who can access the vault and the sort of operations that they can do</p>
+<p>A vault lock policy can be added to ensure that the vault cannot be altered.<br>
+Each vault can have at most one access and one lock policy.</p>
+<p>Vaults are replicated across at least 3 availability zones.</p>
+<h4 class="mume-header" id="three-types-of-data-retrival-options">Three types of data retrival options</h4>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Retrieval time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expedited</td>
+<td>1-5 minutes</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>3-5 hours</td>
+</tr>
+<tr>
+<td>Bulk</td>
+<td>5-12 hours</td>
+</tr>
+</tbody>
+</table>
+<p>Example use cases</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>Media asset archiving</li>
+<li>Healthcare information archiving</li>
+<li>Regulatory and compliance archiving</li>
+<li>Scientific data archiving</li>
+<li>Digital preservation</li>
+<li>Magnetic tape replacement</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>S3 Glavier Vault Lock helps you to set compliance controls to meet compliance requirements<br>
+S3 Glacier performs regular, systematic data integrity checks and is designed to be self-healing.</p>
+<h3 class="mume-header" id="accessing-s3-glacier">Accessing S3 Glacier</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<ul>
+<li>AWS Console
+<ul>
+<li>has limited operations</li>
+</ul>
+</li>
+<li>RESTful web services</li>
+<li>Java / .NET SDKs</li>
+<li>AWS CLI</li>
+<li>S3 lifecycle policies</li>
+</ul>
+<h3 class="mume-header" id="s3-lifecycle-policies">S3 lifecycle policies</h3>
+
+<p>S3 lifecyle policies enable you to automate the movement of data between S3 storage solutions as the data ages, gradually moving the data from more expensive and easily accessible S3 storage classes to less expensive and less easily accessible storage classes.</p>
+<p>Lifecycle rules can be applied at the level of individual objects or individual buckets.</p>
+<div class="mermaid">graph LR
+  S3_Standard -- 30 days --&gt; S3_Standard_IA -- 60 days --&gt; S3_Glacier -- 365 days --&gt; Delete
+</div><h3 class="mume-header" id="s3-or-s3-glacier">S3 or S3 Glacier?</h3>
+
+<p><img src="images/s3_vs_s3_glacier.md.png" alt="S3 vs S3 Glacier"></p>
+<h3 class="mume-header" id="server-side-encryption">Server-Side Encryption</h3>
+
+<p>Server-size encryption focuses on protecting data at rest.</p>
+<p>Data archived in S3 Glacier is encrypted by default.<br>
+With S3, your application must enable server-side encryption.</p>
+<p>Three ways of setting up server-side encryption in AWS S3:</p>
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
-</ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<li>Amazon S3-managed encryption keys (SSE-S3)
 <ul>
-<li>read queries might not return the latest data</li>
+<li>encrypts each object with a unique key.</li>
+<li>encrypts each object key with a main that is regularly rotated</li>
+<li>encryption is done with AES-256</li>
 </ul>
-<p>Strongly consistent reads</p>
+</li>
+<li>Customer-provided Encryption Keys (SSE-C)
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>you choose your own encryption keys and AWS S3 manages the encryption and decryption.</li>
 </ul>
+</li>
+<li>AWS Key Management Service (AWS KMS)
+<ul>
+<li>Customer Master Keys (CMKs) are used to encryption your S3 objects</li>
+<li>either go to IAM console -&gt; Encryption Keys -&gt; AWS KMS or use the AWS KMS API</li>
+</ul>
+</li>
+</ol>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-4-s3-glacier">Section 4: S3 Glacier</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#key-terms">Key terms</a>
+<ul>
+<li><a href="#three-types-of-data-retrival-options">Three types of data retrival options</a></li>
+</ul>
+</li>
+<li><a href="#accessing-s3-glacier">Accessing S3 Glacier</a></li>
+<li><a href="#s3-lifecycle-policies">S3 lifecycle policies</a></li>
+<li><a href="#s3-or-s3-glacier">S3 or S3 Glacier?</a></li>
+<li><a href="#server-side-encryption">Server-Side Encryption</a></li>
 </ul>
 </li>
 </ul>
@@ -325,7 +384,40 @@ The default read consistency is eventually consistent.</p>
       <a id="sidebar-toc-btn">&#x2261;</a>
     
     
-    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false
+  window['MERMAID_CONFIG'].theme = "default"
+}
+mermaid.initialize(window['MERMAID_CONFIG'] || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
     
     
     

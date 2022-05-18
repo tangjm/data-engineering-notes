@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_cloud_architecture</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,181 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-1-cloud-architecture">Section 1: Cloud architecture</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p>Architecture - designing and building large structures</p>
+<p>Cloud architects</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>identify business goals</li>
+<li>ensure that technological solutions align with business goals</li>
+<li>work with delivery team (engineers, data scientists etc.) to ensure that the technological solution has the appropriate features</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<h3 class="mume-header" id="aws-well-architected-framework">AWS Well-Architected Framework</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<p>A guide for designing cloud infrastructures that are</p>
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>Secure</li>
+<li>Performant</li>
+<li>Resilient</li>
+<li>Efficient</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
+<p>Consistent approach to evaluating and implementing cloud architecture.</p>
+<p>It provides a set of foundational questions and best practices that can help you evaluate and implement your cloud architectures.</p>
+<h3 class="mume-header" id="pillars-of-the-well-architected-framework">Pillars of the well-architected framework</h3>
 
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
+<p><img src="images/well_architected_framework_pillars.png" alt="Pillars"></p>
+<h3 class="mume-header" id="operational-excellence">Operational excellence</h3>
+
+<p>Run and monitor systems to deliver business value and to continually improve processes.</p>
+<p>Key topics</p>
+<ul>
+<li>Managing, automating changes</li>
+<li>Responding to events</li>
+<li>Defining standards for managing daily operations successfully</li>
+</ul>
+<h4 class="mume-header" id="six-design-principles">Six design principles</h4>
+
 <ol>
-<li>Query by key attributes</li>
+<li>Peform operations as code (limit human error and allow for consistency)</li>
+<li>Annotate documentation</li>
+<li>Frequent, small reversible changes</li>
+<li>Refine operations frequently</li>
+<li>Anticipate failure (set up regular test workloads to validate your team responses)</li>
+<li>Learn from all operational events and failures (sharing learning across organisation)</li>
 </ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
+<h4 class="mume-header" id="questions-to-consider-for-operational-excellence">Questions to consider for operational excellence:</h4>
 
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p>Three overarching themes<br>
+Prepare<br>
+Operate<br>
+Evolve</p>
+<p><img src="images/operational_excellence_questions.png" alt="Operational excellence questions"></p>
+<h3 class="mume-header" id="security">Security</h3>
+
+<p>Protect information, systems, and assets wihle delivering business value through risk assessments and mitigation strategies.</p>
+<p>Key topics</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>Protecting the confidentiality and integrity of data</li>
+<li>Identifying and managing access permissions</li>
+<li>Protecting systems</li>
+<li>Putting in place controls to detect security events</li>
 </ul>
-<p>Strongly consistent reads</p>
+<h4 class="mume-header" id="security-design-principles">Security design principles</h4>
+
+<ol>
+<li>Implement a strong identity foundation (give users the minimum amount of access needed to complete their tasks)</li>
+<li>Enable traceability (monitor, alert and audit actions and changes to your cloud environment in real time)</li>
+<li>Apply security at all layers of your architecture (VPC, subnets, instances, edge networks, load balancer, application)</li>
+<li>Automate security best practices</li>
+<li>Protect data in transit and at rest</li>
+<li>Keep people away from data (reduces risk of human error)</li>
+<li>Prepare for security events (setup an incident management process; run incident response simulations)</li>
+</ol>
+<h4 class="mume-header" id="questions-to-consider-for-architecting-a-secure-cloud-infrastructure">Questions to consider for architecting a secure cloud infrastructure</h4>
+
+<p><img src="images/security_questions.png" alt="Security questions"></p>
+<h3 class="mume-header" id="reliability">Reliability</h3>
+
+<p>Ability to recover from system infrastructure failures.</p>
+<p>Key topics</p>
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>setup</li>
+<li>cross-project requirements</li>
+<li>recovery planning</li>
+<li>handling change</li>
 </ul>
+<h4 class="mume-header" id="design-principles">Design principles</h4>
+
+<ul>
+<li>Test recovery procedures</li>
+<li>Automatically recover from failure (put in place triggers for automated recovery when a manually configured threshold is reached)</li>
+<li>horizontal scaling (replace a large resource with many smaller resources and distribute loads across the smaller resources to build fault-tolerance into your systems)</li>
+<li>Monitor demand and system usage to automate the provisioning of resources to maintain optimal levels for meeting demands</li>
+<li>Manage change in automation (use automation to manage changes to infrastructure)</li>
+</ul>
+<h4 class="mume-header" id="questions-to-consider">Questions to consider</h4>
+
+<p><img src="images/reliability_questions.png" alt="Questions to consider for creating reliable cloud infrastructures"></p>
+<h3 class="mume-header" id="performance-and-efficiency">Performance and Efficiency</h3>
+
+<p>Use IT and computing resources to meet system requirements efficiently</p>
+<p>Key topics</p>
+<ul>
+<li>Selecting the right resource types and sizes based on workload requirements</li>
+<li>Monitoring performance</li>
+<li>Making informed decisions to maintain efficiency as business needs evolve</li>
+</ul>
+<p>Performance efficiency design principles</p>
+<ul>
+<li>Democratise advanced technologies (less time spent on provisioning and setting up infrastructure on machine learning, NoSQL databases and big data environments, more time on product development)</li>
+<li>Go global in minutes (Deploy apps in multiple AWS Regions)</li>
+<li>Use serverless architectures (removes burden on managing and running a server)</li>
+<li>Experiment with different configurations</li>
+<li>Mechanical sympathy (when selecting a database or storage solution, you can stick to HDDs if you don&apos;t really need the benefits that SSDs provide over HDDs)</li>
+</ul>
+<h4 class="mume-header" id="questions-to-consider-1">Questions to consider</h4>
+
+<p><img src="images/performance_efficiency_questions.png" alt="Performance and efficiency questions to ponder"></p>
+<h3 class="mume-header" id="cost-optimisation">Cost optimisation</h3>
+
+<p>Avoid unnecessary costs</p>
+<p>Key topics</p>
+<ul>
+<li>Understand and control where money is spent</li>
+<li>Select the most optimal type and number of resources</li>
+<li>Analyse diachronic spending data</li>
+<li>Scale to meet business needs without overspending</li>
+</ul>
+<p>Cost optimisation design principles</p>
+<ul>
+<li>Implement Cloud Financial Management</li>
+<li>Measure overall efficiency (measure the business output of the workload and the costs of delivering the workload to see how the input costs are affecting the business outputs)</li>
+<li>Stop spending money on undifferentitated heavy lifting (spend less on IT infrastructure; more on business applications)</li>
+<li>Analyse and attribute expenditure (makes it easy to accurately pinpoint system usage and costs and to come up with practical responses)</li>
+</ul>
+<h4 class="mume-header" id="questions-to-consider-2">Questions to consider</h4>
+
+<p><img src="images/cost_optimisation_questions.png" alt="Cost optimisation questions"></p>
+<h3 class="mume-header" id="sustainability">Sustainability</h3>
+
+<p>Minimise environmental impact for running resources in AWS cloud.</p>
+<p>Use minimum optimal amount of hardware for running resources in AWS cloud.</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-1-cloud-architecture">Section 1: Cloud architecture</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#aws-well-architected-framework">AWS Well-Architected Framework</a></li>
+<li><a href="#pillars-of-the-well-architected-framework">Pillars of the well-architected framework</a></li>
+<li><a href="#operational-excellence">Operational excellence</a>
+<ul>
+<li><a href="#six-design-principles">Six design principles</a></li>
+<li><a href="#questions-to-consider-for-operational-excellence">Questions to consider for operational excellence:</a></li>
+</ul>
+</li>
+<li><a href="#security">Security</a>
+<ul>
+<li><a href="#security-design-principles">Security design principles</a></li>
+<li><a href="#questions-to-consider-for-architecting-a-secure-cloud-infrastructure">Questions to consider for architecting a secure cloud infrastructure</a></li>
+</ul>
+</li>
+<li><a href="#reliability">Reliability</a>
+<ul>
+<li><a href="#design-principles">Design principles</a></li>
+<li><a href="#questions-to-consider">Questions to consider</a></li>
+</ul>
+</li>
+<li><a href="#performance-and-efficiency">Performance and Efficiency</a>
+<ul>
+<li><a href="#questions-to-consider-1">Questions to consider</a></li>
+</ul>
+</li>
+<li><a href="#cost-optimisation">Cost optimisation</a>
+<ul>
+<li><a href="#questions-to-consider-2">Questions to consider</a></li>
+</ul>
+</li>
+<li><a href="#sustainability">Sustainability</a></li>
 </ul>
 </li>
 </ul>

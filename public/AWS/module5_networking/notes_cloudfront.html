@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_cloudfront</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,103 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-6-aws-cloudfront">Section 6: AWS CloudFront</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p>A content delivery network (CDN) service</p>
+<p>Is a solution to the performance challenges of network communication when a request is routed through many different networks to reach the original server.</p>
+<p>With each router and with increasing distance, the performance and responsiveness of the requested resource decreases.</p>
+<h3 class="mume-header" id="whats-a-cdn">What&apos;s a CDN</h3>
+
+<p><img src="images/network_routers.png" alt="network routers"></p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>globally distributed system of caching servers</li>
+<li>they cache static contents like HTML, CSS, JavaScript and static images hosted on application servers</li>
+<li>they deliver a local copy of the requested content from a cache edge or Point of Presence to provide fast delivery of content</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>They can also deliver dynamic content unique to the requesting client that cannot be cached.</p>
+<p>Because CDN maintains secure connections closer to the client, delivering dynamic content improves the application performance and scaling.</p>
+<p>If a CDN is on the same network as the application origin server, routing to the origin to retrieve dynamic content is accelerated.</p>
+<h3 class="mume-header" id="amazon-cloudfront">Amazon CloudFront</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
-<ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
-</ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p><img src="images/amazon_cloudfront.png" alt="amazon CloudFront"></p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>Low latency, high transfer speed, global and secure CDN service</li>
+<li>Developer friendly</li>
+<li>Uses a global network of edge locations and Regional edge caches</li>
 </ul>
-<p>Strongly consistent reads</p>
+<p>Edge locations - networks of data centers designed to serve popular content asap to viewers.</p>
+<p>Regional edge caches - caches less popular content. Has a larger cache than individual edge locations.</p>
+<p>Together they ensure more of your content remains closer to users, reducing the need for CloudFront to fetch data from your origin server, thus improving overall performance for users.</p>
+<p>Helps improve performance by using Keep-alive connections between the Edge locations &amp; the origin server.</p>
+<p>Can customise content at the Edge location before delivering it to users through the use of Lambda@Edge functions.</p>
+<p>Geolocation headers can be used to provide location-based web personalisation. This gives you greater control over cache behaviour. Your origins also get access to the requester&apos;s country name, region, city, postal code, latitude and longitude based on their IP address.</p>
+<h3 class="mume-header" id="origins">Origins</h3>
+
+<p>Origins are locations where content is stored and retrieved by CloudFront to serve to clients</p>
+<p>Use S3OriginConfig to specify an Amazon S3 bucket that is not configured with static website hosting.</p>
+<p>Use CustomOriginConfig to specify all other kinds of origins, including:</p>
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>
+<p>An Amazon S3 bucket that is configured with static website hosting</p>
+</li>
+<li>
+<p>An Elastic Load Balancing load balancer</p>
+</li>
+<li>
+<p>An AWS Elemental MediaPackage endpoint</p>
+</li>
+<li>
+<p>An AWS Elemental MediaStore container</p>
+</li>
+<li>
+<p>Any other HTTP server, running on an Amazon EC2 instance or any other kind of host</p>
+</li>
 </ul>
+<h3 class="mume-header" id="benefits">Benefits</h3>
+
+<ul>
+<li>
+<p>Fast and global</p>
+</li>
+<li>
+<p>Integrated with AWS</p>
+</li>
+<li>
+<p>Secure<br>
+Amazon CloudFront provides both network-level and application-level protection. Your traffic and applications benefit through various built-in protections, such as AWS Shield Standard, at no additional cost. You can also use configurable features, such as AWS Certificate Manager (ACM), to create and manage custom Secure Sockets Layer (SSL) certificates at no extra cost</p>
+</li>
+<li>
+<p>Programmable<br>
+It integrates with Lambda@Edge so that you can run custom code across AWS locations worldwide, which enables you to move complex application logic closer to users to improve responsiveness. The CDN also supports integrations with other tools and automation interfaces for DevOps. It offers continuous integration and continuous delivery (CI/CD) environments</p>
+</li>
+<li>
+<p>Economical<br>
+Charged according to what you use.<br>
+If you use AWS origins such as Amazon Simple Storage Service (Amazon S3) or Elastic Load Balancing, you pay only for storage costs, not for any data transferred between these services and CloudFront</p>
+</li>
+</ul>
+<h3 class="mume-header" id="cloudfront-pricing">CloudFront Pricing</h3>
+
+<ul>
+<li>Data egress charges</li>
+</ul>
+<p>Charged per GB of data transferred from CloudFront edge location to the internet or to your origin.<br>
+Costs are calculated by geographic region</p>
+<ul>
+<li>Number of HTTP requests made to CloudFront</li>
+<li>Dedicated IP custom Secure Sockets Layer (SSL)</li>
+</ul>
+<p>You pay $600 per month for each custom SSL certificate that is associated with one or more CloudFront distributions that use the Dedicated IP version of custom SSL certificate support.</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-6-aws-cloudfront">Section 6: AWS CloudFront</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#whats-a-cdn">What&apos;s a CDN</a></li>
+<li><a href="#amazon-cloudfront">Amazon CloudFront</a></li>
+<li><a href="#origins">Origins</a></li>
+<li><a href="#benefits">Benefits</a></li>
+<li><a href="#cloudfront-pricing">CloudFront Pricing</a></li>
 </ul>
 </li>
 </ul>

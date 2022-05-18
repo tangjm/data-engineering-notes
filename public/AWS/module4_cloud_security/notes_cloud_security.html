@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_cloud_security</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -7,7 +7,7 @@
       
       
       
-      
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
       
       
       
@@ -261,63 +261,276 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-1-shared-responsibility">Section 1: Shared responsibility</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<h3 class="mume-header" id="shared-responsibility">Shared responsibility</h3>
+
+<p>AWS is responsible for the security of the cloud infrastructure. This includes the hardware, software, networking, and facilities running the AWS Cloud services</p>
+<p>Customers are responsible for data encryption, network security configurations and management of credentials and logins.</p>
+<p>They are also responsible for:</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>security group configuration</li>
+<li>operating system configuration for compute instances</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>All the infrastructure running AWS Regions, availability zones and edge locations is the responsibility of AWS.</p>
+<ul>
+<li>Physical security of data centres (video surveillance, security guards, 2-factor authentication)</li>
+<li>Hardward infrastructure (servers, storage devices...)</li>
+<li>Software infrastructure (operating systems, virtualisation software)</li>
+<li>Network infrastructure (routers, switches, cabling...)</li>
+</ul>
+<p>Customer responsibilities include:</p>
+<ul>
+<li>selecting and securing any instance operating systems</li>
+<li>securing the applications that are launched on AWS resources</li>
+<li>security group configurations</li>
+<li>firewall configurations</li>
+<li>network configurations</li>
+<li>secure account management</li>
+</ul>
+<p>Customers are responsible for managing critical content security:</p>
+<ul>
+<li>What content they choose to store on AWS</li>
+<li>Which AWS services are used with the content</li>
+<li>In what country that content is stored</li>
+<li>The format and structure of that content and whether it is masked, anonymized, or<br>
+encrypted</li>
+<li>Who has access to that content and how those access rights are granted, managed, and<br>
+revoked</li>
+</ul>
+<h4 class="mume-header" id="iaas-paas-saas">IaaS, PaaS, SaaS</h4>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
-<ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
-</ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
+<p>----decreasing customer responsibility --&gt;<br>
+--- increasing AWS responsibility --&gt;</p>
+<p>With more flexbility and control over your IT services comes with greater responsibility</p>
+<p><strong>IaaS</strong></p>
+<ul>
+<li>customer to perform all necessary <strong>security configuration</strong> and <strong>management tasks</strong></li>
+<li>e.g. Customers who deploy EC2 instances are responsible for managing the guest operating system (including updates and security patches), any application software that is installed on the instances, and the configuration of the security groups that were provided by AWS.</li>
+</ul>
+<p><strong>PaaS</strong></p>
+<ul>
+<li>With PaaS services, customers<br>
+are responsible for managing their data, classifying their assets, and applying the appropriate<br>
+permissions.</li>
+<li>e.g. RDS and Lambda</li>
+</ul>
+<p><strong>SaaS</strong></p>
+<ul>
+<li>With SaaS, customers do not need to manage the infrastructure that supports the<br>
+service.</li>
+<li>The responsibility is all on AWS</li>
+</ul>
+<p><strong>AWS Trusted Advisor</strong></p>
+<ul>
+<li>an online tool that analyzes your AWS environment and provides real-time guidance and recommendations to help you provision your resources by following AWS best practices.</li>
+<li>The Trusted Advisor service is offered as part of your AWS Support plan. Some of the Trusted Advisor features are free to all accounts, but Business Support and Enterprise Support customers have access to the full set of Trusted Advisor checks and recommendations.</li>
+</ul>
+<p><strong>AWS Shield</strong></p>
+<ul>
+<li>a managed distributed denial of service (DDoS) protection service that safeguards applications running on AWS.</li>
+<li>It provides always-on detection and automatic inline mitigations that minimize application downtime and latency, so there is no need to engage AWS Support to benefit from DDoS protection.</li>
+<li>AWS Shield Advanced is available to all customers. However, to contact the DDoS Response Team, customers must have either Enterprise Support or Business Support from AWS Support.</li>
+</ul>
+<p><strong>Amazon Chime</strong></p>
+<ul>
+<li>Amazon&apos;s version of teams or zoom</li>
+<li>It is a pay-as-you-go communications service with no upfront fees, commitments, or long-term contracts</li>
+</ul>
+<h1 class="mume-header" id="section-2-iam">Section 2: IAM</h1>
 
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
+<h3 class="mume-header" id="identity-and-access-management">Identity and Access Management</h3>
+
+<p>IAM User - person/application that can authenticate with an AWS account</p>
+<p>IAM Group - collection of IAM users granted the same authorisation</p>
+<p>IAM Policy - document that defines which resources can be accessed and the level of access to each resource</p>
+<p>IAM role - mechanism to grant temporary permissions for AWS services for select users</p>
+<h3 class="mume-header" id="authentication">Authentication</h3>
+
+<p>Programmatic access</p>
+<ul>
+<li>access key id</li>
+<li>secret access key</li>
+<li>Access via AWS CLI or AWS SDK</li>
+</ul>
+<p>AWS Management Console access</p>
+<ul>
+<li>12-digit Account ID or alias</li>
+<li>IAM username</li>
+<li>IAM password</li>
+<li>Multi-factor authentication</li>
+</ul>
+<p>Use an IAM Policy to assign permissions.<br>
+Permissions determine which resources and operations are allowed:</p>
+<p>By default, all permissions are implicitly defnied<br>
+Apply the minimum set of privileges needed to perform some task.</p>
+<p>IAM Policies</p>
+<p>2 types</p>
 <ol>
-<li>Query by key attributes</li>
+<li>Identity-based policies</li>
 </ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
+<ul>
+<li>Attach to IAM entity like user, group or role</li>
+<li>When there is a conflict between an allow and deny access statement, the deny access statement takes precedence</li>
+</ul>
 <ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
+<li>Resource-based policies</li>
 </ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
+<ul>
+<li>Attach to resources</li>
+</ul>
+<p>How IAM determines permissions</p>
+<p>By default, permission is denied implicitly.<br>
+You can change this by either allowing or denying access/permission explicitly.</p>
+<p>IAM group</p>
+<ul>
+<li>specify permissions for a collection of users</li>
+<li>cannot be nested</li>
+<li>users can belong to more than one group</li>
+</ul>
+<p>IAM role</p>
+<ul>
+<li>IAM identity with specific permissions</li>
+<li>Can be assumed by multiple persons, applications, services</li>
+<li>temporary security credentials</li>
+</ul>
+<h3 class="mume-header" id="aws-account-creation">AWS Account creation</h3>
 
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p>Root user - the user account that&apos;s created when your first signup<br>
+Step 1. Stop using the root user</p>
+<p>Create an IAM User<br>
+Create an IAM Group with full admin access<br>
+Add the IAM User to the IAM Group<br>
+Disable or delete root user account access keys<br>
+Enable a password policy for users<br>
+Sign in with IAM User credentials (This will be your new admin account)<br>
+Store root user account credentials securely</p>
+<p>Step 2. Enable Multi-factor authentication<br>
+Step 3. Enable CloudTrail</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>Tracks all API requests</li>
 </ul>
-<p>Strongly consistent reads</p>
+<p>Step 4. Enable billing reports (Cost and Usage report)</p>
+<h3 class="mume-header" id="securing-accounts-with-aws-organisations">Securing accounts with AWS Organisations</h3>
+
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>Group accounts into OU (Organisational Units)</li>
+<li>Apply Service Control Policies (SCP) to OUs</li>
 </ul>
+<h4 class="mume-header" id="service-control-policies">Service control policies</h4>
+
+<ul>
+<li>applied at the level of organisational units (OUs)</li>
+<li>specifies maximum permissions for organisations</li>
+</ul>
+<h4 class="mume-header" id="kms-key-management-service">KMS (Key Management Service)</h4>
+
+<ul>
+<li>create and manage encryption keys</li>
+<li>integrates with CloudTrail</li>
+<li>uses hardware security modules (HSM)</li>
+</ul>
+<h3 class="mume-header" id="cognito">Cognito</h3>
+
+<ul>
+<li>service for managing user credentials and authentication for your applications.</li>
+<li>Add sign-up, sign-in and access control to web and mobile applications</li>
+<li>Amazon Cognito User Pools are used to manage user authentication to your web and mobile apps</li>
+<li>Amazon Cognito Identity Pools are used to provide temporary AWS credentials to users for accessing AWS services.</li>
+</ul>
+<h3 class="mume-header" id="aws-shield">AWS Shield</h3>
+
+<ul>
+<li>managed distributed DDoS protection service</li>
+<li>always-on and automatic inline mitigations</li>
+<li>Shield Standard is enabled for free</li>
+<li>Shield Advanced is an optional paid service</li>
+</ul>
+<h3 class="mume-header" id="encryption-of-data-at-rest">Encryption of data at rest</h3>
+
+<ul>
+<li>Encrypt stored data with secret key</li>
+<li>Use AWS KMS</li>
+</ul>
+<h3 class="mume-header" id="encryption-of-data-in-transit">Encryption of data in transit</h3>
+
+<ul>
+<li>TLS (transport layer security) - formerly SSL</li>
+<li>AWS Certificate Manager to manage TLS certificates</li>
+<li>HTTPS - bidirectional encryption of TLS</li>
+</ul>
+<div class="mermaid">graph LR
+  EC2 -- TLS --&gt; EFS
+  EFS -- TLS --&gt; EC2
+</div><div class="mermaid">graph LR
+  v(Storage Gateway) -- TLS --&gt; S3
+  S3 -- TLS --&gt; v(Storage Gateway)
+</div><h3 class="mume-header" id="securing-s3-buckets-and-objects">Securing S3 buckets and objects</h3>
+
+<p>S3 buckets and objects are private and protected by default</p>
+<ul>
+<li>Block Public Access is enabled by default</li>
+<li>Bucket policies</li>
+<li>Access control lists</li>
+<li>Trusted Advisor - to check permissions</li>
+</ul>
+<h3 class="mume-header" id="aws-compliance-programs">AWS Compliance Programs</h3>
+
+<p>Certifications and attestations<br>
+e.g. ISO 27001</p>
+<p>Laws, regulations and privacy</p>
+<ul>
+<li>security features and legal agreements to support laws like GDPR</li>
+</ul>
+<p>AWS Config</p>
+<ul>
+<li>monitors AWS resource configurations</li>
+<li>Simplifies compliance auditing and security analysis</li>
+<li>Compares recorded configurations with configurations rules</li>
+</ul>
+<p>AWS Artifact</p>
+<ul>
+<li>provides on-demand access to security and compliance reports and online agreements</li>
+<li>Security -&gt; Identify &amp; Compliance -&gt; Artifact</li>
+<li>you can accept agreements on behalf of multiple accounts using AWS Organisations</li>
+</ul>
+<h3 class="mume-header" id="iam-policy-structure">IAM Policy structure</h3>
+
+<p>The basic structure of the statements in an IAM Policy is:</p>
+<p>Effect says whether to Allow or Deny the permissions.</p>
+<p>Action specifies the API calls that can be made against an AWS Service (eg cloudwatch:ListMetrics).</p>
+<p>Resource defines the scope of entities covered by the policy rule (eg a specific Amazon S3 bucket or Amazon EC2 instance, or * which means any resource).</p>
+<p>Inline Policy, which is a policy assigned to just one User or Group. Inline Policies are typically used to apply permissions for one-off situations.</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-1-shared-responsibility">Section 1: Shared responsibility</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#shared-responsibility">Shared responsibility</a>
+<ul>
+<li><a href="#iaas-paas-saas">IaaS, PaaS, SaaS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#section-2-iam">Section 2: IAM</a>
+<ul>
+<li><a href="#identity-and-access-management">Identity and Access Management</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#aws-account-creation">AWS Account creation</a></li>
+<li><a href="#securing-accounts-with-aws-organisations">Securing accounts with AWS Organisations</a>
+<ul>
+<li><a href="#service-control-policies">Service control policies</a></li>
+<li><a href="#kms-key-management-service">KMS (Key Management Service)</a></li>
+</ul>
+</li>
+<li><a href="#cognito">Cognito</a></li>
+<li><a href="#aws-shield">AWS Shield</a></li>
+<li><a href="#encryption-of-data-at-rest">Encryption of data at rest</a></li>
+<li><a href="#encryption-of-data-in-transit">Encryption of data in transit</a></li>
+<li><a href="#securing-s3-buckets-and-objects">Securing S3 buckets and objects</a></li>
+<li><a href="#aws-compliance-programs">AWS Compliance Programs</a></li>
+<li><a href="#iam-policy-structure">IAM Policy structure</a></li>
 </ul>
 </li>
 </ul>
@@ -325,7 +538,40 @@ The default read consistency is eventually consistent.</p>
       <a id="sidebar-toc-btn">&#x2261;</a>
     
     
-    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false
+  window['MERMAID_CONFIG'].theme = "default"
+}
+mermaid.initialize(window['MERMAID_CONFIG'] || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
     
     
     

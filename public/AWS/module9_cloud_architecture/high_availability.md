@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 2: Reliability and High Availability
 
 ### AWS Well-Architected Tool
@@ -41,7 +45,7 @@ $$
 
 ### Availability
 
-Availability is the percentage of the time that an application is functioning as intended
+Availability is the percentage of the time that an application is functioning as intended.
 
 $$ \text{Availability} = \frac{\text{normal operation time}}{\text{total time}}
 $$

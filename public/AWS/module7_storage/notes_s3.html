@@ -273,6 +273,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>By default, buckets are replicated across at least 3 accessibility zones.</p>
 <p>You can configure security options for individual buckets.</p>
+<p>Supports both server-side and client-side encryption of data at rest for data uploads.</p>
 <p>By default, public access to newly created buckets is denied.</p>
 <h3 class="mume-header" id="integration-with-aws-lambda-functions">Integration with AWS Lambda functions</h3>
 
@@ -288,7 +289,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </li>
 <li>Amazon S3 Intelligent-Tiering
 <ul>
-<li>designed to optimise costs by analysing your data access and moving infrequently accessed data into the infrequent access tier</li>
+<li>designed to optimise costs by analysing your data access and moving infrequently accessed data into the infrequent access tier if unaccessed for 30 consecutive days.</li>
+<li>has two storage layers: frequently accessed; infrequently accessed</li>
 </ul>
 </li>
 <li>Amazon S3 Standard-Infrequent Access (Amazon S3 Standard-IA)
@@ -309,6 +311,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>Amazon S3 Glacier Deep Archive
 <ul>
 <li>cheapest storage class that stores data accessed a couple of times a year</li>
+<li>12 hours retrieval time</li>
+<li>long-term data retention (7 to 10 years)</li>
 </ul>
 </li>
 </ul>
@@ -327,6 +331,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Uploaded files are referred to as objects because they get wrapped with metadata (which includes the object&apos;s url) and are stored as objects in S3 buckets.</p>
 <p>Folders are logical separators for organising files/objects in your S3 bucket.</p>
 <p>You can configure the permissions for each uploaded file.</p>
+<h3 class="mume-header" id="s3-bucket-configurations">S3 bucket configurations</h3>
+
+<p><a href="https://aws.amazon.com/s3/transfer-acceleration/">S3 Transfer Acceleration</a></p>
+<p>Amazon S3 Transfer Acceleration creates fast, easy, and secure transfers of files over long distances between your client and your Amazon S3 bucket. S3 Transfer Acceleration leverages Amazon CloudFront&#x2019;s globally distributed AWS Edge Locations. As data arrives at an AWS Edge Location, data is routed to your Amazon S3 bucket over an optimized network path.</p>
 <h3 class="mume-header" id="pricing">Pricing</h3>
 
 <p>You pay for:</p>
@@ -351,6 +359,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#integration-with-aws-lambda-functions">Integration with AWS Lambda functions</a></li>
 <li><a href="#s3-storage-classes">S3 storage classes</a></li>
 <li><a href="#s3-bucket-urls">S3 bucket URLs</a></li>
+<li><a href="#s3-bucket-configurations">S3 bucket configurations</a></li>
 <li><a href="#pricing">Pricing</a></li>
 </ul>
 </li>

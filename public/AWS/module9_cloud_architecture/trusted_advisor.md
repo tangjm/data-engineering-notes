@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 3: AWS Trusted Advisor
 
 Trusted Advisor is an online tool that provides real-time guidance to help you provision your resources in accordance with AWS best practices.

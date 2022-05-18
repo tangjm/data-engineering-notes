@@ -1,6 +1,10 @@
+---
+export_on_save:
+  html: true
+---
 # Section 1: Amazon Relational Database Service
 
-Managed vs Unmanaged services
+### Managed vs Unmanaged services
 
 ![Unmanaged vs Managed services](images/managed_vs_unmanaged_services.png)
 
@@ -18,7 +22,7 @@ Amazon RDS is a managed relational database service in the cloud.
 
 These tasks associated with running your own relational database are addressed by Amazon RDS.
 
-### Onpremises vs EC2 vs RDS
+### On-premises vs EC2 vs RDS
 
 ![On-premises vs EC2 vs RDS](images/onPremises_ec2_rds_comparison.png)
 
@@ -55,7 +59,7 @@ You can run database instance in a VPC, usually in a private subnet.
 
 What does it mean to seed a database copy?
 
-### High availability with Multi-AZ (multi-AvailabilityZone) deployment
+### High availability with Multi-AZ (Multi-Availability Zone) deployment
 
 With AWS RDS, you have the ability to configure your database instance for high availability with Multi-AZ deployment. 
 

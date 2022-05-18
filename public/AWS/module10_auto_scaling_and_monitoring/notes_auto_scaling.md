@@ -5,7 +5,9 @@ export_on_save:
 
 # Section 1: Elastic Load Balancers
 
-Distributes inbound network traffic by routing requests across multiple targets in one or more avalability zones. Targets include EC2 instances within a target group, containers, IP addressses and Lambda functions.
+Distributes inbound network traffic by routing requests across multiple targets in one or more avalability zones. 
+
+Targets include EC2 instances within a target group, containers, IP addressses and Lambda functions.
 
 <img src="images/elastic_load_balancing.png" alt="Elastic Load Balancing" width=80%>
 

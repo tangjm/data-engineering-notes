@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_ebs</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,107 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="storage-services">Storage services</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p>Preliminary concepts:</p>
+<p>Non-volatile memory is memory that can retain data even when power is removed. E.g. SSD, HDD</p>
+<p>Volatile memory is memory that requires power to retain data. E.g. RAM</p>
+<h3 class="mume-header" id="section-1-aws-ebs-elastic-block-store">Section 1: AWS EBS (Elastic Block Store)</h3>
+
+<p>EBS is a form of unstructured, non-volatile block memory that can be attached to EC2 instances.</p>
+<p>Due to it being non-volatile, EBS is a persistent storage service.</p>
+<p>Each EBS can be attached to at most one EC2 instance at any point in time. Because EBS are physically attached to EC2s, they offer low latency data transfers to and from your EC2. Encryption of data in transit between an EBS and EC2 is provided for free.</p>
+<p>EBS are automatically replicated with the same Availability Zone to provide data durability and high availability.</p>
+<p>EBS volumes can be dynamically resized and you can change between SSD and HDD disk types</p>
+<h3 class="mume-header" id="backup-your-ebs">Backup your EBS</h3>
+
+<p>We refer to EBS backups as snapshots.</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>The initial snapshot is called the baseline snapshot.</li>
+<li>Subsequent snapshots capture differences between the current EBS and the latest snapshot.</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>Point-in-time snapshots enable you to recreate a new EBS volume from a snapshot at any time.</p>
+<p>Snapshots can also be shared between AWS Regions. While there are no data ingress costs, there are data egress costs for moving data out of an EBS into a different AWS Region. Note that transfers within the same Region don&apos;t incur data egress costs.</p>
+<p>Note: Only used storage blocks are copied to snapshots, so empty blocks do not occupy any snapshot storage space.<br>
+Note: When restoring a snapshot to a new volume, you can also modify the configuration, such as changing the volume type, size or Availability Zone.</p>
+<h3 class="mume-header" id="block-level-storage-vs-object-level-storage">Block-level storage vs Object-level storage</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<p>Block storage allows you to update individual blocks whereas object storage forces you to update the entire object even if only a small part is changed.</p>
+<p>Because only a part of the data needs to be updated in block storage compared to object storage, block storage tends to have faster transfer speeds and uses up less bandwidth.</p>
+<p>Block storage is, however, more expensive than object storage.</p>
+<h3 class="mume-header" id="types-of-ebs">Types of EBS</h3>
+
+<p><img src="images/ebs_volume_types.png" alt="Elastic Block Store Types"></p>
+<p>AWS requires the boot volume of an EC2 to use an SSD</p>
+<h3 class="mume-header" id="when-to-use-which-type-of-ebs">When to use which type of EBS?</h3>
+
+<p><img src="images/ebs_volume_types_use_case.png" alt="Elastic Block Store Comparison"></p>
+<h3 class="mume-header" id="ebs-pricing">EBS pricing</h3>
+
+<p>In short, you pay for the amount of storage and the IOPS (volume of input/outputs per second).</p>
+<p>With all EBS volumes, you pay for the amount of storage you provision in GB per month.</p>
+<p>Depending on whether you provision a general purpose SSD, provisioned IOPS SSD or a HDD, your IOPS costs will vary.</p>
+<ul>
+<li>
+<p>General Purpose SSDs</p>
+<ul>
+<li>the input/output costs are included in the storage cost.</li>
+</ul>
+</li>
+<li>
+<p>Provisioned IOPS SSDs</p>
+<ul>
+<li>the additional IOPS costs are complex. You are charged by the amount of IOPS you provision per month multiplied by the percentage of days that you provision for the month.</li>
+</ul>
+</li>
+<li>
+<p>HDDs or magnetic disks</p>
+<ul>
+<li>you pay for the number of requests you make.</li>
+</ul>
+</li>
+</ul>
+<h3 class="mume-header" id="creating-attaching-mounting-ebs-volumes-to-ec2-instances">Creating, attaching, mounting EBS volumes to EC2 instances</h3>
+
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>Create an EBS volume</li>
+<li>Attach to EC2 instance</li>
+<li>Connect to EC2 instance via SSH using PuTTY</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
+<p>Key bash commands</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># df is short for Disk Free and displays free disk space. </span>
+<span class="token comment"># The -h option denotes &apos;human-readable&apos;</span>
+<span class="token function">df</span> -h 
 
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
+<span class="token comment"># Create an ext3 file system on the new volume:</span>
+<span class="token comment"># sudo mkfs -t &lt;file-system-type&gt; &lt;path/to/newvolume&gt;</span>
+<span class="token comment"># &apos;mkfs&apos; is short for Make File System</span>
+<span class="token comment"># &apos;-t&apos; lets you specify the file system type</span>
+<span class="token function">sudo</span> <span class="token function">mkfs</span> -t ext3 /dev/sdf
 
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
-<ul>
-<li>read queries might not return the latest data</li>
-</ul>
-<p>Strongly consistent reads</p>
-<ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
-</ul>
+<span class="token comment"># Create a suitably named directory for mounting the EBS volume</span>
+<span class="token comment"># sudo mkdir &lt;path/to/directory_name&gt;</span>
+<span class="token function">sudo</span> <span class="token function">mkdir</span> /mnt/data-store
 
+<span class="token comment"># Mount a volume</span>
+<span class="token comment"># sudo mount &lt;path/to/storage/volume&gt; &lt;path/to/created/directory&gt;</span>
+<span class="token function">sudo</span> <span class="token function">mount</span> /dev/sdg /mnt/data-store
+
+<span class="token comment"># configure the Linux instance to mount this volume whenever the instance is started</span>
+<span class="token comment"># add a line to /etc/fstab.</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;/dev/sdf   /mnt/data-store ext3 defaults,noatime 1 2&quot;</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> -a /etc/fstab
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#storage-services">Storage services</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#section-1-aws-ebs-elastic-block-store">Section 1: AWS EBS (Elastic Block Store)</a></li>
+<li><a href="#backup-your-ebs">Backup your EBS</a></li>
+<li><a href="#block-level-storage-vs-object-level-storage">Block-level storage vs Object-level storage</a></li>
+<li><a href="#types-of-ebs">Types of EBS</a></li>
+<li><a href="#when-to-use-which-type-of-ebs">When to use which type of EBS?</a></li>
+<li><a href="#ebs-pricing">EBS pricing</a></li>
+<li><a href="#creating-attaching-mounting-ebs-volumes-to-ec2-instances">Creating, attaching, mounting EBS volumes to EC2 instances</a></li>
 </ul>
 </li>
 </ul>

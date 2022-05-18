@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 5: Introduction to AWS Lambda
 
 ![AWS Lambda](images/aws_lambda.png)
@@ -21,9 +25,9 @@ Some services invoke Lambda functions asynchronously
 - SNS
 - CloudWatch
   
-Lambda can pull resources from Amazon Simple Queue Service and read events from DynamoDB
+Lambda can pull resources from Amazon Simple Queue Service (SQS) and read events from DynamoDB
 
-Other services invoke Lamda functions directly like Elastic Load Balancing and API Gateway.
+Other services invoke Lamda functions directly like Elastic Load Balancers and API Gateways.
 
 The Lambda console, API, SDK, and AWS CLI are some ways of invoking your Lambda functions.
 

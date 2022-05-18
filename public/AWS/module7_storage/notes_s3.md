@@ -22,6 +22,8 @@ By default, buckets are replicated across at least 3 accessibility zones.
 
 You can configure security options for individual buckets.
 
+Supports both server-side and client-side encryption of data at rest for data uploads.
+
 By default, public access to newly created buckets is denied.
 
 ### Integration with AWS Lambda functions
@@ -47,6 +49,8 @@ There are a range of different object-level storage classes:
   - stores data unlikely to be accessed with slow retrieval times.
 - Amazon S3 Glacier Deep Archive
   - cheapest storage class that stores data accessed a couple of times a year
+  - 12 hours retrieval time
+  - long-term data retention (7 to 10 years)
 
 
 ### S3 bucket URLs

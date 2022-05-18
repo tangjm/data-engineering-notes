@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>note_s3_glacier</title>
+      <title>notes_global_infrastructure</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -7,7 +7,7 @@
       
       
       
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
+      
       
       
       
@@ -261,151 +261,282 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-4-s3-glacier">Section 4: S3 Glacier</h1>
+      <h3 class="mume-header" id="aws-regions">AWS Regions</h3>
 
-<p>A data archiving service designed to be secure, durable and low cost.</p>
-<p>S3 buckets optimised for storing data with high latency but large storage sizes.</p>
-<p>This makes it good for storing archives which tend to be in large volume but infrequently accessed.</p>
-<h3 class="mume-header" id="key-terms">Key terms</h3>
-
-<p>Archives<br>
-Archives are objects (photos, video files, documents ...)<br>
-Archives are the smallest unit of storage.<br>
-Each archive has a unique id</p>
-<p>Vault<br>
-A vault is a container for archives<br>
-Valuts have a name and belong to only one AWS Region.</p>
-<p>Vault access policy<br>
-An access policy at the level of vaults which determines who can access the vault and the sort of operations that they can do</p>
-<p>A vault lock policy can be added to ensure that the vault cannot be altered.<br>
-Each vault can have at most one access and one lock policy.</p>
-<p>Vaults are replicated across at least 3 availability zones.</p>
-<p>Three types of data retrival options</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Retrieval time</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Expedited</td>
-<td>1-5 minutes</td>
-</tr>
-<tr>
-<td>Standard</td>
-<td>3-5 hours</td>
-</tr>
-<tr>
-<td>Bulk</td>
-<td>5-12 hours</td>
-</tr>
-</tbody>
-</table>
-<p>Example use cases</p>
-<ul>
-<li>Media asset archiving</li>
-<li>Healthcare information archiving</li>
-<li>Regulatory and compliance archiving</li>
-<li>Scientific data archiving</li>
-<li>Digital preservation</li>
-<li>Magnetic tape replacement</li>
-</ul>
-<p>S3 Glavier Vault Lock helps you to set compliance controls to meet compliance requirements<br>
-S3 Glacier performs regular, systematic data integrity checks and is designed to be self-healing.</p>
-<h3 class="mume-header" id="accessing-s3-glacier">Accessing S3 Glacier</h3>
+<p>An AWS Region is a geographical area with two or more availability zones.</p>
+<p>An availability zone comprises one or more data centres.</p>
+<p>Availability zones are fully isolated partitions of the AWS infrastructure.</p>
+<p>Within a region, availability zones are not physically located together but remain within 100km of each other.</p>
+<p>They are designed to be fault tolerant.</p>
+<p>Availability zones are connected through high speed low-latency private links.</p>
+<p>It is a good idea to replicate data across availability zones for data resilience.</p>
+<p>Data replication is not cross regional.</p>
+<p>Use AWS console to enable and disable regions</p>
+<h3 class="mume-header" id="selecting-a-region">Selecting a Region</h3>
 
 <ul>
-<li>AWS Console
-<ul>
-<li>has limited operations</li>
+<li>Data governance and legal requirements (e.g. GDPR)</li>
+<li>Latency (Proximy to customers; Use Cloud Ping to test latency)</li>
+<li>AWS Services available within the region</li>
+<li>Cost</li>
 </ul>
-</li>
-<li>RESTful web services</li>
-<li>Java / .NET SDKs</li>
-<li>AWS CLI</li>
-<li>S3 lifecycle policies</li>
-</ul>
-<h3 class="mume-header" id="s3-lifecycle-policies">S3 lifecycle policies</h3>
+<h3 class="mume-header" id="aws-data-centres">AWS Data Centres</h3>
 
-<p>S3 lifecyle policies enable you to automate the movement of data between S3 storage solutions as the data ages, gradually moving the data from more expensive and easily accessible S3 storage classes to less expensive and less easily accessible storage classes.</p>
-<p>Lifecycle rules can be applied at the level of individual objects or individual buckets.</p>
-<div class="mermaid">graph LR
-  S3_Standard -- 30 days --&gt; S3_Standard_IA -- 60 days --&gt; S3_Glacier -- 365 days --&gt; Delete
-</div><h3 class="mume-header" id="s3-or-s3-glacier">S3 or S3 Glacier?</h3>
+<p>You select in which availability zones your systems reside.</p>
+<p>You cannot specify exactly which data centre.</p>
+<p>Data centres are where data resides and is processed.</p>
+<p>Data centres are designed with failure in mind to ensure high availability.</p>
+<p>A data centre has typically 50,000 to 80,000 physical servers.</p>
+<p>CloudFront is a CDN (Content Delivery Network). It delivers content to end users with reduced latency</p>
+<p>Route 53 is a DNS (Domain Name System) service. Requests are automatically routed to edge locations to reduce latency.</p>
+<p>Regional edge caches are for not frequently accessed data.</p>
+<h3 class="mume-header" id="infrastructure-features">Infrastructure features</h3>
 
-<p><img src="images/s3_vs_s3_glacier.md.png" alt="S3 vs S3 Glacier"></p>
-<h3 class="mume-header" id="server-side-encryption">Server-Side Encryption</h3>
-
-<p>Server-size encryption focuses on protecting data at rest.</p>
-<p>Data archived in S3 Glacier is encrypted by default.<br>
-With S3, your application must enable server-side encryption.</p>
-<p>Three ways of setting up server-side encryption in AWS S3:</p>
 <ol>
-<li>Amazon S3-managed encryption keys (SSE-S3)
-<ul>
-<li>encrypts each object with a unique key.</li>
-<li>encrypts each object key with a main that is regularly rotated</li>
-<li>encryption is done with AES-256</li>
-</ul>
-</li>
-<li>Customer-provided Encryption Keys (SSE-C)
-<ul>
-<li>you choose your own encryption keys and AWS S3 manages the encryption and decryption.</li>
-</ul>
-</li>
-<li>AWS Key Management Service (AWS KMS)
-<ul>
-<li>Customer Master Keys (CMKs) are used to encryption your S3 objects</li>
-<li>either go to IAM console -&gt; Encryption Keys -&gt; AWS KMS or use the AWS KMS API</li>
-</ul>
-</li>
+<li>Elasticity and scalability</li>
 </ol>
+<p>Resources adjust on-demand to fit capacity and growth</p>
+<ol start="2">
+<li>Fault-tolerance</li>
+</ol>
+<p>Allows for operation in spite of failures</p>
+<ol start="3">
+<li>High availability</li>
+</ol>
+<p>Minimal downtime without in-person support.</p>
+<h3 class="mume-header" id="foundational-infrastructure">Foundational Infrastructure</h3>
+
+<ol>
+<li>Compute</li>
+<li>Networking</li>
+<li>Storage</li>
+</ol>
+<h3 class="mume-header" id="storage-services">Storage services</h3>
+
+<p>S3 (Simple Storage System)</p>
+<ul>
+<li>Object storage service</li>
+</ul>
+<p>EBS (Elastic Block Store)</p>
+<ul>
+<li>Block storage service</li>
+<li>for transaction intensive workloads</li>
+<li>works well with EC2</li>
+</ul>
+<p>EFS (Elastic File System)</p>
+<ul>
+<li>NFS (Network File System)</li>
+</ul>
+<p>S3 Glacier</p>
+<ul>
+<li>Data archiving</li>
+<li>Long-term backups</li>
+</ul>
+<h3 class="mume-header" id="compute-services">Compute services</h3>
+
+<p>EC2 (Elastic Compute Cloud)</p>
+<ul>
+<li>a virtual machine in the cloud</li>
+<li>resizable/configurable</li>
+</ul>
+<p>Auto Scaling allows for adding and removing EC2&apos;s automatically according to preconfigured settings.</p>
+<p>ECS (EC2 Container Service)</p>
+<ul>
+<li>Supports Docker containers</li>
+</ul>
+<p>ECR (EC2 Container Registry)</p>
+<ul>
+<li>Deploy, maintain, manage, store Docker container images</li>
+</ul>
+<p>Elastic Beanstalk</p>
+<ul>
+<li>web applications</li>
+</ul>
+<p>Lambda</p>
+<ul>
+<li>Run code without servers</li>
+<li>You only pay for units of computation.</li>
+</ul>
+<p>EKS (Elastic Kubernetes Service)</p>
+<ul>
+<li>Deploy apps containerised with Kubernetes</li>
+</ul>
+<p>Fargate</p>
+<ul>
+<li>serverless compute for ECS and EKS</li>
+</ul>
+<h3 class="mume-header" id="database-services">Database services</h3>
+
+<p>RDS (Relational Database Service)</p>
+<ul>
+<li>relational database</li>
+</ul>
+<p>Aurora</p>
+<ul>
+<li>MySQL/PostgresSQL database</li>
+<li>5x faster than ordinary MySQL databases</li>
+<li>3x faster than PostgresSQL database</li>
+</ul>
+<p>Redshift</p>
+<ul>
+<li>Run analytic queries on data</li>
+<li>Data analysis platform</li>
+</ul>
+<p>DynamoDB</p>
+<ul>
+<li>Document based NoSQL database</li>
+<li>&lt;key, value&gt; pair NoSQL database</li>
+</ul>
+<h3 class="mume-header" id="networking-and-content-delivery-services">Networking and Content Delivery services</h3>
+
+<p>VPC (Virtual Private Cloud)</p>
+<ul>
+<li>run logically isolated parts of the AWS cloud in a user-controlled private network</li>
+</ul>
+<p>Elastic Load Balancing</p>
+<ul>
+<li>Automatically distribute traffic across multiple compute targets</li>
+</ul>
+<p>CloudFront</p>
+<ul>
+<li>CDN that delivers data and applications, APIs to global customers</li>
+<li>low latency</li>
+<li>high transfer speed</li>
+</ul>
+<p>Transit Gateway</p>
+<ul>
+<li>Connect your on-premise infrastructure with your VPC</li>
+</ul>
+<p>Route 53</p>
+<ul>
+<li>Cloud DNS (Domain Name System)</li>
+</ul>
+<p>Direct Connect</p>
+<ul>
+<li>Dedicated private network connection</li>
+</ul>
+<p>VPN</p>
+<ul>
+<li>Secure private tunnel for your device to the AWS global network.</li>
+</ul>
+<h3 class="mume-header" id="security-identity-compliance-services">Security, Identity, Compliance services</h3>
+
+<p>IAM (Identity and Access Management)</p>
+<ul>
+<li>Manage user access to AWS services and resources</li>
+</ul>
+<p>AWS Organisations</p>
+<ul>
+<li>Restrict access based on accounts and Organisational Units</li>
+<li>configure services and resources centrally from a security standpoint using Service Control Policies (SCPs) which lets you manage permissions at the organisation level.</li>
+</ul>
+<p>Cognito</p>
+<ul>
+<li>User Authentication for web and mobile apps</li>
+<li>Manage federated identities</li>
+</ul>
+<p>Artifact</p>
+<ul>
+<li>On-demand access to AWS compliance reports and online agreements</li>
+</ul>
+<p>Key Management Service</p>
+<ul>
+<li>Create and manage data encryption keys and Customer Master Keys (CMKs)</li>
+</ul>
+<p>Shield</p>
+<ul>
+<li>Managed, distributed DOS protection service</li>
+</ul>
+<p>Cost Management services</p>
+<p>Cost and Usage Report (Part of AWS Cost Explorer)</p>
+<ul>
+<li>cost and usage data</li>
+<li>metadata about services, pricing and reservations</li>
+</ul>
+<p>Reserved Instance Reports (Part of AWS Cost Explorer)</p>
+<ul>
+<li>reports on cost and usage of reserved instances</li>
+</ul>
+<p>Budgets</p>
+<ul>
+<li>Setup custom budgets for AWS services</li>
+<li>Setup notifications when you exceed your budget</li>
+</ul>
+<p>Cost Explorer</p>
+<ul>
+<li>Visualise your AWS cost and usage over time</li>
+</ul>
+<h3 class="mume-header" id="aws-management-and-governance-services">AWS Management and Governance services</h3>
+
+<p>Management Console</p>
+<ul>
+<li>Access your AWS account via a webpage</li>
+</ul>
+<p>Config</p>
+<ul>
+<li>Track resource inventory and changes</li>
+</ul>
+<p>CloudWatch</p>
+<ul>
+<li>Monitor resources and apps</li>
+</ul>
+<p>Auto Scaling</p>
+<ul>
+<li>Scale multiple resources to meet demand</li>
+</ul>
+<p>CLI</p>
+<ul>
+<li>Manage AWS Services through the command line</li>
+</ul>
+<p>Trusted Advisor</p>
+<ul>
+<li>Optimise performance, cost-optimisation, security, service limits and fault-tolerance using AWS best practices</li>
+</ul>
+<p>Well-Architected Tool</p>
+<ul>
+<li>Review and improve workloads</li>
+</ul>
+<p>CloudTrail</p>
+<ul>
+<li>Track user activity and API usage across AWS accounts</li>
+</ul>
 
       </div>
-      
-      
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#aws-regions">AWS Regions</a></li>
+<li><a href="#selecting-a-region">Selecting a Region</a></li>
+<li><a href="#aws-data-centres">AWS Data Centres</a></li>
+<li><a href="#infrastructure-features">Infrastructure features</a></li>
+<li><a href="#foundational-infrastructure">Foundational Infrastructure</a></li>
+<li><a href="#storage-services">Storage services</a></li>
+<li><a href="#compute-services">Compute services</a></li>
+<li><a href="#database-services">Database services</a></li>
+<li><a href="#networking-and-content-delivery-services">Networking and Content Delivery services</a></li>
+<li><a href="#security-identity-compliance-services">Security, Identity, Compliance services</a></li>
+<li><a href="#aws-management-and-governance-services">AWS Management and Governance services</a></li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">&#x2261;</a>
     
     
-    <script>
-// config mermaid init call
-// http://knsv.github.io/mermaid/#configuration
-//
-// You can edit the 'MERMAID_CONFIG' variable below.
-MERMAID_CONFIG = {
-  startOnLoad: false
-}
+    
+    
+    
+    
+    
+    
+<script>
 
-if (window['MERMAID_CONFIG']) {
-  window['MERMAID_CONFIG'].startOnLoad = false
-  window['MERMAID_CONFIG'].cloneCssStyles = false
-  window['MERMAID_CONFIG'].theme = "default"
-}
-mermaid.initialize(window['MERMAID_CONFIG'] || {})
-if (typeof(window['Reveal']) !== 'undefined') {
-  function mermaidRevealHelper(event) {
-    var currentSlide = event.currentSlide
-    var diagrams = currentSlide.querySelectorAll('.mermaid')
-    for (var i = 0; i < diagrams.length; i++) {
-      var diagram = diagrams[i]
-      if (!diagram.hasAttribute('data-processed')) {
-        mermaid.init(null, diagram, ()=> {
-          Reveal.slide(event.indexh, event.indexv)
-        })
-      }
-    }
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
   }
-  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
-  Reveal.addEventListener('ready', mermaidRevealHelper)
-} else {
-  mermaid.init(null, document.getElementsByClassName('mermaid'))
-}
+})
 </script>
-    
-    
-    
-    
-    
+      
   
     </body></html>

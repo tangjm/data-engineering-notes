@@ -1,0 +1,686 @@
+<!DOCTYPE html><html><head>
+      <title>notes_networking</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="section-2-networking-basics">Section 2: Networking basics</h1>
+
+<h3 class="mume-header" id="computer-networks">Computer networks</h3>
+
+<ul>
+<li>two or more client machines connected together for the purpose of sharing resources</li>
+<li>we can partition networks into subnets(subnetworks)</li>
+<li>routers or switches are needed to connect client machines together for networking</li>
+</ul>
+<h3 class="mume-header" id="ip-addresses-internet-protocol-address">IP addresses (Internet Protocol address)</h3>
+
+<ul>
+<li>unique identifiers for client machines</li>
+<li>numeric label in decimal format which is converted into binary format</li>
+</ul>
+<h4 class="mume-header" id="ipv4-32bits">IPv4 (32bits)</h4>
+
+<ul>
+<li>e.g. 192.2.1.0</li>
+<li>Four numbers separated by dots.</li>
+<li>Each number is in octal number format</li>
+<li>Each 8bit number ranges from 0 to 255.</li>
+</ul>
+<h4 class="mume-header" id="ipv6-128bits">IPv6 (128bits)</h4>
+
+<ul>
+<li>e.g. fr80::599f:a54f:ab4d:a7gc</li>
+<li>accommodate more user devices</li>
+<li>Eight groups of 16bit letters or numbers separated by colons.</li>
+<li>Each group is in hexadecimal format and ranges from 0 to FFFF <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">(0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">2^{16})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>.</li>
+</ul>
+<h3 class="mume-header" id="cidr-classless-inter-domain-routing">CIDR (Classless Inter-Domain Routing)</h3>
+
+<p>Structure</p>
+<ol>
+<li>IP address</li>
+<li>forward slash</li>
+<li>number specifying how many bits of the routing prefix must be fixed or allocated for the network provider.</li>
+</ol>
+<p>Examples.<br>
+With 192.0.2.0/24<br>
+First 24 bits must be fixed, so we can have 192.0.2.0/24 to  192.0.2.255/24</p>
+<p>With  192.0.2.0/8 we can have 192.0.0.0/8 to  192.255.255.255/8</p>
+<p>192.0.2.0/32 is a fixed IP address, which can be useful for setting up firewalls.<br>
+0.0.0.0/0 is the IP address of the internet</p>
+<h3 class="mume-header" id="osi-open-systems-interconnection-model">OSI (Open Systems Interconnection) Model</h3>
+
+<p>Model conceptualising how data moves through a network. Depicts 7 transport layers and their typical protocols.</p>
+<p><img src="images/oci_diagram.png" alt="oci_diagram"></p>
+<h3 class="mume-header" id="amazon-vpc">Amazon VPC</h3>
+
+<p>You can provision a logically isolated section of the AWS Cloud where you can launch your AWS resources</p>
+<ul>
+<li>virtual networking resources</li>
+<li>IP addresses (IPv4 and IPv6)</li>
+<li>create subnetworks</li>
+<li>configure route tables</li>
+<li>configure network gateways</li>
+</ul>
+<h3 class="mume-header" id="vpc-and-subnets">VPC and subnets</h3>
+
+<ul>
+<li>VPCs belong to a single AWS Region and can span multiple Availability Zones.</li>
+<li>VPCs can be subdivided into multiple subnets, which are a range of IP addresses.</li>
+<li>Each subnet belongs to a single availability zone.</li>
+<li>Each subnet is either public or private.</li>
+<li>Public subnets have direct access to the internet.</li>
+</ul>
+<p>An IPv4 CIDR block (range of IPv4 addresses) is assigned to a VPC upon creation. This address range cannot be changed after being assigned.</p>
+<p>This ranges from /16 (wide range) to /28 (narrow range) different IP addresses.<br>
+You have the option to assign an IPv6 CIDR block with your VPC and subnets.</p>
+<p>Each subnets requires its own CIDR block.<br>
+The CIDR block for a subnet can be a subset of the CIDR block for the VPC.<br>
+CIDR blocks must be disjoint because you cannot have duplicate IP addresses in the same VPC.</p>
+<h3 class="mume-header" id="reserved-ip-addresses">Reserved IP addresses</h3>
+
+<p>For each CIDR block, 5 IP addresses are reserved:</p>
+<table>
+<thead>
+<tr>
+<th>Reserved IP address</th>
+<th>Reserved For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x.x.x.0</td>
+<td>Network address</td>
+</tr>
+<tr>
+<td>x.x.x.1</td>
+<td>Internal Communication</td>
+</tr>
+<tr>
+<td>x.x.x.2</td>
+<td>DNS resolution</td>
+</tr>
+<tr>
+<td>x.x.x.3</td>
+<td>Future use</td>
+</tr>
+<tr>
+<td>x.x.x.255</td>
+<td>Network broadcast address</td>
+</tr>
+</tbody>
+</table>
+<h3 class="mume-header" id="public-ip-addresses">Public IP addresses</h3>
+
+<p>Private IP addresses are automatically assigned to VPC instances.<br>
+Public IP addresses can be assigned by modifying the subnet&apos;s auto-assign public IP address properties.</p>
+<p>Elastic IP address - static public IPv4 address designed for dynamic cloud computing; they can be associated with VPC instances or VPC network interfaces</p>
+<p>Associating an Elastic IP address with a network interface for a VPC belonging to your account allows for interfacing with multiple VPC instances without having to change their IP address.</p>
+<h3 class="mume-header" id="elastic-network-interface">Elastic network interface</h3>
+
+<ul>
+<li>virtual network interface that can be attached and detached from VPC instances</li>
+<li>its attributes follow when it is reattached to new instances</li>
+<li>each instance in a VPC has a default/primary network interface that is assigned a private IPv4 address within the IPv4 CIPR block range. While this primary network interface cannot be detached, you can attach additional network interfaces.</li>
+</ul>
+<h3 class="mume-header" id="route-tables-and-routes">Route tables and routes</h3>
+
+<p>A route table contains a set of rules that govern how network traffic from your subnet is directed. We call this set of rules routes. Each route has a destination and target: destination denotes the CIDR block to which you want traffic from your subnet to go; target denotes the target through which the traffic is sent through.</p>
+<p>The local route is included by default with each route table and is used for internal communication within the VPC. This route cannot be deleted.</p>
+<p>Every subnet in your VPC must be associated with a route table and only one such table at any point in time.</p>
+<p>The same route table may be used for multiple subnets.</p>
+<p>The main route table is the route table that is automatically assigned to your VPC and contains routing for all subnets not explicitly associated with any route table.</p>
+<p>E.g. Main Route Table</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0/16</td>
+<td>local</td>
+</tr>
+</tbody>
+</table>
+<h1 class="mume-header" id="section-3-vpc-networking">Section 3: VPC networking</h1>
+
+<h3 class="mume-header" id="internet-gateway">Internet Gateway</h3>
+
+<p>An internet gateway is a scalable, redundant, and highly available VPC component that allows communication between instances in your VPC and the internet.</p>
+<p>It serves 2 purposes:</p>
+<ol>
+<li>Provide a target in your VPC route tables for internet-routable traffic</li>
+<li>Perform Network Address Translation for instances that were assigned public IPv4 address blocks</li>
+</ol>
+<p>Attach an internet gateway to your VPC<br>
+Add a route to the route table with the internet(0.0.0.0/0) as its destination and the internet gateway as its target.<br>
+E.g.<br>
+<img src="images/internet_gateway.png" alt="internet_gateway"></p>
+<h3 class="mume-header" id="nat-network-address-translation-gateway">NAT (Network Address Translation) gateway</h3>
+
+<p>NAT gateways allow instances part of a private subnet to make a one-way connection to the internet and other AWS services.</p>
+<p>NAPs translate private IP addresses against a public IP address. Traffic to the private IP address is then mapped to its associated public IP address. This allows instances within a private subnet to connect to the internet.</p>
+<ol>
+<li>Specify the public subnet in which the NAT gateway resides.</li>
+<li>Update the route table associated with your private subnet that contains the instance that you want to connect to the internet so that the target of its route points to the NAT gateway</li>
+</ol>
+<p>NAT instances are an alternative to NAT gateways, but AWS recommends NAT gateways for most use cases due to higher availability, bandwidth and less admin effort.</p>
+<p><img src="images/nat_gateway.png" alt="nat_gateway"></p>
+<h3 class="mume-header" id="vpc-sharing">VPC sharing</h3>
+
+<p><img src="images/vpc_sharing.png" alt="vpc_sharing"></p>
+<p>VPC sharing enables subnets to be shared between AWS accounts part of the same AWS Organisation.</p>
+<p>This allows for different AWS accounts to create their applications resources like compute, storage and database services and share them with each other via a central VPC managed by their AWS Organisation.</p>
+<p>For example, here is one way of making use of VPC sharing. The AWS Account that owns the VPC can share subnets with other accounts in the same AWS Organisation and participants can perform CRUD operations with their application resources in the subnets shared with them.</p>
+<ul>
+<li>Networks are decoupled from accounts - I don&apos;t need account X to access network K; network K can be shared with me while I use account Y.</li>
+<li>More use gotten out of fewer, larger VPCs</li>
+</ul>
+<h3 class="mume-header" id="vpc-peering">VPC peering</h3>
+
+<p>VPC peering connections are networking connections between two VPCs that enables you to route traffic between them privately.</p>
+<p>In setting up the peering connection, routes need to be created in the route tables for both VPCs.</p>
+<ul>
+<li>IP address ranges cannot overlap between the two VPC&apos;s (this follows from how the two VPCs communicate as though they were part of the same network and that IP addresses are unique identifiers)</li>
+<li>Transitive peering isn&apos;t supported (Peering connections between VPC A and VPC B and between VPC B and VPC C doesn&apos;t imply a peering connection between VPC A and VPC C)</li>
+<li>A VPC peering connection can only connect one resource between two VPCs</li>
+</ul>
+<h3 class="mume-header" id="site-to-site-vpn">Site-to-Site VPN</h3>
+
+<p><img src="images/site_to_site_vpn.png" alt="site_to_site_vpn_connection"></p>
+<p>Steps to connect your VPC to a remote network (VPN)</p>
+<ol>
+<li>Create and attach a virtual gateway device(VPN gateway) to your VPC</li>
+<li>Configure the customer gateway (this gateway provides information about your VPN device to AWS)</li>
+<li>Create a custom route table and set the target field of traffic destined for the corporate data centre to be the virtual gateway. (Update security group rules)</li>
+<li>Establish an AWS Site-to-Site VPN connection to link the customer gateway and the virtual gateway.</li>
+<li>Configure routing to pass traffice through the connection</li>
+</ol>
+<h3 class="mume-header" id="aws-direct-connect">AWS Direct Connect</h3>
+
+<p><img src="images/direct_connect_vpn.png" alt="direct_connect"></p>
+<p>Direct Connect enables you to establish a dedicated private network connection between your network and one of the Direct Connect locations.</p>
+<p>This reduces network costs, increases bandwidth throughput and provides a more consistent network experience than internet-based connections.</p>
+<p>Very useful for maintaining stable performance when communicating with data centres faraway from your AWS Region.</p>
+<h3 class="mume-header" id="vpc-endpoints">VPC endpoints</h3>
+
+<p>Virtual devices that enable you to privately connect your VPC to supported AWS services and VPC endpoint services powered by AWS<br>
+PrivateLink.</p>
+<ul>
+<li>Doesn&apos;t rely on internet gateways, NAT device, VPN connection or AWS Direct Connect connections</li>
+<li>These connections don&apos;t require public IP addresses</li>
+<li>Traffic to and from these VPC endpoints never leaves the Amazon network</li>
+</ul>
+<p>There are two types of endpoints</p>
+<ol>
+<li>Interface endpoints - services powered by AWS PrivateLink. You are charged for creating and using an interface endpoint to a service according to hourly usage and data processing rates.</li>
+<li>Gateway endpoints - no additional charges.</li>
+</ol>
+<h3 class="mume-header" id="aws-transit-gateway">AWS Transit Gateway</h3>
+
+<p>Solution for scaling VPC connections across multiple accounts and VPCs.</p>
+<p>Rather than configure VPC peering to connect pairs of VPCs, with the Transit Gateway, the networking model is simplified as you simply need to connect each VPC to the Transit Gateway, which services as a central hub for mangaging traffic among all your connected networks.</p>
+<p>Each network only needs to connect to the transit gateway and not to every network that it needs to communicate with.</p>
+<p>Any network connected to the Transit Gateway is connected to every network connected to the Transit Gateway.</p>
+<h1 class="mume-header" id="section-4-vpc-security">Section 4: VPC security</h1>
+
+<p>Two VPC firewall options:</p>
+<ol>
+<li>security groups</li>
+<li>network access control lists (network ACLs)</li>
+</ol>
+<p>Security groups are virtual firewalls for your instances. They control inbound and outbound traffic to your instances.<br>
+Each instance can have a different set of security groups assigned to it.</p>
+<h3 class="mume-header" id="security-groups">Security Groups</h3>
+
+<p><img src="images/security_groups.png" alt="security_groups"></p>
+<p>Security groups have rules which control inbound and outbound traffic to instances.<br>
+Default security groups allow all outbound traffic and deny all inbound traffic</p>
+<p>Security groups are stateful. This means that state information is kept after a request is processed. If you make a request from your instance, then any response sent back to your instance will still be allowed regardless of inbound security groups. Similarly, if you receive a request to your instance, then any responses you sent out from your instance will also be allowed regardless of your outbound security groups.</p>
+<h4 class="mume-header" id="custom-security-groups">Custom security groups</h4>
+
+<p><img src="images/custom_security_groups.png" alt="security_groups"></p>
+<p>You can only specify rules which govern what kinds of inbound and outbound traffic is allowed.</p>
+<h3 class="mume-header" id="network-access-control-lists-network-acls">Network access control lists (network ACLs)</h3>
+
+<p><img src="images/network_acl.png" alt="network acl"></p>
+<p>Network ACLs control inbound and outbound traffic for subnets.<br>
+They are an optional layer of security for your Amazon VPC.</p>
+<p>Each subnet in your VPC needs to be associated with a network ACL, those without an explicit network ACL will be associated with the default network ACL.</p>
+<p>You can use the same network ACL for multiple subnets but each subnet can at most be associated with one network ACL at any point in time.</p>
+<p>Associating a subnet with a new network ACL automatically dissociates it from its previous network ACL.</p>
+<p>Network ACL has separate inbound and outbound rules and like security groups, we can specify rules governing which IP addresses, types of traffic, ports can we use to send outbound traffic and receive inbound traffic. However, unlike security groups, we can also specify rules to deny access to certain IP addresses, types of traffic and ports for sending and receiving information.</p>
+<p><img src="images/network_acl_rules.png" alt="network_acl_rules"></p>
+<p>Default network ACLs allow all inbound and outbound IPv4 traffic.</p>
+<p>Network ACLs are stateless - no information about requests is kept and maintained after a request has been processed.</p>
+<h3 class="mume-header" id="custom-network-acls">Custom network ACLs</h3>
+
+<p><img src="images/custom_acl_rules.png" alt="custom acl rules"></p>
+<p>Custom network ACLs deny all inbound and outbound traffic until you specify rules.</p>
+<p>Rules numbered and are evaluated in increasing order of their number.<br>
+The highest number for a rule is 32,766.<br>
+AWS recommends numbering rules at 10 step intervals to allow for the insertion of new rules if needed at a later point.</p>
+<h3 class="mume-header" id="security-groups-vs-network-acls">Security groups vs Network ACLs</h3>
+
+<img src="images/security_groups_vs_network_acls.png" alt="security groups vs network ACLs" width="80%" class="mume-header" id="design-a-vpc">
+###  Design a VPC
+
+<p>VPC - 10.0.0.0/16<br>
+- spans multiple availability zones<br>
+Public subnet - 10.2.0.0/16<br>
+- NAT gateway<br>
+- EC2<br>
+Private subnet - 10.3.0.0/16<br>
+- Database Server<br>
+- Custom network ACL<br>
+Internet gateway<br>
+Route tables</p>
+<ul>
+<li>Public subnet route table</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0.0.0/0</td>
+<td>internet gateway</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Private subnet route table</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0.0.0/0</td>
+<td>NAT gateway</td>
+</tr>
+</tbody>
+</table>
+<p>Security groups</p>
+<ul>
+<li>EC2</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Protocol</th>
+<th>Port Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0.0.0/0</td>
+<td>All</td>
+<td>All</td>
+<td>Allow all inbound HTTP requests from all IPv4 addresses</td>
+</tr>
+</tbody>
+</table>
+<p>Database Server</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Protocol</th>
+<th>Port Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0.0.0/0</td>
+<td>All</td>
+<td>All</td>
+<td>Allow all outbound HTTP requests from all Classless Inter Domain Routing from Private subnet</td>
+</tr>
+</tbody>
+</table>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#section-2-networking-basics">Section 2: Networking basics</a>
+<ul>
+<li><a href="#computer-networks">Computer networks</a></li>
+<li><a href="#ip-addresses-internet-protocol-address">IP addresses (Internet Protocol address)</a>
+<ul>
+<li><a href="#ipv4-32bits">IPv4 (32bits)</a></li>
+<li><a href="#ipv6-128bits">IPv6 (128bits)</a></li>
+</ul>
+</li>
+<li><a href="#cidr-classless-inter-domain-routing">CIDR (Classless Inter-Domain Routing)</a></li>
+<li><a href="#osi-open-systems-interconnection-model">OSI (Open Systems Interconnection) Model</a></li>
+<li><a href="#amazon-vpc">Amazon VPC</a></li>
+<li><a href="#vpc-and-subnets">VPC and subnets</a></li>
+<li><a href="#reserved-ip-addresses">Reserved IP addresses</a></li>
+<li><a href="#public-ip-addresses">Public IP addresses</a></li>
+<li><a href="#elastic-network-interface">Elastic network interface</a></li>
+<li><a href="#route-tables-and-routes">Route tables and routes</a></li>
+</ul>
+</li>
+<li><a href="#section-3-vpc-networking">Section 3: VPC networking</a>
+<ul>
+<li><a href="#internet-gateway">Internet Gateway</a></li>
+<li><a href="#nat-network-address-translation-gateway">NAT (Network Address Translation) gateway</a></li>
+<li><a href="#vpc-sharing">VPC sharing</a></li>
+<li><a href="#vpc-peering">VPC peering</a></li>
+<li><a href="#site-to-site-vpn">Site-to-Site VPN</a></li>
+<li><a href="#aws-direct-connect">AWS Direct Connect</a></li>
+<li><a href="#vpc-endpoints">VPC endpoints</a></li>
+<li><a href="#aws-transit-gateway">AWS Transit Gateway</a></li>
+</ul>
+</li>
+<li><a href="#section-4-vpc-security">Section 4: VPC security</a>
+<ul>
+<li><a href="#security-groups">Security Groups</a>
+<ul>
+<li><a href="#custom-security-groups">Custom security groups</a></li>
+</ul>
+</li>
+<li><a href="#network-access-control-lists-network-acls">Network access control lists (network ACLs)</a></li>
+<li><a href="#custom-network-acls">Custom network ACLs</a></li>
+<li><a href="#security-groups-vs-network-acls">Security groups vs Network ACLs</a></li>
+<li><a href="#design-a-vpc">Design a VPC</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">&#x2261;</a>
+    
+    
+    
+    
+    
+    
+    
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  
+    </body></html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>amazon_rds</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,164 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-1-amazon-relational-database-service">Section 1: Amazon Relational Database Service</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<h3 class="mume-header" id="managed-vs-unmanaged-services">Managed vs Unmanaged services</h3>
+
+<p><img src="images/managed_vs_unmanaged_services.png" alt="Unmanaged vs Managed services"></p>
+<p>Unmanaged services require the user to do the provisioning and manage how their solution handles load changes, errors and when resources are unavailable. But, in return, this gives the user more fine-grained control over their cloud solutions.</p>
+<p>For instance, with an EC2 instance, the user must manage how their EC2 instance should scale to handle increased traffic loads by specifying a scaling solution like AWS Automatic Scaling.</p>
+<p>Managed services require the user to configure them and set permissions. With AWS S3, the user just needs to configure permissions and set up an S3 bucket; AWS S3 will handle scaling, fault-tolerance and availability automatically.</p>
+<h3 class="mume-header" id="amazon-relational-database-rds">Amazon Relational Database (RDS)</h3>
+
+<p>Amazon RDS is a managed relational database service in the cloud.</p>
+<p><img src="images/relational_database_challenges.png" alt="Relational Database Challenges"></p>
+<p>These tasks associated with running your own relational database are addressed by Amazon RDS.</p>
+<h3 class="mume-header" id="on-premises-vs-ec2-vs-rds">On-premises vs EC2 vs RDS</h3>
+
+<p><img src="images/onPremises_ec2_rds_comparison.png" alt="On-premises vs EC2 vs RDS"></p>
+<p>Running your relational database on EC2</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>You are still responsible for patching the OS and handling software and backup operations. AWS RDS handles the rest of the administrative tasks.</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>RDS or Amazon Aurora (these are platforms as a service)</p>
+<ul>
+<li>application optimisation</li>
+</ul>
+<p>Database instance - an isolated database environment that can contain multiple user-created databases</p>
+<p>Database Instance Class</p>
+<ul>
+<li>CPU</li>
+<li>Memory</li>
+<li>Network performance</li>
+</ul>
+<p>Database Instance Storage</p>
+<ul>
+<li>Magnetic (HDD)</li>
+<li>General Purpose (SSD)</li>
+<li>Provisioned IOPS</li>
+</ul>
+<p>Pricing depends on the selected instance class and storage.</p>
+<p>Supported relational database engines:</p>
+<ul>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+<li>Amazon Aurora</li>
+<li>Microsoft SQL Server</li>
+<li>MariaDB</li>
+<li>Oracle</li>
+</ul>
+<p>You can run database instance in a VPC, usually in a private subnet.</p>
+<p>What does it mean to seed a database copy?</p>
+<h3 class="mume-header" id="high-availability-with-multi-az-multi-availability-zone-deployment">High availability with Multi-AZ (Multi-Availability Zone) deployment</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<p>With AWS RDS, you have the ability to configure your database instance for high availability with Multi-AZ deployment.</p>
+<p><img src="images/multi-az_deployment.png" alt="Multi-ZD deployment"></p>
+<p>RDS automatically generates a standby copy of your database instance in another Availability Zone within the same VPC.</p>
+<p>Database transactions are synchronously replicated to the standby copy, thereby minimising chances of data loss.</p>
+<p><img src="images/multi-az_deployment2.png" alt="When your main database instance fails"></p>
+<p>This means that if the main database instance fails, Amazon RDS will automatically bring in the standby database instance as the new main instance. This is made possible by referencing the database instance by name using the RDS DNS (Domain Name System) endpoint in your applications.</p>
+<h3 class="mume-header" id="rds-read-replicas">RDS read replicas</h3>
+
+<p>RDS also lets you created read replicas for MySQL, MariaDB, PostgresSWL and Amazon Aurora database instances.</p>
+<p>Updates to the source database instance are asynchronously copied to the replica instance.</p>
+<p>For scaling purposes, you can redirect read-heavy database queries to your read-only replica instance, thereby reducing the load on your primary instance.</p>
+<p>It is also possible to convert your replica instance into the primary instance.</p>
+<p>Read-only replica instances can also be created in a different Region to your primary database instance.</p>
+<h3 class="mume-header" id="example-use-cases">Example use cases</h3>
+
+<ul>
+<li>Web and mobile app
+<ul>
+<li>high throughput</li>
+<li>storage scaling</li>
+<li>high availability</li>
+</ul>
+</li>
+<li>E-commerce apps
+<ul>
+<li>low-cost database</li>
+<li>data security</li>
+<li>fully managed solution</li>
+</ul>
+</li>
+<li>Mobile and online games
+<ul>
+<li>auto scaling</li>
+<li>database monitoring</li>
+</ul>
+</li>
+</ul>
+<p>Ideal conditions for using Amazon RDS</p>
+<ul>
+<li>Complex transaction or complex queries</li>
+<li>Medium/High read or write rates - up to 30,000 IOPS (15,000 reads and 15,000 writes a second)</li>
+<li>No more than a single worker node/shard</li>
+<li>High durability</li>
+</ul>
+<p>When not to use RDS</p>
+<ul>
+<li>Massive read/write rates</li>
+<li>Sharding for large data volumes or throughput demands</li>
+<li>Simple GET/PUT requests and queries</li>
+</ul>
+<p>Alternative solutions:</p>
+<ul>
+<li>Running your relational database engine on an EC2 instance</li>
+<li>NoSQL solution like DynamoDB</li>
+</ul>
+<h3 class="mume-header" id="how-rds-are-billed">How RDS are billed</h3>
+
+<p>Clock-hour billing - you pay for the time your resources are running. This includes the resources expended from the time you launch a database instance until you terminate that database instance.</p>
+<p>Your database engine, size and memory class will also affect the pricing.</p>
+<h3 class="mume-header" id="purchase-type-and-multiple-rds-instances">Purchase type and multiple RDS instances</h3>
+
+<p>Purchase types:</p>
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>On-Demand Instances - compute capacity by the hour</li>
+<li>Reserved Instances - Single upfront payment for 1yr or 3yr terms</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
+<p>You can also provision multiple database instances for horizontal scaling.</p>
+<h3 class="mume-header" id="rds-storage">RDS Storage</h3>
 
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
+<p>Provisioned storage</p>
+<ul>
+<li>Active database instances = No additional charge for backing up 100% of your provisioned database storage</li>
+<li>Terminated DB instances - backup storage is charged for each GB/month.</li>
+</ul>
+<p>Additional storage</p>
+<ul>
+<li>Both provisioned storage and backup storage are charged for each GB/month</li>
+</ul>
+<h3 class="mume-header" id="rds-deployment-types-and-data-transfer">RDS Deployment types and Data transfer</h3>
 
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p>Deployment types</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>single availability zone</li>
+<li>multiple availability zone</li>
 </ul>
-<p>Strongly consistent reads</p>
+<p>These affect your storage and I/O charges</p>
+<p>Data transfer</p>
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>inbound data transfer is free</li>
+<li>outbound data transfer is based on a tiered system</li>
 </ul>
+<p>DB subnet groups tell Amazon RDS which subnets can be used for RDS database instances.</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-1-amazon-relational-database-service">Section 1: Amazon Relational Database Service</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#managed-vs-unmanaged-services">Managed vs Unmanaged services</a></li>
+<li><a href="#amazon-relational-database-rds">Amazon Relational Database (RDS)</a></li>
+<li><a href="#on-premises-vs-ec2-vs-rds">On-premises vs EC2 vs RDS</a></li>
+<li><a href="#high-availability-with-multi-az-multi-availability-zone-deployment">High availability with Multi-AZ (Multi-Availability Zone) deployment</a></li>
+<li><a href="#rds-read-replicas">RDS read replicas</a></li>
+<li><a href="#example-use-cases">Example use cases</a></li>
+<li><a href="#how-rds-are-billed">How RDS are billed</a></li>
+<li><a href="#purchase-type-and-multiple-rds-instances">Purchase type and multiple RDS instances</a></li>
+<li><a href="#rds-storage">RDS Storage</a></li>
+<li><a href="#rds-deployment-types-and-data-transfer">RDS Deployment types and Data transfer</a></li>
 </ul>
 </li>
 </ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>high_availability</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,85 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-2-reliability-and-high-availability">Section 2: Reliability and High Availability</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<h3 class="mume-header" id="aws-well-architected-tool">AWS Well-Architected Tool</h3>
+
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>reviews your workloads and compares them to AWS best practices</li>
+<li>provides a process for you to review and measure your cloud architectures</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
-
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
-<ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
-</ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p>When architecting application workloads to withstand failure, we should consider two important factors:</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>reliability</li>
+<li>availability</li>
 </ul>
-<p>Strongly consistent reads</p>
+<h3 class="mume-header" id="reliability">Reliability</h3>
+
+<p>Reliability is the ability of your system to provide functionality when desired by the user.</p>
+<p>Formally, it&apos;s the probability that your system will function as intended for a specified period of time where system includes components such as hardware, firmware and software.</p>
+<p>The mean time between failures (MTBF) is one way of quantifying the reliability of a system:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mtext>total&#xA0;time&#xA0;in&#xA0;service</mtext><mtext>number&#xA0;of&#xA0;failures</mtext></mfrac></mrow><annotation encoding="application/x-tex">\frac
+{\text{total time in service}}
+{\text{number of failures}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">number&#xA0;of&#xA0;failures</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">total&#xA0;time&#xA0;in&#xA0;service</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h5 class="mume-header" id="reliability-metrics">Reliability metrics</h5>
+
+<p>Time to failure (length of time the application is available)</p>
+<p>Time to repair (length of time it takes to repair the application)</p>
+<p>Mean time between failures (MTBF) is the sum of the mean time to failure and mean time to repair</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Mean&#xA0;Time&#xA0;Between&#xA0;Failures</mtext><mo>=</mo><mtext>Mean&#xA0;Time&#xA0;to&#xA0;Failure</mtext><mo>+</mo><mtext>Mean&#xA0;Time&#xA0;to&#xA0;Repair</mtext></mrow><annotation encoding="application/x-tex">\text{Mean Time Between Failures} = \text{Mean Time to Failure} + \text{Mean Time to Repair}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Mean&#xA0;Time&#xA0;Between&#xA0;Failures</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord">Mean&#xA0;Time&#xA0;to&#xA0;Failure</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">Mean&#xA0;Time&#xA0;to&#xA0;Repair</span></span></span></span></span></span></p>
+<p><img src="images/reliability_metric_diagram.png" alt="reliability metrics diagram"></p>
+<h3 class="mume-header" id="availability">Availability</h3>
+
+<p>Availability is the percentage of the time that an application is functioning as intended.</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Availability</mtext><mo>=</mo><mfrac><mtext>normal&#xA0;operation&#xA0;time</mtext><mtext>total&#xA0;time</mtext></mfrac></mrow><annotation encoding="application/x-tex">\text{Availability} = \frac{\text{normal operation time}}{\text{total time}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">Availability</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">total&#xA0;time</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">normal&#xA0;operation&#xA0;time</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>Another way to frame this is in terms of percentage of uptime over a period of time. For example, 90% uptime over a year.</p>
+<p>Number of 9s is often used a shorthand to denote availability. Five 9s would denote 99.999% availability and three 9s would denote 99.9% availability.</p>
+<h3 class="mume-header" id="highly-availability">Highly availability</h3>
+
+<p>A highly available system is resilient and can withstand some measure of degration whilst staying available.</p>
+<p>Highly available systems minimise downtime and human intervention.</p>
+<p>Software is combined with hardware to minimise downtime by restoring services when a system or application fails.</p>
+<p>Availability tiers for common types of applications</p>
+<p><img src="images/availability_tiers.png" alt="Availability tiers"></p>
+<h3 class="mume-header" id="three-factors-that-influence-availability">Three factors that influence availability</h3>
+
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>Fault tolerance
+<ul>
+<li>built-in redudancy of a system</li>
+<li>ability of an application to remain operational even if some of its components fail</li>
+<li>specialised hardware is used to detect system faults and to instantaneously switch to redundant hardware components</li>
+<li>affects availability at the hardware level</li>
 </ul>
+</li>
+<li>Scalability
+<ul>
+<li>ability of an application to accommodate changes in capacity needs without changing its design</li>
+<li>scalability tends to increase availability</li>
+</ul>
+</li>
+<li>Recoverability
+<ul>
+<li>ability of an application or service to overcome failures and catastrophic events</li>
+</ul>
+</li>
+</ul>
+<p>Highly available applications and systems tend to be more costly. It is a good idea to aim to strike a balance between cost and availability.</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-2-reliability-and-high-availability">Section 2: Reliability and High Availability</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#aws-well-architected-tool">AWS Well-Architected Tool</a></li>
+<li><a href="#reliability">Reliability</a>
+<ul>
+<li><a href="#reliability-metrics">Reliability metrics</a></li>
+</ul>
+</li>
+<li><a href="#availability">Availability</a></li>
+<li><a href="#highly-availability">Highly availability</a></li>
+<li><a href="#three-factors-that-influence-availability">Three factors that influence availability</a></li>
 </ul>
 </li>
 </ul>

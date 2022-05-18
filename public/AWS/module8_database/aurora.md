@@ -20,8 +20,9 @@ Integrates with AWS Schema Conversion Tool and Database Migration Service to mak
 
 Pay as you go pricing model
 
-Designed for high avilability and resilience
+Designed for high avilability and resilience (has self-healing sotrage)
 
+Auto-scales storage up to 128TB
 ### High availability
 
 ![High availability](images/aurora_high_availability.png)

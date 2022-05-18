@@ -1,5 +1,8 @@
-### Cloud service models
 ---
+export_on_save:
+  html: true
+---
+### Cloud service models
 
 1. IaaS
 
@@ -16,12 +19,9 @@
 
 - A complete service where the centrally hosted infrastructure is provided and run by the provider
 - Provides a service to end-user apps, typically via APIs, web browsers or mobile apps
-
-
 - IaaS gives you the most control over your IT resources
 
 ### Deployment models
----
 
 1. Cloud
 2. Hybrid
@@ -30,7 +30,6 @@
 - with virtualisation and application management
 
 ### Advantages of Cloud Computing
----
 
 1. Capital expense traded for operational/variable expense (move to a pay as you consume model)
 2. Economies of scale
@@ -40,7 +39,6 @@
 6. Global services easily achieved
 
 ### Amazon Web Services
----
 
 A web service is a software that makes itself available over the internet using a standardized format like JSON or XML for API requests and responses.
 
@@ -52,16 +50,14 @@ AWS is a secure cloud platform offering a range of cloud products.
 - The services can be used together as building blocks
 
 ### Ways to interact with AWS
----
 
 - AWS Management Console (gui)
 - AWS CLI (from your commandline)
 - Software Development Kits (from your code)
 
-All use REST-like API
+Most services use a REST-like API
 
 ### Migrating to AWS Cloud
----
 
 AWS Cloud Adoption Framework
 

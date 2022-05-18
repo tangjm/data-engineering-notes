@@ -1,6 +1,10 @@
+---
+export_on_save:
+  html: true
+---
 # Section 3: Amazon EFS (Elastic File System)
 
-A simple file storage system based in the AWS Cloud that automatically scales from GB to 1000s of TBs
+A simple POSIX compliant network file system (NFS) based in the AWS Cloud that automatically scales from GB to petabytes of file storage.
 
 ### EFS architecture
 

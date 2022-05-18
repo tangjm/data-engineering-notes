@@ -1,4 +1,10 @@
+---
+export_on_save:
+  html: true
+---
 # Amazon Route 53
+
+Route 53 is a highly available and scalable DNS web service. The three main functions of Route 53 are registering domain names, routing internet traffic to the resources for your domain, and checking the health of those resources.
 
 - highly available and scalable cloud DNS(Domain Name System) service
 - routes end users to web applications by translating http addresses (www.domain.com) into IP addresses (190.0.0.0)
@@ -43,6 +49,9 @@ percent of the time, Amazon Route 53 will return the record set with weight 1. W
 <img src="images/dns_failover_example.png" alt="dna failover example" width=80%>
 
 DNS failover in a typical architecture for a multi-application. Route 53 passes traffic to a load balancer, which then distributes traffic to a fleet of EC2 instances.
+
 Using Route 53 to ensure high availability:
+
 1. Create two DNS records for the Canonical Name Record (CNAME) with a routing policy of Failover Routing. The first record is the primary route policy, which points to the load balancer for your web application. The second record is the secondary route policy, which points to your static Amazon S3 website.
+
 2. Use Route 53 health checks to make sure that the primary is running. If it is, all traffic defaults to your web application stack. Failover to the static backup site would be triggered if either the web server goes down (or stops responding), or the database instance goes down.

@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 1: Cloud architecture
 
 Architecture - designing and building large structures
@@ -28,14 +32,14 @@ It provides a set of foundational questions and best practices that can help you
 
 ### Operational excellence
  
-Focus - run and monitor systems to deliver business value and to continually improve processes
+Run and monitor systems to deliver business value and to continually improve processes.
 
 Key topics
 - Managing, automating changes
 - Responding to events
 - Defining standards for managing daily operations successfully
 
-### Six design principles
+#### Six design principles
 
 1. Peform operations as code (limit human error and allow for consistency)
 2. Annotate documentation
@@ -44,7 +48,7 @@ Key topics
 5. Anticipate failure (set up regular test workloads to validate your team responses)
 6. Learn from all operational events and failures (sharing learning across organisation)
 
-### Questions to consider for operational excellence:
+#### Questions to consider for operational excellence:
 
 Three overarching themes
 Prepare
@@ -56,7 +60,7 @@ Evolve
 
 ### Security
 
-Focus - protect information, systems, and assets wihle delivering business value through risk assessments and mitigation strategies
+Protect information, systems, and assets wihle delivering business value through risk assessments and mitigation strategies.
 
 Key topics
 - Protecting the confidentiality and integrity of data
@@ -64,7 +68,7 @@ Key topics
 - Protecting systems
 - Putting in place controls to detect security events
 
-### Security design principles
+#### Security design principles
 
 1. Implement a strong identity foundation (give users the minimum amount of access needed to complete their tasks)
 2. Enable traceability (monitor, alert and audit actions and changes to your cloud environment in real time)
@@ -74,14 +78,14 @@ Key topics
 6. Keep people away from data (reduces risk of human error)
 7. Prepare for security events (setup an incident management process; run incident response simulations)
 
-### Questions to consider for architecting a secure cloud infrastructure
+#### Questions to consider for architecting a secure cloud infrastructure
 
 ![Security questions](images/security_questions.png)
 
 
 ### Reliability
 
-Focus - ability to recover from system infrastructure failures
+Ability to recover from system infrastructure failures.
 
 Key topics
 - setup
@@ -89,7 +93,7 @@ Key topics
 - recovery planning
 - handling change
 
-### Design principles
+#### Design principles
 
 - Test recovery procedures
 - Automatically recover from failure (put in place triggers for automated recovery when a manually configured threshold is reached)
@@ -97,16 +101,16 @@ Key topics
 - Monitor demand and system usage to automate the provisioning of resources to maintain optimal levels for meeting demands
 - Manage change in automation (use automation to manage changes to infrastructure)
 
-### Questions to consider
+#### Questions to consider
 
 ![Questions to consider for creating reliable cloud infrastructures](images/reliability_questions.png)
 
 ### Performance and Efficiency
 
-Focus - Use IT and computing resources to meet system requirements efficiently
+Use IT and computing resources to meet system requirements efficiently
 
 Key topics 
-- Selecting the right resource types and sizes abasd on workload requirements
+- Selecting the right resource types and sizes based on workload requirements
 - Monitoring performance
 - Making informed decisions to maintain efficiency as business needs evolve
 
@@ -117,13 +121,13 @@ Performance efficiency design principles
 - Experiment with different configurations
 - Mechanical sympathy (when selecting a database or storage solution, you can stick to HDDs if you don't really need the benefits that SSDs provide over HDDs)
 
-### Questions to consider 
+#### Questions to consider 
 
 ![Performance and efficiency questions to ponder](images/performance_efficiency_questions.png)
 
 ### Cost optimisation
 
-Focus - Avoid unnecessary costs
+Avoid unnecessary costs
 
 Key topics
 - Understand and control where money is spent
@@ -137,9 +141,17 @@ Cost optimisation design principles
 - Stop spending money on undifferentitated heavy lifting (spend less on IT infrastructure; more on business applications)
 - Analyse and attribute expenditure (makes it easy to accurately pinpoint system usage and costs and to come up with practical responses)
 
-### Questions to consider
+#### Questions to consider
 
 ![Cost optimisation questions](images/cost_optimisation_questions.png)
+
+### Sustainability
+
+Minimise environmental impact for running resources in AWS cloud.
+
+Use minimum optimal amount of hardware for running resources in AWS cloud.
+
+
 
 
 

@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 4: S3 Glacier
 
 A data archiving service designed to be secure, durable and low cost.
@@ -7,16 +11,16 @@ S3 buckets optimised for storing data with high latency but large storage sizes.
 This makes it good for storing archives which tend to be in large volume but infrequently accessed.
 
 ### Key terms
-Archives
+**Archives**
 Archives are objects (photos, video files, documents ...)
 Archives are the smallest unit of storage.
 Each archive has a unique id
 
-Vault
+**Vault**
 A vault is a container for archives
 Valuts have a name and belong to only one AWS Region.
 
-Vault access policy
+**Vault access policy**
 An access policy at the level of vaults which determines who can access the vault and the sort of operations that they can do
 
 A vault lock policy can be added to ensure that the vault cannot be altered.
@@ -24,9 +28,10 @@ Each vault can have at most one access and one lock policy.
 
 Vaults are replicated across at least 3 availability zones.
 
-Three types of data retrival options
+#### Three types of data retrival options
+
 | Type      | Retrieval time |
-|-----------|----------------|
+| --------- | -------------- |
 | Expedited | 1-5 minutes    |
 | Standard  | 3-5 hours      |
 | Bulk      | 5-12 hours     |

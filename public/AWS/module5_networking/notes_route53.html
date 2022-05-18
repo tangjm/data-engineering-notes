@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_route53</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,87 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="amazon-route-53">Amazon Route 53</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p>Route 53 is a highly available and scalable DNS web service. The three main functions of Route 53 are registering domain names, routing internet traffic to the resources for your domain, and checking the health of those resources.</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>highly available and scalable cloud DNS(Domain Name System) service</li>
+<li>routes end users to web applications by translating http addresses (<a href="http://www.domain.com">www.domain.com</a>) into IP addresses (190.0.0.0)</li>
+<li>fully compliant with IPv4 and IPv6</li>
+<li>enables you to register domain names and configures your DNS settings automatically</li>
+<li>connects user requests to AWS Services like S3 and EC2</li>
+<li>monitors the health of your resources</li>
+<li>Amazon Route 53 traffic flow&#x2019;s simple visual editor lets you manage how your users are routed to your application&#x2019;s endpoints.</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<h3 class="mume-header" id="how-aws-route-53-handles-dns-resolution">How AWS Route 53 handles DNS resolution</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<p>DNS resolution is the process of converting domain names into IP addresses</p>
+<p><img src="images/dns_resolver_flow.png" alt="dns resolver flow"></p>
+<h3 class="mume-header" id="routing-types-supported-by-route-53">Routing types supported by Route 53</h3>
+
+<ul>
+<li>
+<p>Simple routing (round robin)<br>
+Use for a single resource that performs a given function for your domain (such as a web server that serves content for the <a href="http://example.com">example.com</a> website).</p>
+</li>
+<li>
+<p>Weighted round robin routing - Use to route traffic to multiple resources in proportions that you specify.</p>
+<ul>
+<li>Enables you to assign weights to resource record sets to specify the frequency with which different responses are served. You might want to use this capability to do A/B testing, which is when you send a small portion of traffic to a server where you made a software change. For instance, suppose you have two record sets that are associated with one DNS name: one with weight 3 and one with weight 1. In this case, 75 percent of the time, Amazon Route 53 will return the record set with weight 3, and 25<br>
+percent of the time, Amazon Route 53 will return the record set with weight 1. Weights can be any number between 0 and 255.</li>
+</ul>
+</li>
+<li>
+<p>Latency routing (LBR) &#x2013; Use when you have resources in multiple AWS Regions and you want to route traffic to the Region that provides the best latency.</p>
+<ul>
+<li>Latency routing works by routing your customers to the AWS endpoint (for example, Amazon EC2 instances, Elastic IP addresses, or load balancers) that provides the fastest experience based on actual performance measurements of the different AWS Regions where your application runs.</li>
+</ul>
+</li>
+<li>
+<p>Geolocation routing &#x2013; Use when you want to route traffic based on the location of your users.</p>
+<ul>
+<li>When you use geolocation routing, you can localize your content and present some or all of your website in the language of your users.</li>
+<li>You can also use geolocation routing to restrict the distribution of content to only the locations where you have distribution rights.</li>
+<li>Another possible use is for balancing the load across endpoints in a predictable, easy to manage way, so that each user location is consistently routed to the same endpoint.</li>
+</ul>
+</li>
+<li>
+<p>Geoproximity routing &#x2013; Use when you want to route traffic based on the location of your resources and, optionally, shift traffic from resources in one location to resources in another.</p>
+</li>
+<li>
+<p>Failover routing (DNS failover) &#x2013; Use when you want to configure active passive failover.</p>
+<ul>
+<li>Amazon Route 53 can help detect an outage of your website and redirect your users to alternate locations where your application is operating properly. When you enable this feature, Amazon Route 53 health checking agents will monitor each location or endpoint of your application to determine its availability. You can take advantage of this feature to increase the availability of your customer facing application.</li>
+</ul>
+</li>
+<li>
+<p>Multivalue answer routing - Use when you want Route 53 to respond to DNS queries with up to eight healthy records that are selected at random.</p>
+<ul>
+<li>You can configure Amazon Route 53 to return multiple values such as IP addresses for your web servers in response to DNS queries. You can specify multiple values for almost any record, but multivalue answer routing also enables you to check the health of each resource so that Route 53 returns only values for healthy resources. It&apos;s not a substitute for a load balancer, but the ability to return multiple health checkable IP addresses is a way to use DNS to improve availability and load balancing.</li>
+</ul>
+</li>
+</ul>
+<h3 class="mume-header" id="dns-failover-example">DNS failover example</h3>
+
+<img src="images/dns_failover_example.png" alt="dna failover example" width="80%">
+<p>DNS failover in a typical architecture for a multi-application. Route 53 passes traffic to a load balancer, which then distributes traffic to a fleet of EC2 instances.</p>
+<p>Using Route 53 to ensure high availability:</p>
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>
+<p>Create two DNS records for the Canonical Name Record (CNAME) with a routing policy of Failover Routing. The first record is the primary route policy, which points to the load balancer for your web application. The second record is the secondary route policy, which points to your static Amazon S3 website.</p>
+</li>
+<li>
+<p>Use Route 53 health checks to make sure that the primary is running. If it is, all traffic defaults to your web application stack. Failover to the static backup site would be triggered if either the web server goes down (or stops responding), or the database instance goes down.</p>
+</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
-<ul>
-<li>read queries might not return the latest data</li>
-</ul>
-<p>Strongly consistent reads</p>
-<ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
-</ul>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#amazon-route-53">Amazon Route 53</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#how-aws-route-53-handles-dns-resolution">How AWS Route 53 handles DNS resolution</a></li>
+<li><a href="#routing-types-supported-by-route-53">Routing types supported by Route 53</a></li>
+<li><a href="#dns-failover-example">DNS failover example</a></li>
 </ul>
 </li>
 </ul>

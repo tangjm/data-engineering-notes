@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_containers</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,109 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-4-container-services">Section 4: Container services</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p><img src="images/containers.png" alt="Containers"></p>
+<p>Method of operating system virtualisation (which is the process of running an application and its dependencies in resource-isolated processes).</p>
+<p>Containers hold everything a software needs to run (libraries, code, runtime environment, system tools). This means they don&apos;t have any external dependencies, giving them environmental consistency.</p>
+<p>Containers share a virtualised operating system.</p>
+<p>Container images are much smaller than virtual machine images, making them faster to start.</p>
+<h3 class="mume-header" id="docker">Docker</h3>
+
+<p><img src="images/container_structure.png" alt="Structure of a container"></p>
+<p>A software platform that allows you to run software packaged in containers</p>
+<p>A Docket is installed on each server that will host containers and provides simple commands to manage your containers.</p>
+<p>Some Docket use cases:</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>Standardised environments</li>
+<li>Reduce conflicts between language stacks and versions</li>
+<li>Containers as a service</li>
+<li>Running microservices using stndardised code deployments</li>
+<li>Portability for data processing</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>Containers are created from a template called an image (this is analogous to how a virtual machine is created from a machine image).</p>
+<h3 class="mume-header" id="containers-vs-virtual-machines">Containers vs Virtual Machines</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
-<ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
-</ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
+<p><img src="images/container_vs_virtual_machine.png" alt="Container and Virtual Machine comparison"></p>
+<p>Multiple containers can run alongside each other on one and the same OS.</p>
+<p>Each virtual machine requires its own OS.</p>
+<p>The Docker engine manages how containers are run and their lifecycle.</p>
+<h3 class="mume-header" id="ecs-elastic-container-service">ECS (Elastic Container Service)</h3>
 
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>Orchestrates the running of Docker containers</li>
+<li>Manages EC2 instances that run your containers</li>
+<li>Removes complexity of standing up the infrastructure</li>
 </ul>
-<p>Strongly consistent reads</p>
+<p><img src="images/ecs_container_orchestration.png" alt="container orchestration"></p>
+<p>Create a task definition (text file describing one to ten containers) that forms your application.</p>
+<p>Task definitions specify your application parameters like which containers, ports and data volumes should be used with the task.</p>
+<p>A task is an instance of a task definition within a cluster.</p>
+<p>The Amazon ECS task scheduler is responsible for placing tasks within your ECS cluster.</p>
+<p>An ECS cluster contains a group/fleet of EC2 instances. Each EC2 instance runs an Amazon ECS container agent.</p>
+<p>ECS places the 5 containers on the EC2 instances in the ECS cluster. The distribution accounts for CPU and RAM of each cluster node (EC2 instance)</p>
+<h3 class="mume-header" id="ecs-cluster-options">ECS cluster options</h3>
+
+<p><img src="images/ecs_cluster_options.png" alt="ECS Cluster options"></p>
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>Amazon ECS cluster backed by Amazon EC2 gives you more fine-grained control over your infrastructure
+<ul>
+<li>you manage the underlying EC2 instances as would you if you launched an EC2 instance</li>
+</ul>
+</li>
+<li>Amazon ECS cluster backed by AWS Fargate is easier to maintain, allowing you to focus on your applications
+<ul>
+<li>AWS manages your clusters (optimisation, scaling, packing)</li>
+<li>you just need to define networking and IAM policies</li>
+</ul>
+</li>
+</ul>
+<h3 class="mume-header" id="kubernetes">Kubernetes</h3>
+
+<p>Open-source container orchestration software</p>
+<p>Deploy and manage containerised applications at scale</p>
+<p>Complements Docker</p>
+<ul>
+<li>Docker lets you run multiple containers on a single OS host</li>
+<li>Kubernetes orchestrates multiple Docker hosts</li>
+</ul>
+<p>Kubernetes manages a cluster of compute instances (nodes) and containers are run on these compute instances in logical groupings called pods.</p>
+<p>Pods can include multiple containers and can be scaled.<br>
+Pods have an IP address and a DNS name which Kubernetes uses to connect your services with external traffic.</p>
+<p>Kubernetes automates container provisioning, networking, load distribution and scaling.</p>
+<h3 class="mume-header" id="amazon-eks-elastic-kubernetes-service">Amazon EKS (Elastic Kubernetes Service)</h3>
+
+<p>Simplifies the running of Kubernetes on AWS</p>
+<ul>
+<li>Manage EC2 compute instance clusters</li>
+<li>Run containers orchestrated by Kubernetes on those instances</li>
+</ul>
+<h3 class="mume-header" id="amazon-ecr-elastic-container-registry">Amazon ECR (Elastic Container Registry)</h3>
+
+<p>Docker container registry to store, manage and deploy Docker container images.</p>
+<ul>
+<li>Integrates with ECS</li>
+<li>Supports Docker Registry HTTP API version 2
+<ul>
+<li>use Docker CLI commands to interact with ECR</li>
+</ul>
+</li>
+<li>You can use HTTPS to make container image transfer to and from ECS.</li>
+<li>Container images at rest are encrypted with S3 server-side encryption</li>
+<li>You can also use ECR with EKS</li>
 </ul>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-4-container-services">Section 4: Container services</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#docker">Docker</a></li>
+<li><a href="#containers-vs-virtual-machines">Containers vs Virtual Machines</a></li>
+<li><a href="#ecs-elastic-container-service">ECS (Elastic Container Service)</a></li>
+<li><a href="#ecs-cluster-options">ECS cluster options</a></li>
+<li><a href="#kubernetes">Kubernetes</a></li>
+<li><a href="#amazon-eks-elastic-kubernetes-service">Amazon EKS (Elastic Kubernetes Service)</a></li>
+<li><a href="#amazon-ecr-elastic-container-registry">Amazon ECR (Elastic Container Registry)</a></li>
 </ul>
 </li>
 </ul>

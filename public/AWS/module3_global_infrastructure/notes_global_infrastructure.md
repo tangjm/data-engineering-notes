@@ -1,5 +1,8 @@
+---
+export_on_save:
+  html: true
+---
 ### AWS Regions
-***
 
 An AWS Region is a geographical area with two or more availability zones.
 
@@ -108,7 +111,7 @@ EKS (Elastic Kubernetes Service)
 - Deploy apps containerised with Kubernetes
 
 Fargate
-- engine for ECS without needing servers/clusters
+- serverless compute for ECS and EKS
 
 
 ### Database services
@@ -163,27 +166,32 @@ IAM (Identity and Access Management)
 
 AWS Organisations
 - Restrict access based on accounts and Organisational Units
+- configure services and resources centrally from a security standpoint using Service Control Policies (SCPs) which lets you manage permissions at the organisation level.
 
 Cognito
 - User Authentication for web and mobile apps
+- Manage federated identities
 
 Artifact
 - On-demand access to AWS compliance reports and online agreements
 
 Key Management Service
-- Create and manage encryption keys
+- Create and manage data encryption keys and Customer Master Keys (CMKs)
 
 Shield
 - Managed, distributed DOS protection service
 
 Cost Management services
 
-Cost and Usage Report
+Cost and Usage Report (Part of AWS Cost Explorer)
 - cost and usage data
 - metadata about services, pricing and reservations
 
+Reserved Instance Reports (Part of AWS Cost Explorer)
+- reports on cost and usage of reserved instances
+
 Budgets
-- Custom budgets for services
+- Setup custom budgets for AWS services
 - Setup notifications when you exceed your budget
 
 Cost Explorer
@@ -207,7 +215,7 @@ CLI
 - Manage AWS Services through the command line
   
 Trusted Advisor
-- Optimise peformance and security using AWS best practices
+- Optimise performance, cost-optimisation, security, service limits and fault-tolerance using AWS best practices
   
 Well-Architected Tool
 - Review and improve workloads

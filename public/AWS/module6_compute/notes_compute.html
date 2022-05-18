@@ -1,0 +1,656 @@
+<!DOCTYPE html><html><head>
+      <title>notes_compute</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header undefined" id="pageTop">Compute services</h1>
+
+<p>Categorisation of compute services</p>
+<p><img src="images/compute_categories.png" alt="compute service categories"></p>
+<h3 class="mume-header" id="selecting-a-compute-service">Selecting a compute service</h3>
+
+<p>Best practices</p>
+<ol>
+<li>Evalute the options</li>
+<li>Understand the configuration options</li>
+<li>Collect computer-related metrics</li>
+<li>Use available elasticity of resources</li>
+<li>Re-evaluate your compute needs based on metrics</li>
+</ol>
+<p>Some things to consider when choosing a compute service:</p>
+<ul>
+<li>Application design</li>
+<li>Usage patterns</li>
+<li>Configuration settings</li>
+</ul>
+<h3 class="mume-header" id="section-2-ec2-elastic-compute-cloud">Section 2: EC2 (Elastic Compute Cloud)</h3>
+
+<ul>
+<li>Virtual machines that host the same applications that you might run on traditional on-premises servers.</li>
+<li>Secure and resizable compute capacity in the cloud</li>
+</ul>
+<p>Elastic - easily scale up or down the number of servers on demand<br>
+Compute - hosts applications that require compute resources like processing power (CPU) and memory (RAM)<br>
+Cloud - hosted in the cloud</p>
+<p>Some example EC2 use cases:</p>
+<ul>
+<li>Web servers</li>
+<li>Database servers</li>
+<li>Game servers</li>
+<li>Mail servers</li>
+<li>Media servers</li>
+<li>File servers</li>
+<li>Computing servers</li>
+<li>Proxy servers</li>
+</ul>
+<p>You get full administrative control over either a Windows or Linux operating system running on the instance.</p>
+<p>Guest operating system - the operating system that runs on a virtual machine</p>
+<p>Host operating system - the operating system installed on the server hardware that hosts virtual machines.</p>
+<p>Use virtual machine templates called AMI (Amazon Machine Images) to launch EC2 instances of any size into any availability zone.</p>
+<p>Security groups enable you to control your EC2 instance&apos;s inbound and outbound traffic; they can only be configured for instances in &quot;running&quot; or &quot;stopped&quot; state, not in the &quot;hibernate&quot; state.</p>
+<h3 class="mume-header" id="launching-an-ec2-instance">Launching an EC2 instance</h3>
+
+<p><strong>Step 1: Select an AMI (Amazon Machine Image)</strong></p>
+<p>AMI enable you to launch multiple instances.<br>
+Select your virtual machine template. This involves choosing your OS, either Windows or Linux. It also comes with pre-installed software.</p>
+<h4 class="mume-header" id="ami-components">AMI components</h4>
+
+<ul>
+<li>template for the root volume of the instance. The root volume includes an OS (operating system) and everything installed in the OS (applications, libraries, etc.). EC2 copies the template to the root volume of the new EC2 instance.</li>
+<li>Launch permissions - determine which accounts are permitted to use the AMI.</li>
+<li>a block device mapping - this specifies which volumes to attach to the instance when it is launched</li>
+</ul>
+<h4 class="mume-header" id="types-of-amis">Types of AMIs</h4>
+
+<p>Quick Start - select from prebuilt AMIs<br>
+My AMIs - AMIs you have created<br>
+AWS Marketplace - select from a digital catalogue of software solutions<br>
+Community AMIs - AMIs created by people all over the world.</p>
+<h4 class="mume-header" id="creating-an-ami">Creating an AMI</h4>
+
+<ol>
+<li>Import or start with an existing AMI and use it to launch an instance (we call this an unmodified instance)</li>
+<li>Configure the unmodified instance in the way you want (this is now a modified instance)</li>
+<li>Capture the modified instance as a new AMI. (a snapshot of its volume is made and is registered as a new AMI during which the EC2 instance is stopped)</li>
+<li>The newly registered AMI can be used to launch instances in the same Region. Copy this AMI to other Regions if you want to launch instances in those Regions.</li>
+</ol>
+<p><strong>Step 2: Select an instance type</strong></p>
+<p>Your instance type determines</p>
+<ul>
+<li>memory (RAM)</li>
+<li>processing power (CPU)</li>
+<li>disk space and type (Storage)</li>
+<li>network performance</li>
+</ul>
+<p>Instance type categories</p>
+<ul>
+<li>general purpose</li>
+<li>compute optimised</li>
+<li>memory optimised</li>
+<li>storage optimised</li>
+<li>accelerated computing</li>
+</ul>
+<p>EC2 instance type nomenclature</p>
+<p><img src="images/ec2_instance_types.png" alt="EC2 instance types"></p>
+<p>e.g. t2.micro</p>
+<p>The 2nd generation of the T family.<br>
+In general, the larger the generation number, the better value for money and the greater the power the instance.</p>
+<ul>
+<li>t denotes the family name</li>
+<li>2 denotes the generation number</li>
+<li>micro denotes the size</li>
+</ul>
+<p>t2.2xlarge has twice the vCPU and memory of a t2.xlarge and a t2.xlarge has twice the vCPU and memory of a t2.large.</p>
+<p>Network bandwith is tied to EC2 instance size.</p>
+<p>T3 instances provide burstable performance general purpose instances that provide a baseline level of CPU performance with the ability to burst above the baseline. Use cases for this type of instance include websites and web, development<br>
+environments, build servers, code repositories, microservices, test and staging environments, and line-of-business applications.</p>
+<p>C5 instances are optimized for compute-intensive workloads, and deliver cost-effective high performance at a low price per compute ratio. Use cases include scientific modeling, batch processing, ad serving, highly scalable multiplayer gaming, and video encoding.</p>
+<p>R5 instances are optimized for memory-intensive applications. Use cases include high-performance databases, data mining and analysis, in-memory databases, distributed web-scale in-memory caches, applications that perform real-time of<br>
+big data, Apache Hadoop or Apache Spark clusters, and other enterprise applications</p>
+<p>Each instance comes with a documented network bandwith(Gbps)</p>
+<p>By default AWS EC2 tries to spread out your instances across the underlying hardware when you create many instances at once.</p>
+<p>But you can use placement groups to influence the placement of a group of interdependent instances to meet your compute needs.</p>
+<p>Some instance types will allow you to configure enhanced networking to get higher packet per second (PPS) performance, lower delay variation in the arrival of packets over the network (network jitter) and lower latencies. Consult the Elastic Network Adapter (ENA) for more information.</p>
+<p><strong>Step 3: Specify network settings</strong></p>
+<p>Choose your Region before you start the Launch Instance Wizard by ensuring you are on the correct Region page before you select &apos;Launch Instance&apos;.<br>
+A public IP is automatically assigned when you launch an EC2 instance inside a default VPC.</p>
+<p>For instances launched in nondefault VPCs, AWS doesn&apos;t assign a public IP address in nondefault subnets.</p>
+<p>Either modify the public IP addressing attribute of your subnet or enable/disable the public IP addressing feature during instance launch to control whether your instances get assigned a public IP address from the public IPv4 address pool.</p>
+<p><strong>Step 4: Attach an IAM (Identity Access Management) role (Optional)</strong></p>
+<p>Attach AWS IAM roles to EC2 instances to grant applications running on EC2 instances permission to interact with other AWS Services like through API calls.</p>
+<p>The instance profile is a container for IAM roles.</p>
+<p>Attaching IAM roles can be done after an instance has launched; we can attach them to existing instances.</p>
+<p><img src="images/iam_role_example.png" alt="IAM role permitting access to S3"></p>
+<p><strong>Step 5: User data script</strong></p>
+<p>By default, user data only runs the very first time that an instance starts up.</p>
+<p>You have the option to pass user data to the instance. User data can be used to automate installations and configurations at instance launch.</p>
+<p>The user data script runs with root privileges during the final phases of the boot process when the EC2 instance is created.</p>
+<ul>
+<li>Windows instances are run by EC2config or EC2Launch utility.</li>
+<li>Linux instances are run by the cloud-init service.</li>
+</ul>
+<p>User data cannot be modifed while your EC2 instance is running.</p>
+<p><img src="images/example_user_data.png" alt="Example User data"></p>
+<p>In the example user data script above, you see a simple three-line Linux Bash shell script. The first line indicates that the script should be run by the Bash shell. The second line invokes the Yellowdog Updater, Modified (YUM) utility, which is commonly used in many Linux distributions &#x2014; such as Amazon Linux, CentOS, and Red Hat Linux &#x2014; to retrieve software from an online repository and install it. In line two of the example, that command tells YUM to update all installed packages to the latest versions that are known to the software repository that it is configured to access. Line three of the script indicates that the Wget utility should be installed. Wget is a common utility for downloading files from the web.</p>
+<p><strong>Step 6: Specify storage</strong></p>
+<ul>
+<li>configure root volume - where guest OS is installed</li>
+<li>add additional storage volumes</li>
+<li>specify disk size, disk type</li>
+<li>specify if the storage volume should be deleted when the instance is terminated</li>
+<li>specify disk encryption.</li>
+</ul>
+<h4 class="mume-header" id="ec2-storage-options">EC2 storage options</h4>
+
+<p>Elastic Block Store (Amazon EBS)</p>
+<ul>
+<li>durable, block-level storage volumes that persist (data will still be there after an instance is terminated)</li>
+<li>designed for high throughput and transaction instensive workloads</li>
+</ul>
+<p>Instance Store</p>
+<ul>
+<li>Temporary storage provided on disks physically attached to host computer where EC2 instance is running</li>
+<li>Data store is deleted if the instance stops</li>
+<li>good for temporary data like buffers, caches etc.</li>
+<li>store data replicated across multiple instances like a load balanced pool of web servers.</li>
+<li>If an instance reboots, then the instance store does persist</li>
+</ul>
+<p>Other options separate from root volume</p>
+<ul>
+<li>connect to S3</li>
+<li>Mount Amazon Elastic File System</li>
+</ul>
+<p><strong>Step 7: Add tags</strong></p>
+<p>Tags allow you to attach metadata to EC2 instances<br>
+Tags are key, value pairs where the value is optional.<br>
+Tags are case sensitive</p>
+<p><strong>Step 8: Security group settings</strong></p>
+<p>See notes on module 5: networking</p>
+<p><strong>Step 9: Key pair</strong></p>
+<p>EC2 uses public-key cryptography to encrypt and decrypt login information.</p>
+<p>A public key is used to encrypt a piece of data.<br>
+The associated private key is used to decrypt the data.<br>
+We denote a public key and its corresponding private key as a Key pair.</p>
+<p>Use can use your private key instead of a password to securely access your EC2 instances.</p>
+<p>To connect to a Windows instance, use the private key to obtain the administrator password, and then log in to the EC2 instance&apos;s Windows Desktop by using Remote Desktop Protocol (RDP). To establish an SSH connection from<br>
+a Windows machine to an Amazon EC2 instance, you can use a tool such as PuTTY, which will require the same private key.</p>
+<p>With Linux instances, at boot time, the<br>
+public key content is placed on the instance. An entry is created in within<br>
+~/.ssh/authorized_keys. To log in to your Linux instance (for example, by using SSH), you must provide the private key when you establish the connection.</p>
+<p>Two ways of creating key pairs for connecting to EC2 instances</p>
+<ol>
+<li>Use the AWS Console or AWS CLI to create a public, private key pair using AWS EC2 instance.<br>
+The public key is stored in an EC2 instance and the customer downloads and stores securely the private key</li>
+<li>Use a third-party tool to generate a key pair. With this option, the customer needs to import the generated public key to an EC2 instance; they then use the private key to connect to the EC2 instance</li>
+</ol>
+<h3 class="mume-header" id="launching-ec2-instances-programmatically">Launching EC2 instances programmatically</h3>
+
+<p>AWS CLI or AWS SDK</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash">aws ec2 run-instances <span class="token punctuation">\</span>
+--image-id ami-1a2b3c4d <span class="token punctuation">\</span>
+--count <span class="token number">1</span><span class="token punctuation">\</span>
+--instance-type c3.large <span class="token punctuation">\</span>
+--key-name MyKeyPair <span class="token punctuation">\</span>
+--security-groups MySecurityGroup <span class="token punctuation">\</span>
+--region us-east-1
+</pre><p>Necessary conditions for the EC2 instance to be created:</p>
+<ul>
+<li>well formed syntax</li>
+<li>required resources already exist like security groups and Amazon Machine Image ID</li>
+<li>sufficient permissions</li>
+<li>sufficient capacity in AWS account</li>
+</ul>
+<p>If successful, the API responds with the instance ID and relevant data for your application to use in subsequent API requests.</p>
+<h3 class="mume-header" id="ec2-instance-lifecycle">EC2 instance lifecycle</h3>
+
+<p><img src="images/ec2_instance_lifecycle.png" alt="EC2 instance lifecycle"></p>
+<p>You cannot connect to or recover a terminated instance</p>
+<p>Stopped instances do not incur the same costs as running instances.</p>
+<p>Stopped instances will re-enter the pending state when they are started, this will move the instance to a new host machine.</p>
+<h3 class="mume-header" id="elastic-ip-addresses">Elastic IP addresses</h3>
+
+<p>If you have an instance connected to the internet, then each time you stop and restart your instance, a new public IP address is associated with your instance along with a new external DNS hostname based on your public IP address.</p>
+<p>To ensure that your EC2 instance&apos;s public IP address and external DNS hostname persists, consider using an Elastic IP address.</p>
+<p>To do this, allocate a new elastic IP address in the same Region as your instance and associate your elastic IP address with your EC2 instance.</p>
+<p>By default AWS Accounts are limited to 5 Elastic IP addresses per Region due to the scarcity of IPv4 internet addresses.</p>
+<h3 class="mume-header" id="ec2-instance-metadata">EC2 instance metadata</h3>
+
+<p>While connected to your EC2 instance you can access metadata and user data through these ways:</p>
+<p>Url: <a href="http://169.254.169.254/latest/meta-data/">http://169.254.169.254/latest/meta-data/</a><br>
+From your terminal: <code>curl http://169.254.169.254/latest/meta-data/</code><br>
+User data at: <a href="http://169.254.169.254/latest/user-data">http://169.254.169.254/latest/user-data</a></p>
+<p>Example metadata that you might find</p>
+<ul>
+<li>public IP address</li>
+<li>private IP address</li>
+<li>public hostname</li>
+<li>instance ID</li>
+<li>security groups</li>
+<li>Region</li>
+<li>Availability Zone</li>
+</ul>
+<h3 class="mume-header" id="amazon-cloudwatch">Amazon CloudWatch</h3>
+
+<p>Use CloudWatch to monitor your EC2 instances.</p>
+<ul>
+<li>collects and processes raw data into readable, near-real time metrics</li>
+<li>Maintains 15 months of historical data</li>
+</ul>
+<p>By default, basic monitoring is provided by EC2, which sends data at 5 minute intervals to CloudWatch. Enable detailed monitoring to send data at 1 minute intervals.</p>
+<p>By default, RAM metrics are not provided.</p>
+<p><a href="#pageTop">Link to top of page</a></p>
+<h3 class="mume-header" id="ec2-price-model">EC2 price model</h3>
+
+<p>EC2 pricing models</p>
+<ul>
+<li>Per second billing
+<ul>
+<li>On-Demand, Reserved and Spot Instances running Amazon Linux or Ubuntu only</li>
+</ul>
+</li>
+<li>On-Demand
+<ul>
+<li>Part of AWS Free Tier</li>
+<li>Lowest upfront costs and greatest flexibility</li>
+<li>Good for short-term apps with unpredictable workloads</li>
+</ul>
+</li>
+<li>Dedicated hosts
+<ul>
+<li>physical servers dedicated to your use</li>
+<li>per-socket, per-core and per-VM software licenses like Windows and SQL Server can be used</li>
+</ul>
+</li>
+<li>Dedicated instances
+<ul>
+<li>instances that run in a VPC on hardware dedicated to a single customer.</li>
+<li>host hardware is physically isolated from other instances</li>
+</ul>
+</li>
+<li>Reserved instance
+<ul>
+<li>reserve computing capacity for 1 year or 3 year terms with lower hourly costs.</li>
+<li>discounted price applies for as long as you own the reserved instance</li>
+<li>Good for workloads with consistent, heavy use</li>
+</ul>
+</li>
+<li>Scheduled Reserved Instances
+<ul>
+<li>reserve computing capacity for a year at specified recurring durations (e.g. every day, week, or month)</li>
+<li>you pay for the scheduled time</li>
+</ul>
+</li>
+<li>Spot instances
+<ul>
+<li>bid on usnused EC2 instances.</li>
+<li>Your Spot Instance runs whenever capacity is available and the maximum price per hour for your request exceeds the Spot price (the hourly price) which fluctuates every hour depending on supply and demand.</li>
+<li>are interrupted with a 2 minute notification.</li>
+</ul>
+</li>
+</ul>
+<p><img src="images/ec2_price_model_comparison.png" alt="Comparing the price model of different EC2 instances"></p>
+<p><img src="images/ec2_instance_price_model_suggestions.png" alt="How to choose between EC2 price models"></p>
+<p><img src="images/ec2_4_pillars_cost_optimisation.png" alt="4 pillars of cost optimisation"></p>
+<ul>
+<li>
+<p>Right size</p>
+<ul>
+<li>Review deployed resources and look for opportunities to downsize where possible.</li>
+<li>Use load testing techniques</li>
+<li>Test your application on different test deployments and on a variety of instance types and sizes.</li>
+<li>Review CPU, RAM, storage and network utilisation to identify resources that you can downsize.</li>
+<li>Amazon CloudWatch metrics and custom metrics.</li>
+</ul>
+</li>
+<li>
+<p>Increase elasticity</p>
+<ul>
+<li>turn off EC2 instances when they aren&apos;t needed (e.g. test and development workloads)</li>
+<li>configure precise and granular auto scaling policies to make the most horizontal scaling to meet peak capacity needs without paying for peak capacity needs all the time.</li>
+<li>AWS recommends having 20 - 30% of your EC2 instances to run as on-demand instances or spot instances and to actively seek out ways to maximise elasticity.</li>
+</ul>
+</li>
+<li>
+<p>Optimal pricing model</p>
+<ul>
+<li>Combine multiple purchase types based on current and predicted capacity needs to optimise pricing
+<ul>
+<li>On-Demand plus Spot Instsances for variable workloads</li>
+<li>Reserved instances for predictable workloads</li>
+</ul>
+</li>
+<li>Consider whether your application architecture requires an EC2 instance or if you can make do with cheaper alternatives like an AWS Lambda.</li>
+</ul>
+</li>
+<li>
+<p>Optimal storage</p>
+<ul>
+<li>reduce storage costs without compromising storage performance and availability</li>
+<li>resize EBS volumes to better fit your storage volume</li>
+<li>select the cheapest EBS volume type that meets your needs
+<ul>
+<li>maybe go for a HDD instead of an SSD if you can</li>
+</ul>
+</li>
+<li>delete unneeded EBS snapshots</li>
+<li>consider whether your app needs to make use of an EBS or if you can make do with cheaper altneratives like S3</li>
+<li>configure data lifecycle policies such as migrate data from EBS to cheaper storage services like S3 Glacier</li>
+</ul>
+</li>
+</ul>
+<h3 class="mume-header" id="continuously-measure-monitor-and-improve-your-cost-optimisations">Continuously measure, monitor and improve your cost optimisations</h3>
+
+<ul>
+<li>Cost optimisation should be done routinely by analysing your systems</li>
+<li>Use Tagging to identify what each resource is being used for and by whom. Cost allocation tags can be activated in the Billing and Cost Management console. Cost allocation reports can be generated with usage and costs grouped by your tags. Tags enable you to organise costs across multiple AWS services by business category.</li>
+<li>Incentivise teams to architect for cost.</li>
+<li>AWS Trusted Advisor can provide real-time guidance on how to provision your resources in accordance with AWS best practices</li>
+</ul>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#pageTop">Compute services</a>
+<ul>
+<li><a href="#selecting-a-compute-service">Selecting a compute service</a></li>
+<li><a href="#section-2-ec2-elastic-compute-cloud">Section 2: EC2 (Elastic Compute Cloud)</a></li>
+<li><a href="#launching-an-ec2-instance">Launching an EC2 instance</a>
+<ul>
+<li><a href="#ami-components">AMI components</a></li>
+<li><a href="#types-of-amis">Types of AMIs</a></li>
+<li><a href="#creating-an-ami">Creating an AMI</a></li>
+<li><a href="#ec2-storage-options">EC2 storage options</a></li>
+</ul>
+</li>
+<li><a href="#launching-ec2-instances-programmatically">Launching EC2 instances programmatically</a></li>
+<li><a href="#ec2-instance-lifecycle">EC2 instance lifecycle</a></li>
+<li><a href="#elastic-ip-addresses">Elastic IP addresses</a></li>
+<li><a href="#ec2-instance-metadata">EC2 instance metadata</a></li>
+<li><a href="#amazon-cloudwatch">Amazon CloudWatch</a></li>
+<li><a href="#ec2-price-model">EC2 price model</a></li>
+<li><a href="#continuously-measure-monitor-and-improve-your-cost-optimisations">Continuously measure, monitor and improve your cost optimisations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">&#x2261;</a>
+    
+    
+    
+    
+    
+    
+    
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  
+    </body></html>

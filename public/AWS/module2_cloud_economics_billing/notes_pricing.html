@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_pricing</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,65 +261,172 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h3 class="mume-header" id="payment">Payment</h3>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>You pay for what you use.</li>
+<li>You pay less when you use more and when AWS grows (economies of scale)</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<h3 class="mume-header" id="volume-based-discounts">Volume based discounts</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<ul>
+<li>As your storage usage increases, the less you pay per GB of storage</li>
+<li>Tiered pricing for storage services like AWS S3</li>
+<li>You can choose the best combination of AWS storage solutions to lower storage costs</li>
+</ul>
+<p>As AWS grows, future higher-performing resources replace current resources for no extra charge</p>
+<h3 class="mume-header" id="custom-pricing">Custom pricing</h3>
+
+<ul>
+<li>High volume projects with unique requirements</li>
+</ul>
+<p>AWS Free Tier for 1 year</p>
+<h3 class="mume-header" id="services-with-no-charge">Services with no charge</h3>
+
+<ul>
+<li>Amazon VPC</li>
+<li>Elastic Beanstalk</li>
+<li>Auto Scaling</li>
+<li>AWS CloudFormation</li>
+<li>AWS Identity and Access Management (IAM)</li>
+</ul>
+<h3 class="mume-header" id="total-cost-of-ownership">Total Cost of Ownership</h3>
+
+<ul>
+<li>
+<p>What it costs to setup and run the solution</p>
+</li>
+<li>
+<p>Financial estimate to help identify direct and indirect costs of a system</p>
+</li>
+<li>
+<p>We can compare entire infrastructure environment or workload on-premises vs on AWS</p>
+</li>
+<li>
+<p>To budget and build a case for moving to the cloud</p>
+</li>
+<li>
+<p>Server costs</p>
+</li>
+<li>
+<p>Storage costs</p>
+</li>
+<li>
+<p>Network costs</p>
+</li>
+<li>
+<p>IT Labour costs</p>
+</li>
+</ul>
+<p>More indirect costs to consider for on-premise solutions</p>
+<h3 class="mume-header" id="aws-pricing-calculator">AWS Pricing Calculator</h3>
+
+<ul>
+<li>Estimate monthly costs</li>
+<li>Identity cost reduction opportunities</li>
+<li>Model solutions before realising them</li>
+<li>Explore price points</li>
+<li>Find the best instance types to meet your needs</li>
+</ul>
+<h4 class="mume-header" id="reading-price-estimate">Reading price estimate</h4>
+
+<ul>
+<li>first 12 months total</li>
+<li>total upfront - how much you pay upfront to set up your stack</li>
+<li>total monthly - how much you each month to run your AWS stack</li>
+</ul>
+<h4 class="mume-header" id="hard-benefits">Hard benefits</h4>
+
+<ul>
+<li>Reduced spending on compute, storage, networking, security</li>
+<li>Reduced hardward and software purchases</li>
+<li>Reduced operationalcosts, back up and disaster recovery</li>
+<li>Reduced operations personnel</li>
+</ul>
+<h4 class="mume-header" id="soft-benefits-difficult-to-quantify">Soft benefits (difficult to quantify)</h4>
+
+<ul>
+<li>Reuse services and applications to define and redefine solutions using the same cloud solutions</li>
+<li>Increased developer productivity</li>
+<li>Agile businesses can quickly respond to new and emerging opportunities</li>
+<li>Increase in global reach</li>
+</ul>
+<h3 class="mume-header" id="billing">Billing</h3>
+
+<p>AWS Organisations for grouped billing of multiple AWS accounts</p>
+<p>AWS Accounts are organised into OUs(Organisation Units)<br>
+OU&apos;s are branches of accounts and other OU&apos;s</p>
+<p>IAM (Identity Access Management) policies apply to services, users, groups and roles. It can&apos;t be used to restrict AWS accounts</p>
+<p>SCP (Service Control Policies) apply to individual AWS Accounts and OUs to control their access to AWS services. This affects all users, groups, roles falling under each OU.</p>
+<h3 class="mume-header" id="accessing-aws-organisations">Accessing AWS Organisations</h3>
+
+<ul>
+<li>AWS Management Console</li>
+<li>AWS CLI</li>
+<li>SDK</li>
+<li>HTTPS Query APIs</li>
+</ul>
+<h3 class="mume-header" id="aws-billing-and-cost-management">AWS Billing and Cost Management</h3>
+
+<p>AWS Billing Dashboard shows you what you&apos;re spending the most on and your spending trends at different levels of granularity. It also predicts your costs for future months based on your past usage.</p>
+<p>Tools include:</p>
+<ul>
+<li>AWS Budgets</li>
+<li>AWS Cost and Usage Report</li>
+<li>AWS Cost Explorer</li>
+<li>AWS Bills page</li>
+</ul>
+<p>Provides up-to-date info of the costs of the serivces you are using.<br>
+You can send billing reports to S3.</p>
+<h3 class="mume-header" id="technical-support">Technical Support</h3>
+
+<p>Proactive guidance</p>
+<ul>
+<li>Technical Account Manager (TAM) provide guidance and technical reviews, ongoing communication (Enterprise Support Plan)</li>
+</ul>
+<p>AWS Trusted Advisor</p>
+<ul>
+<li>Automated service that identify problems in your cloud architecture</li>
+</ul>
+<p>Account assistance</p>
+<ul>
+<li>AWS Support Concierge</li>
+</ul>
+<h3 class="mume-header" id="4-support-plans">4 Support Plans</h3>
+
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>Basic (free)</li>
+<li>Developer</li>
+<li>Business</li>
+<li>Enterprise</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
+<p><img src="technical_support_response_types.png" alt="technical support"></p>
+<p>Costs for services with reserved capacity:</p>
 <ol>
-<li>Query by key attributes</li>
+<li>AURI (All up front)</li>
+<li>PURI (Partial up front)</li>
+<li>NURI (No up front)</li>
 </ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
-<ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
-</ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
-
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
-<ul>
-<li>read queries might not return the latest data</li>
-</ul>
-<p>Strongly consistent reads</p>
-<ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
-</ul>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#payment">Payment</a></li>
+<li><a href="#volume-based-discounts">Volume based discounts</a></li>
+<li><a href="#custom-pricing">Custom pricing</a></li>
+<li><a href="#services-with-no-charge">Services with no charge</a></li>
+<li><a href="#total-cost-of-ownership">Total Cost of Ownership</a></li>
+<li><a href="#aws-pricing-calculator">AWS Pricing Calculator</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#reading-price-estimate">Reading price estimate</a></li>
+<li><a href="#hard-benefits">Hard benefits</a></li>
+<li><a href="#soft-benefits-difficult-to-quantify">Soft benefits (difficult to quantify)</a></li>
 </ul>
 </li>
+<li><a href="#billing">Billing</a></li>
+<li><a href="#accessing-aws-organisations">Accessing AWS Organisations</a></li>
+<li><a href="#aws-billing-and-cost-management">AWS Billing and Cost Management</a></li>
+<li><a href="#technical-support">Technical Support</a></li>
+<li><a href="#4-support-plans">4 Support Plans</a></li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>

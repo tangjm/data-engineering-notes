@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 6: AWS CloudFront
 
 A content delivery network (CDN) service
@@ -31,13 +35,33 @@ If a CDN is on the same network as the application origin server, routing to the
 
 Edge locations - networks of data centers designed to serve popular content asap to viewers.
 
-Regional edge cahces - caches less popular content. Has a larger cache than individual edge locations. 
+Regional edge caches - caches less popular content. Has a larger cache than individual edge locations. 
 
 Together they ensure more of your content remains closer to users, reducing the need for CloudFront to fetch data from your origin server, thus improving overall performance for users.
 
 Helps improve performance by using Keep-alive connections between the Edge locations & the origin server.
 
 Can customise content at the Edge location before delivering it to users through the use of Lambda@Edge functions. 
+
+Geolocation headers can be used to provide location-based web personalisation. This gives you greater control over cache behaviour. Your origins also get access to the requester's country name, region, city, postal code, latitude and longitude based on their IP address.
+### Origins
+
+Origins are locations where content is stored and retrieved by CloudFront to serve to clients
+
+Use S3OriginConfig to specify an Amazon S3 bucket that is not configured with static website hosting.
+
+Use CustomOriginConfig to specify all other kinds of origins, including:
+
+- An Amazon S3 bucket that is configured with static website hosting
+
+- An Elastic Load Balancing load balancer
+
+- An AWS Elemental MediaPackage endpoint
+
+- An AWS Elemental MediaStore container
+
+- Any other HTTP server, running on an Amazon EC2 instance or any other kind of host
+
 ### Benefits
 
 - Fast and global
@@ -55,7 +79,6 @@ It integrates with Lambda@Edge so that you can run custom code across AWS locati
 - Economical
 Charged according to what you use.
 If you use AWS origins such as Amazon Simple Storage Service (Amazon S3) or Elastic Load Balancing, you pay only for storage costs, not for any data transferred between these services and CloudFront
-
 
 ### CloudFront Pricing
 

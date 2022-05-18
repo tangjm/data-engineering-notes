@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>dynamo_db</title>
+      <title>notes_lambda</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,63 +261,77 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</h1>
+      <h1 class="mume-header" id="section-5-introduction-to-aws-lambda">Section 5: Introduction to AWS Lambda</h1>
 
-<p>Managed serverless NoSQL database optimised for low-latency performance</p>
+<p><img src="images/aws_lambda.png" alt="AWS Lambda"></p>
+<p>AWS Lambda is an event-driven serverleess compute service.</p>
+<p>Let&apos;s you deploy custom code without having to provision a server</p>
+<p>You can configure your code to run in response to events or according to a preset schedule.</p>
+<p>You only pay for the compute time consumed by your Lambda function.</p>
+<p>Your compute time is billed at the granularity of 1 millisecond.</p>
+<h3 class="mume-header" id="aws-lambda-event-sources">AWS Lambda event sources</h3>
+
+<p>An event source is an AWS service or an application that produces events which trigger an AWS Lambda function to run.</p>
+<p>Some services invoke Lambda functions asynchronously</p>
 <ul>
-<li>The database is replicated across multiple availability zones within a Region</li>
-<li>Table storage is optimised for large and volatile data sets.</li>
-<li>Its query language is optimised for low-latency performance.</li>
-<li>Data is stored in SSDs</li>
-<li>Option to encrypt data at rest</li>
+<li>S3</li>
+<li>SNS</li>
+<li>CloudWatch</li>
 </ul>
-<h3 class="mume-header" id="tables-items-and-attributes">Tables, items and attributes</h3>
+<p>Lambda can pull resources from Amazon Simple Queue Service (SQS) and read events from DynamoDB</p>
+<p>Other services invoke Lamda functions directly like Elastic Load Balancers and API Gateways.</p>
+<p>The Lambda console, API, SDK, and AWS CLI are some ways of invoking your Lambda functions.</p>
+<h3 class="mume-header" id="lambda-function-configuration">Lambda function configuration</h3>
 
-<p>Attributes are the most fundamental data elements<br>
-Items are uniquely identifiable groups of attributes<br>
-A table is a collection of items.</p>
-<p><img src="images/primary_key_types.png" alt="Primary key types"></p>
-<p>Two primary key types:</p>
+<p><img src="images/lambda_function_config.png" alt="Lambda function configuration"></p>
+<ul>
+<li>
+<p>Function code</p>
+</li>
+<li>
+<p>Dependencies</p>
+</li>
+<li>
+<p>Execution role (IAM role that determines which AWS Services this lambda function can interact with)</p>
+</li>
+<li>
+<p>environment variables</p>
+</li>
+<li>
+<p>If you use the lambda API</p>
+</li>
+</ul>
+<p>Example use cases:</p>
 <ol>
-<li>A single key composed of a single attribute: partition key</li>
-<li>A compound key composed of two attributes: partition key and sort key</li>
+<li>Configure AWS Lambda function to automate the stopping and starting of your EC2 instances</li>
 </ol>
-<p>Each item in a table must have a key.</p>
-<h3 class="mume-header" id="querying-your-database">Querying your database</h3>
-
-<p><img src="images/dynamo_db_querying_data.png" alt="Querying data"></p>
-<ol>
-<li>Query by key attributes</li>
-</ol>
-<p>This way of finding data is efficient because your items are indexed by their primary keys</p>
+<p><img src="images/lambdas_for_scheduling_ec2.png" alt="Schedule-based Lambda function"></p>
 <ol start="2">
-<li>Scan for match conditions on non-key attributes</li>
+<li>Uploading thumnail images - run an AWS lambda function to create thumbnails when they are uploaded and store them in S3 buckets</li>
 </ol>
-<p>While less efficient than the first method, this method provides greater flexibility</p>
-<h3 class="mume-header" id="read-consistency">Read consistency</h3>
+<p><img src="images/event_based_lambda_for_moving_images.png" alt="Event-based lambda function"></p>
+<h3 class="mume-header" id="aws-lambda-limits">AWS Lambda limits</h3>
 
-<p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html">Further reading</a></p>
-<p>Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second.</p>
-<p>Both eventually consistent and strongly consistent reads are supported by DynamoDB.<br>
-The default read consistency is eventually consistent.</p>
-<p>Eventually consistent reads</p>
+<p>Soft limits per Region</p>
 <ul>
-<li>read queries might not return the latest data</li>
+<li>1000 concurrent executions</li>
+<li>Max 75GB function and layer storage</li>
 </ul>
-<p>Strongly consistent reads</p>
+<p>Hard limits for individual functions</p>
 <ul>
-<li>read queries return latest data</li>
-<li>uses more throughput</li>
-<li>higher latency</li>
+<li>Max function memory allocation = 10,240 MB</li>
+<li>Functions timeout in 15 minutes</li>
+<li>Max deployment package size is 250MB including layers</li>
+<li>Max Container image code package size of 10GB</li>
 </ul>
 
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#section-2-amazon-dynamodb">Section 2: Amazon DynamoDB</a>
+<li><a href="#section-5-introduction-to-aws-lambda">Section 5: Introduction to AWS Lambda</a>
 <ul>
-<li><a href="#tables-items-and-attributes">Tables, items and attributes</a></li>
-<li><a href="#querying-your-database">Querying your database</a></li>
-<li><a href="#read-consistency">Read consistency</a></li>
+<li><a href="#aws-lambda-event-sources">AWS Lambda event sources</a></li>
+<li><a href="#lambda-function-configuration">Lambda function configuration</a></li>
+<li><a href="#aws-lambda-limits">AWS Lambda limits</a></li>
 </ul>
 </li>
 </ul>

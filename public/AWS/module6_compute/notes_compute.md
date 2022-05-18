@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Compute services {#pageTop}
 
 Categorisation of compute services
@@ -36,7 +40,6 @@ Some example EC2 use cases:
 - Computing servers
 - Proxy servers
 
-
 You get full administrative control over either a Windows or Linux operating system running on the instance.
 
 Guest operating system - the operating system that runs on a virtual machine
@@ -45,7 +48,7 @@ Host operating system - the operating system installed on the server hardware th
 
 Use virtual machine templates called AMI (Amazon Machine Images) to launch EC2 instances of any size into any availability zone.
 
-Security groups enable you to control your EC2 instance's inbound and outbound traffic
+Security groups enable you to control your EC2 instance's inbound and outbound traffic; they can only be configured for instances in "running" or "stopped" state, not in the "hibernate" state.
 
 ### Launching an EC2 instance
 
@@ -54,18 +57,18 @@ Security groups enable you to control your EC2 instance's inbound and outbound t
 AMI enable you to launch multiple instances.
 Select your virtual machine template. This involves choosing your OS, either Windows or Linux. It also comes with pre-installed software.
 
-AMI components
+#### AMI components
 - template for the root volume of the instance. The root volume includes an OS (operating system) and everything installed in the OS (applications, libraries, etc.). EC2 copies the template to the root volume of the new EC2 instance.
 - Launch permissions - determine which accounts are permitted to use the AMI.
 - a block device mapping - this specifies which volumes to attach to the instance when it is launched
 
-Types of AMIs
+#### Types of AMIs
 Quick Start - select from prebuilt AMIs
 My AMIs - AMIs you have created
 AWS Marketplace - select from a digital catalogue of software solutions
 Community AMIs - AMIs created by people all over the world.
 
-Creating an AMI
+#### Creating an AMI
 1. Import or start with an existing AMI and use it to launch an instance (we call this an unmodified instance)
 2. Configure the unmodified instance in the way you want (this is now a modified instance)
 3. Capture the modified instance as a new AMI. (a snapshot of its volume is made and is registered as a new AMI during which the EC2 instance is stopped)
@@ -150,9 +153,11 @@ The user data script runs with root privileges during the final phases of the bo
 - Windows instances are run by EC2config or EC2Launch utility.
 - Linux instances are run by the cloud-init service.
 
+User data cannot be modifed while your EC2 instance is running.
+
 ![Example User data](images/example_user_data.png)
 
-In the example user data script, you see a simple three-line Linux Bash shell script. The first line indicates that the script should be run by the Bash shell. The second line invokes the Yellowdog Updater, Modified (YUM) utility, which is commonly used in many Linux distributions — such as Amazon Linux, CentOS, and Red Hat Linux — to retrieve software from an online repository and install it. In line two of the example, that command tells YUM to update all installed packages to the latest versions that are known to the software repository that it is configured to access. Line three of the script indicates that the Wget utility should be installed. Wget is a common utility for downloading files from the web.
+In the example user data script above, you see a simple three-line Linux Bash shell script. The first line indicates that the script should be run by the Bash shell. The second line invokes the Yellowdog Updater, Modified (YUM) utility, which is commonly used in many Linux distributions — such as Amazon Linux, CentOS, and Red Hat Linux — to retrieve software from an online repository and install it. In line two of the example, that command tells YUM to update all installed packages to the latest versions that are known to the software repository that it is configured to access. Line three of the script indicates that the Wget utility should be installed. Wget is a common utility for downloading files from the web.
 
 
 **Step 6: Specify storage**
@@ -207,6 +212,11 @@ a Windows machine to an Amazon EC2 instance, you can use a tool such as PuTTY, w
 With Linux instances, at boot time, the 
 public key content is placed on the instance. An entry is created in within
 ~/.ssh/authorized_keys. To log in to your Linux instance (for example, by using SSH), you must provide the private key when you establish the connection.
+
+Two ways of creating key pairs for connecting to EC2 instances
+1. Use the AWS Console or AWS CLI to create a public, private key pair using AWS EC2 instance.
+   The public key is stored in an EC2 instance and the customer downloads and stores securely the private key
+2. Use a third-party tool to generate a key pair. With this option, the customer needs to import the generated public key to an EC2 instance; they then use the private key to connect to the EC2 instance
 
 ### Launching EC2 instances programmatically
 

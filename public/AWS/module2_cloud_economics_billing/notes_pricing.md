@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### Payment
 - You pay for what you use.
 - You pay less when you use more and when AWS grows (economies of scale)
@@ -21,10 +25,10 @@ AWS Free Tier for 1 year
 - Elastic Beanstalk
 - Auto Scaling
 - AWS CloudFormation
-- AWS Identity and Access Management
+- AWS Identity and Access Management (IAM)
 
 ### Total Cost of Ownership
----
+
 - What it costs to setup and run the solution
 - Financial estimate to help identify direct and indirect costs of a system
 
@@ -51,20 +55,20 @@ More indirect costs to consider for on-premise solutions
 - total upfront - how much you pay upfront to set up your stack
 - total monthly - how much you each month to run your AWS stack
 
-### Hard benefits
+#### Hard benefits
 - Reduced spending on compute, storage, networking, security
 - Reduced hardward and software purchases
 - Reduced operationalcosts, back up and disaster recovery
 - Reduced operations personnel
 
-### Soft benefits (difficult to quantify)
+#### Soft benefits (difficult to quantify)
 - Reuse services and applications to define and redefine solutions using the same cloud solutions
 - Increased developer productivity
 - Agile businesses can quickly respond to new and emerging opportunities
 - Increase in global reach 
 ### Billing
 
-AWS Organisations for grouped billing of multiple accounts 
+AWS Organisations for grouped billing of multiple AWS accounts 
 
 AWS Accounts are organised into OUs(Organisation Units)
 OU's are branches of accounts and other OU's

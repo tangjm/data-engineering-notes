@@ -1,4 +1,10 @@
+---
+export_on_save:
+  html: true
+---
 ### Section 8: AWS Elastic Beanstalk
+
+AWS Elastic Beanstalk is an easy-to-use service for deploying and scaling web applications and services developed with Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker on familiar servers such as Apache, Nginx, Passenger, and IIS.
 
 Platform as a Service for setting up web applications
 

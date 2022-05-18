@@ -4,7 +4,7 @@ export_on_save:
 ---
 # Section 2: Amazon DynamoDB
 
-Managed low-latency NoSQL database
+Managed serverless NoSQL database optimised for low-latency performance
 
 - The database is replicated across multiple availability zones within a Region
 - Table storage is optimised for large and volatile data sets.
@@ -38,4 +38,21 @@ This way of finding data is efficient because your items are indexed by their pr
 
 While less efficient than the first method, this method provides greater flexibility
 
+
+### Read consistency
+
+[Further reading](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html)
+
+Due to how DynamoDB databases are replicated across multiple availability zones, when you write data to a table in DynamoDB, it takes time for the update to be synchronised across all your replicates. Data is eventually consistent across all of your storage locations usually within a second. 
+
+Both eventually consistent and strongly consistent reads are supported by DynamoDB.
+The default read consistency is eventually consistent.
+
+Eventually consistent reads
+- read queries might not return the latest data
+
+Strongly consistent reads
+- read queries return latest data
+- uses more throughput
+- higher latency
 

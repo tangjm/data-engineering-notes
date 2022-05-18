@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # Section 1: Shared responsibility
 ### Shared responsibility
 
@@ -138,15 +142,16 @@ Sign in with IAM User credentials (This will be your new admin account)
 Store root user account credentials securely
 
 Step 2. Enable Multi-factor authentication
-Step 3. Enable CLoudTrail
-- Tracks all API requests 
+Step 3. Enable CloudTrail
+- Tracks all API requests
+   
 Step 4. Enable billing reports (Cost and Usage report)
 
 
 ### Securing accounts with AWS Organisations
 
 - Group accounts into OU (Organisational Units)
-- Apply Service Control Policies to OUs
+- Apply Service Control Policies (SCP) to OUs
 
 #### Service control policies
 
@@ -156,13 +161,13 @@ Step 4. Enable billing reports (Cost and Usage report)
 #### KMS (Key Management Service)
 - create and manage encryption keys
 - integrates with CloudTrail
-- Uses hardware security modules (HSM)
+- uses hardware security modules (HSM)
 
 ### Cognito
 - service for managing user credentials and authentication for your applications.
 - Add sign-up, sign-in and access control to web and mobile applications
-- Amazon Cognito User Pools are used to manage user authentication to web and mobile apps
-- Amazon Cognito Identity Pools are used to provide temporary AWS credentials for accessing AWS services.
+- Amazon Cognito User Pools are used to manage user authentication to your web and mobile apps
+- Amazon Cognito Identity Pools are used to provide temporary AWS credentials to users for accessing AWS services.
 
 ### AWS Shield
 
@@ -179,8 +184,17 @@ Step 4. Enable billing reports (Cost and Usage report)
 - TLS (transport layer security) - formerly SSL
 - AWS Certificate Manager to manage TLS certificates
 - HTTPS - bidirectional encryption of TLS
-- e.g. EC2 <-TLS-> EFS
-- e.g. Storage Gateway <-TLS-> S3
+
+```mermaid
+graph LR
+  EC2 -- TLS --> EFS
+  EFS -- TLS --> EC2
+```
+```mermaid
+graph LR
+  v(Storage Gateway) -- TLS --> S3
+  S3 -- TLS --> v(Storage Gateway)
+```
 
 ### Securing S3 buckets and objects
 
