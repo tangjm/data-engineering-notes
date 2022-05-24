@@ -6,6 +6,8 @@ node_modules/
 *.pdf
 *.zip
 *.xlsx
+*.csv
+/Tableau
 json_playground.json
 /NoSQL
 /Titanic_data
