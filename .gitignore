@@ -5,7 +5,7 @@ node_modules/
 *.docx
 *.pdf
 *.zip
-*.xlxs
+*.xlsx
 json_playground.json
 /NoSQL
 /Titanic_data
