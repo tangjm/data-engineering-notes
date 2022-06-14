@@ -45,9 +45,9 @@ When stepping through rows after pausing on a breakpoint using Trace Debug, you 
 
 ### Parallelisation
 
-- [ ] Configure a Job to use multi-threaded execution
-- [ ] Configure an individual component to use parallel execution
-- [ ] Use a Talend component to run subJobs in parallel
+- [x] Configure a Job to use multi-threaded execution
+- [x] Configure an individual component to use parallel execution
+- [x] Use a Talend component to run subJobs in parallel
 - [ ] Use Talend components to split your data across multiple threads for multi-threaded execution
 
 #### Synchronous/Sequential execution
@@ -77,9 +77,9 @@ Never use a thread count that is higher than the number of available processors.
 
 ### Memorizing Data
 
-- [ ] Define an autojoin use case
+- [x] Define an autojoin use case
 - [ ] Design a Job using the memorization logic
-- [ ] Configure the tMemorizeRows component
+- [x] Configure the tMemorizeRows component
 
 Self-joins using the tMap component involve calculating Cartesian products which are costly operations in Talend
 

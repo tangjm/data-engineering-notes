@@ -3,11 +3,11 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
       
       
       
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@9.1.1/dist/mermaid.min.js"></script>
       
       
       
@@ -496,9 +496,9 @@ Use iterate connection with tFileList to loop a process on files stored in a dir
 <h3 class="mume-header undefined" id="error-handling">Error handling</h3>
 
 <p>Die-on error - stops the Job when an error is encountered in the component<br>
-Triggers - tranfer control based on subjob and component status<br>
-Kill a job - use the tKill component to kill a job when a specified condition is met<br>
-Warning - use the tWarn in the same way as you would use a tKill, but you get a warning message instead of killing the job.<br>
+Triggers - transfer control based on subjob and component status<br>
+Kill a job - use the tDie component to kill a job when a specified condition is met<br>
+Warning - use the tWarn in the same way as you would use a tDie, but you get a warning message instead of killing the job.<br>
 log4jlevel - configure which messages to log to the console</p>
 <p><img src="images/kill_a_job.png" alt="kill a job"></p>
 <h3 class="mume-header undefined" id="web-services">Web services</h3>

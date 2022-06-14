@@ -253,9 +253,9 @@ Use iterate connection with tFileList to loop a process on files stored in a dir
 ### Error handling {#error-handling}
 
 Die-on error - stops the Job when an error is encountered in the component
-Triggers - tranfer control based on subjob and component status
-Kill a job - use the tKill component to kill a job when a specified condition is met
-Warning - use the tWarn in the same way as you would use a tKill, but you get a warning message instead of killing the job.
+Triggers - transfer control based on subjob and component status
+Kill a job - use the tDie component to kill a job when a specified condition is met
+Warning - use the tWarn in the same way as you would use a tDie, but you get a warning message instead of killing the job.
 log4jlevel - configure which messages to log to the console
 
 ![kill a job](images/kill_a_job.png)
