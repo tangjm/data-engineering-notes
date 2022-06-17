@@ -4,17 +4,21 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/getNotes';
 
+function removeExtension(note) {
+  return note.slice(0, note.length - 5);
+}
+
 function createLinksNotes(subdir, notes) {
   return notes.map(note => {
     return <li key={note}>
-      <Link href={`/SQL/${subdir}/${note}`}>{note.slice(0, note.length - 5)}</Link>
+      <Link href={`/SQL/${subdir}/${note}`}>{removeExtension(note)}</Link>
     </li>
   })
 }
 
 export async function getStaticProps() {
   const generalNotes = getNotes(...['SQL', 'notes'])
-  const chapterNotes = getNotes(...['SQL', 'SQLHabitChapters'])
+  const chapterNotes = getNotes(...['SQL', 'chapters'])
   const exerciseNotes = getNotes(...['SQL', 'exercises'])
   return {
     props: {
@@ -52,7 +56,7 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes }) 
         <h2>SQLHabit chapter notes</h2>
         <p>A learning log on selected chapters from the SQLHabit course</p>
         <ul>
-          {createLinksNotes('SQLHabitCHapters', chapterNotes)}
+          {createLinksNotes('chapters', chapterNotes)}
         </ul>
       </main>
 
