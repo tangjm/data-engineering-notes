@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>exercise26</title>
+      <title>exercise49</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,72 +261,45 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</h1>
+      <h1 class="mume-header" id="49-cumulative-total-users-per-day">49. Cumulative total users per day</h1>
 
-<p>See exercise 22 for Part 1.</p>
-<p>Find out which month historically had the highest gross revenue.</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- year, month with highest gross revenue</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword keyword-SELECT">SELECT</span>
-    m<span class="token punctuation">,</span>
-    
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
+<p>Report the number of signups per day and the cumulative number of signups per day.</p>
+<p>To calculate cumulative number of signups for each day, we take the total_signups_count of the previous day and add to it the signups_count of the current day.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
+  signup_date<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> signups_count<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> signup_date<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_signups_count
+<span class="token keyword keyword-FROM">FROM</span> users
 <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
-</pre><p>Alternative solution</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    TO_CHAR<span class="token punctuation">(</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue1
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
+</pre><p>The (ORDER BY signup_date) changes the window frame such that for each record, all records from the first through to the current record, including the current record, are treated as belonging to the same partition. This is true for all window frames with only an ORDER BY clause.</p>
+<p>For our window function of our current query, the COUNT aggregate function is first calculated for each grouping of records grouped by date in the partition, and then we apply SUM over the results of those calculations.</p>
+<p>This is exactly what a cumulative sum is - summing the number of signups from the first day through to the current day.</p>
+<p><a href="https://www.postgresql.org/docs/current/tutorial-window.html">Further reading</a></p>
+<p>Also note that the following won&apos;t work because the SELECT clause is executed after Window functions.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
+  signup_date<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> signups_count<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span>signups_count<span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> signup_date<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_signups_count
+<span class="token keyword keyword-FROM">FROM</span> users
 <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+</pre><p>If we wanted to improve the clarity we can go with the following query.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> signups_per_day <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    signup_date<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> signups_count
+  <span class="token keyword keyword-FROM">FROM</span> users
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
 <span class="token punctuation">)</span>
 
 <span class="token keyword keyword-SELECT">SELECT</span> 
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span>gross_revenue1<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> gross_revenue1 <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><h3 class="mume-header" id="second-pass-27-05-2022">Second pass (27-05-2022)</h3>
-
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
- <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><p>Although the rounded results make it seem like there is a tie, July 2019 is the month with the highest gross revenue historically.</p>
-<p>There&apos;s likely a problem with this question.</p>
-
+  signup_date<span class="token punctuation">,</span>
+  signups_count<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span>signups_count<span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> signup_date<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_signups_count
+<span class="token keyword keyword-FROM">FROM</span> signups_per_day
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</a>
-<ul>
-<li><a href="#second-pass-27-05-2022">Second pass (27-05-2022)</a></li>
-</ul>
-</li>
+<li><a href="#49-cumulative-total-users-per-day">49. Cumulative total users per day</a></li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>

@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
       
       
       
@@ -263,9 +263,13 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <h1 class="mume-header" id="having">HAVING</h1>
 
+<p>HAVING lets us filter grouped rows.</p>
 <p>Syntax</p>
 <pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> select_list <span class="token keyword keyword-FROM">FROM</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">[</span><span class="token keyword keyword-WHERE">WHERE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span> <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword keyword-HAVING">HAVING</span> boolean_expression
-</pre><p>If a table has been grouped using GROUP BY, but only certain groups are of interest, the HAVING clause can be used, much like a WHERE clause, to eliminate groups from the result. <a href="https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-GROUP">PostgresSQL documentation on HAVING</a></p>
+</pre><p>If a table has been grouped using GROUP BY, but only certain groups are of interest, the HAVING clause can be used, much like a WHERE clause, to eliminate groups from the result.</p>
+<p>It&apos;s more efficient to rewrite a HAVING clause that doesn&apos;t feature an aggregate function as a WHERE clause. This is because the WHERE clause determines which records grouping and aggregate calculations are applied to. And by filtering our records at this stage we avoid unnecessary grouping and aggregating.</p>
+<p>So as a rule of thumb, if we can perform the same filter with both WHERE and HAVING, we should use the WHERE filter to avoid redundant grouping and aggregate calculations.</p>
+<p><a href="https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-GROUP">PostgresSQL documentation on HAVING</a></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>

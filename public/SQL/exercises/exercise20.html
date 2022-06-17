@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
       
       
       
@@ -280,12 +280,12 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Result table schema has three columns: review_type, percentage and reviews_count</p>
 <p>Result table should be sorted by percentage with highest at the top.<br>
 percentages should be rounded to the closest integer.</p>
-<p>Regex for positive word list:<br>
-(amazing)|(great)|(awesome)|(good)|(perfect)|(impressed)|(super)<br>
-(amazing|great|awesome|good|perfect|impressed|super)</p>
-<p>Regex for negative word list:<br>
-(bad|terrible|horrible|disappointed|broken)</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql">REGEXP_MATCHES<span class="token punctuation">(</span>feedback<span class="token punctuation">,</span> <span class="token string">&apos;(amazing)|(great)|(awesome)|(good)|(perfect)|(impressed)|(super)&apos;</span><span class="token punctuation">)</span>
+<p>Regex for positive word list:</p>
+<pre data-role="codeBlock" data-info="regex" class="language-regex"><span class="token group punctuation">(</span>amazing<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>great<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>awesome<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>good<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>perfect<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>impressed<span class="token group punctuation">)</span><span class="token alternation keyword">|</span><span class="token group punctuation">(</span>super<span class="token group punctuation">)</span>
+<span class="token group punctuation">(</span>amazing<span class="token alternation keyword">|</span>great<span class="token alternation keyword">|</span>awesome<span class="token alternation keyword">|</span>good<span class="token alternation keyword">|</span>perfect<span class="token alternation keyword">|</span>impressed<span class="token alternation keyword">|</span>super<span class="token group punctuation">)</span>
+</pre><p>Regex for negative word list:</p>
+<pre data-role="codeBlock" data-info="regex" class="language-regex"><span class="token group punctuation">(</span>bad<span class="token alternation keyword">|</span>terrible<span class="token alternation keyword">|</span>horrible<span class="token alternation keyword">|</span>disappointed<span class="token alternation keyword">|</span>broken<span class="token group punctuation">)</span>
+</pre><pre data-role="codeBlock" data-info="sql" class="language-sql">REGEXP_MATCHES<span class="token punctuation">(</span>feedback<span class="token punctuation">,</span> <span class="token string">&apos;(amazing)|(great)|(awesome)|(good)|(perfect)|(impressed)|(super)&apos;</span><span class="token punctuation">)</span>
 REGEXP_MATCHES<span class="token punctuation">(</span>feedback<span class="token punctuation">,</span> <span class="token string">&apos;(bad)|(terrible)|(horrible)|(disappointed)|(broken)&apos;</span><span class="token punctuation">)</span>
 
 REGEXP_MATCHES<span class="token punctuation">(</span>feedback<span class="token punctuation">,</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span><span class="token punctuation">)</span>
@@ -318,14 +318,14 @@ total_reviews <span class="token keyword keyword-AS">AS</span> <span class="toke
 <span class="token keyword keyword-FROM">FROM</span> sentiment_analysis<span class="token punctuation">,</span> total_reviews
 <span class="token keyword keyword-WHERE">WHERE</span> sentiment <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token string">&apos;positive&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;negative&apos;</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> reviews_count <span class="token operator">/</span> total_reviews<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-</pre><p>Refactored</p>
+</pre><p>Refactored - fails</p>
 <pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> sentiment_analysis <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
   <span class="token keyword keyword-SELECT">SELECT</span> 
       <span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> 
         <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span>
           <span class="token operator">AND</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;mixed&apos;</span>
         <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;positive&apos;</span>
-        <span class="token operator">*</span><span class="token operator">*</span><span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span><span class="token operator">*</span><span class="token operator">*</span>
+        <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span>
         <span class="token keyword keyword-ELSE">ELSE</span> <span class="token string">&apos;neutral&apos;</span>
       <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> sentiment<span class="token punctuation">,</span>
       <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> reviews_count<span class="token punctuation">,</span>
@@ -342,10 +342,170 @@ total_reviews <span class="token keyword keyword-AS">AS</span> <span class="toke
 <span class="token keyword keyword-FROM">FROM</span> sentiment_analysis
 <span class="token keyword keyword-WHERE">WHERE</span> sentiment <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token string">&apos;positive&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;negative&apos;</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> reviews_count <span class="token operator">/</span> total_reviews<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
+</pre><h3 class="mume-header" id="second-pass">Second pass</h3>
+
+<p>Positive reviews<br>
+Negative reviews<br>
+Mixed reviews<br>
+Neutral reviews</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> sentiment_analysis <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span> <span class="token operator">AND</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;mixed&apos;</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;positive&apos;</span>
+      <span class="token keyword keyword-ELSE">ELSE</span> <span class="token string">&apos;neutral&apos;</span>
+    <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> sentiment<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> reviews_count<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_reviews<span class="token punctuation">,</span>
+    <span class="token number">100.0</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage
+  <span class="token keyword keyword-FROM">FROM</span> reviews
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+<span class="token punctuation">,</span> sentiments <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;positive&apos;</span> <span class="token keyword keyword-AS">AS</span> sentiment
+  <span class="token keyword keyword-UNION">UNION</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;negative&apos;</span>
+  <span class="token keyword keyword-UNION">UNION</span> 
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;mixed&apos;</span>
+  <span class="token keyword keyword-UNION">UNION</span> 
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;neutral&apos;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  s<span class="token punctuation">.</span>sentiment <span class="token keyword keyword-AS">AS</span> review_type<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>percentage<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage<span class="token punctuation">,</span>
+  reviews_count
+<span class="token keyword keyword-FROM">FROM</span> sentiments s 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> sentiment_analysis sa
+  <span class="token keyword keyword-ON">ON</span> sa<span class="token punctuation">.</span>sentiment <span class="token operator">=</span> s<span class="token punctuation">.</span>sentiment
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> percentage <span class="token keyword keyword-DESC">DESC</span> NULLS <span class="token keyword keyword-LAST">LAST</span>
+</pre><p>This query includes all sentiments in the result table.</p>
+<p>Rewritten using ILIKE operators</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> sentiment_analysis <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> <span class="token punctuation">(</span>feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%amazing%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%great%&apos;</span> <span class="token operator">OR</span> 
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%awesome%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%good%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%perfect%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%impressed%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%super%&apos;</span><span class="token punctuation">)</span>
+        <span class="token operator">AND</span>
+            <span class="token punctuation">(</span>feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%bad%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%terrible%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%horrible%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%disappointed%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%broken%&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;mixed&apos;</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> <span class="token punctuation">(</span>feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%amazing%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%great%&apos;</span> <span class="token operator">OR</span> 
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%awesome%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%good%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%perfect%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%impressed%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%super%&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;positive&apos;</span>
+      <span class="token keyword keyword-WHEN">WHEN</span> <span class="token punctuation">(</span>feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%bad%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%terrible%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%horrible%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%disappointed%&apos;</span> <span class="token operator">OR</span>
+            feedback <span class="token operator">ILIKE</span> <span class="token string">&apos;%broken%&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span>
+      <span class="token keyword keyword-ELSE">ELSE</span> <span class="token string">&apos;neutral&apos;</span>
+    <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> sentiment<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> reviews_count<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_reviews<span class="token punctuation">,</span>
+    <span class="token number">100.0</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage
+  <span class="token keyword keyword-FROM">FROM</span> reviews
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+<span class="token punctuation">,</span> sentiments <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;positive&apos;</span> <span class="token keyword keyword-AS">AS</span> sentiment
+  <span class="token keyword keyword-UNION">UNION</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;negative&apos;</span>
+  <span class="token keyword keyword-UNION">UNION</span> 
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;mixed&apos;</span>
+  <span class="token keyword keyword-UNION">UNION</span> 
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token string">&apos;neutral&apos;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  s<span class="token punctuation">.</span>sentiment <span class="token keyword keyword-AS">AS</span> review_type<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>percentage<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage<span class="token punctuation">,</span>
+  reviews_count
+<span class="token keyword keyword-FROM">FROM</span> sentiments s 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> sentiment_analysis sa
+  <span class="token keyword keyword-ON">ON</span> sa<span class="token punctuation">.</span>sentiment <span class="token operator">=</span> s<span class="token punctuation">.</span>sentiment
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> percentage <span class="token keyword keyword-DESC">DESC</span> NULLS <span class="token keyword keyword-LAST">LAST</span>
+</pre><p>The problem seems to be that our regex pattern matches are case-sensitive. So, for example, &apos;great&apos; will be matched but &apos;Great&apos; and &apos;GReAt&apos; won&apos;t be matched.</p>
+<p>To perform case-insensitive regex pattern matches, use a tilde succeded by an asterisk, <code>~*</code>, instead of <code>~</code>.</p>
+<h3 class="mume-header" id="solution">Solution</h3>
+
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> sentiment_analysis <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+      <span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> 
+        <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span><span class="token operator">*</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span>
+          <span class="token operator">AND</span> feedback <span class="token operator">~</span><span class="token operator">*</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;mixed&apos;</span>
+        <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span><span class="token operator">*</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;positive&apos;</span>
+        <span class="token keyword keyword-WHEN">WHEN</span> feedback <span class="token operator">~</span><span class="token operator">*</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span>
+        <span class="token keyword keyword-ELSE">ELSE</span> <span class="token string">&apos;neutral&apos;</span>
+      <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> sentiment<span class="token punctuation">,</span>
+      <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> reviews_count<span class="token punctuation">,</span>
+      <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_reviews<span class="token punctuation">,</span>
+      <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage
+  <span class="token keyword keyword-FROM">FROM</span> reviews
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  sentiment <span class="token keyword keyword-AS">AS</span> review_type<span class="token punctuation">,</span>
+  percentage<span class="token punctuation">,</span>
+  reviews_count
+<span class="token keyword keyword-FROM">FROM</span> sentiment_analysis
+<span class="token comment">-- WHERE sentiment IN (&apos;positive&apos;, &apos;negative&apos;)</span>
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> reviews_count <span class="token operator">/</span> total_reviews<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
+</pre><p>Alternatively, we can convert the feedback to lowercase before pattern matching.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> sentiment_analysis <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+      <span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> 
+        <span class="token keyword keyword-WHEN">WHEN</span> LOWER<span class="token punctuation">(</span>feedback<span class="token punctuation">)</span> <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span>
+          <span class="token operator">AND</span> LOWER<span class="token punctuation">(</span>feedback<span class="token punctuation">)</span> <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;mixed&apos;</span>
+        <span class="token keyword keyword-WHEN">WHEN</span> LOWER<span class="token punctuation">(</span>feedback<span class="token punctuation">)</span> <span class="token operator">~</span> <span class="token string">&apos;(amazing|great|awesome|good|perfect|impressed|super)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;positive&apos;</span>
+        <span class="token keyword keyword-WHEN">WHEN</span> LOWER<span class="token punctuation">(</span>feedback<span class="token punctuation">)</span> <span class="token operator">~</span> <span class="token string">&apos;(bad|terrible|horrible|disappointed|broken)&apos;</span> <span class="token keyword keyword-THEN">THEN</span> <span class="token string">&apos;negative&apos;</span>
+        <span class="token keyword keyword-ELSE">ELSE</span> <span class="token string">&apos;neutral&apos;</span>
+      <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> sentiment<span class="token punctuation">,</span>
+      <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> reviews_count<span class="token punctuation">,</span>
+      <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_reviews<span class="token punctuation">,</span>
+      <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage
+  <span class="token keyword keyword-FROM">FROM</span> reviews
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  sentiment <span class="token keyword keyword-AS">AS</span> review_type<span class="token punctuation">,</span>
+  percentage<span class="token punctuation">,</span>
+  reviews_count
+<span class="token keyword keyword-FROM">FROM</span> sentiment_analysis
+<span class="token comment">-- WHERE sentiment IN (&apos;positive&apos;, &apos;negative&apos;)</span>
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> reviews_count <span class="token operator">/</span> total_reviews<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
 </pre>
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#20-naive-sentiment-analysis">20. Naive sentiment analysis</a></li>
+<li><a href="#20-naive-sentiment-analysis">20. Naive sentiment analysis</a>
+<ul>
+<li><a href="#second-pass">Second pass</a></li>
+<li><a href="#solution">Solution</a></li>
+</ul>
+</li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>

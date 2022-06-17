@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 45. Design research: users who refunded 
 
 Provide a list of the 50 most recent customers who refunded their purchase. 

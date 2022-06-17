@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 44. Ultimate AB-test dashboard: purchase rate uplift 
 
 Report cohort sizes (# of users) for all AB-test variations of all tests, including the number of customers, purchase rate and purchase rate uplift (relative to control variation).

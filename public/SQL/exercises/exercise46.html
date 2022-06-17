@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>exercise26</title>
+      <title>exercise46</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,72 +261,77 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</h1>
+      <h1 class="mume-header" id="46-number-of-days-to-make-the-first-purchase">46. Number of days to make the first purchase</h1>
 
-<p>See exercise 22 for Part 1.</p>
-<p>Find out which month historically had the highest gross revenue.</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- year, month with highest gross revenue</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
+<p>Calculate the number of days it takes for a user to make their first purchase.</p>
+<p>We can left join purchases to users and then calculate the difference between the created_at columns of both tables.<br>
+to determine the number of days it takes for each user to make their first purchase.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span>
+  p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span>
+<span class="token keyword keyword-FROM">FROM</span> users u 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+</pre><p>There are users who have made more than one purchase. We want to make sure we only consider the very first purchase for each user.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span>
+  u<span class="token punctuation">.</span>id<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+<span class="token keyword keyword-FROM">FROM</span> users u 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token keyword keyword-HAVING">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">1</span>
+</pre><p>We use a window function to order purchases in the purchases table in ascending order. Then we only include first purchases in our join result.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> purchases_ordered <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> user_id <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> rank
+  <span class="token keyword keyword-FROM">FROM</span> purchases
 <span class="token punctuation">)</span>
 
-<span class="token keyword keyword-SELECT">SELECT</span>
-    m<span class="token punctuation">,</span>
-    
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
-</pre><p>Alternative solution</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    TO_CHAR<span class="token punctuation">(</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue1
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token keyword keyword-SELECT">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword keyword-FROM">FROM</span> users u
+<span class="token keyword keyword-INNER">INNER</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases_ordered p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+    <span class="token operator">AND</span> rank <span class="token operator">=</span> <span class="token number">1</span>
+</pre><p>We run a window function over days_to_buy to determine the number of users for each days_to_buy<br>
+Then we invoke the distinct function for deduplication.</p>
+<h3>Solution</h3>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> purchases_ordered <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> user_id <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> rank
+  <span class="token keyword keyword-FROM">FROM</span> purchases
 <span class="token punctuation">)</span>
 
 <span class="token keyword keyword-SELECT">SELECT</span> 
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span>gross_revenue1<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> gross_revenue1 <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><h3 class="mume-header" id="second-pass-27-05-2022">Second pass (27-05-2022)</h3>
-
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
- <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><p>Although the rounded results make it seem like there is a tie, July 2019 is the month with the highest gross revenue historically.</p>
-<p>There&apos;s likely a problem with this question.</p>
-
+  <span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> days_to_buy<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
+<span class="token keyword keyword-FROM">FROM</span> users u
+<span class="token keyword keyword-INNER">INNER</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases_ordered p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+    <span class="token operator">AND</span> rank <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+</pre><h4>Shorter solution</h4>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span>
+    <span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> days_to_buy<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
+<span class="token keyword keyword-FROM">FROM</span> users u 
+<span class="token keyword keyword-INNER">INNER</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+</pre><h4>Without refunded purchases</h4>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span>
+    <span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> days_to_buy<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-OVER">OVER</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> p<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span> <span class="token operator">-</span> u<span class="token punctuation">.</span>created_at::<span class="token keyword keyword-date">date</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
+<span class="token keyword keyword-FROM">FROM</span> users u 
+<span class="token keyword keyword-INNER">INNER</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>user_id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+    <span class="token operator">AND</span> refunded <span class="token operator">=</span> <span class="token boolean">FALSE</span>
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</a>
-<ul>
-<li><a href="#second-pass-27-05-2022">Second pass (27-05-2022)</a></li>
-</ul>
-</li>
+<li><a href="#46-number-of-days-to-make-the-first-purchase">46. Number of days to make the first purchase</a></li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>

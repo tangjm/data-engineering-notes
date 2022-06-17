@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>exercise26</title>
+      <title>exercise52</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -7,7 +7,7 @@
       
       
       
-      
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@9.1.1/dist/mermaid.min.js"></script>
       
       
       
@@ -261,78 +261,87 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</h1>
+      <h1 class="mume-header" id="52-signups-in-the-last-30-days-with-an-uplift">52. Signups in the last 30 days with an uplift</h1>
 
-<p>See exercise 22 for Part 1.</p>
-<p>Find out which month historically had the highest gross revenue.</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- year, month with highest gross revenue</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token keyword keyword-THEN">THEN</span> amount_usd <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword keyword-SELECT">SELECT</span>
-    m<span class="token punctuation">,</span>
-    
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
-</pre><p>Alternative solution</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
-<span class="token keyword keyword-SELECT">SELECT</span>
-    TO_CHAR<span class="token punctuation">(</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
-    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue1
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<p>Report the number of signups for the past 30 days and the percentage difference compared to the previous 30 days.</p>
+<p>Count the number of records after filtering with the predicate <code>created_at BETWEEN now() - &apos;30 days&apos;::interval AND now()</code> to count the number of signups in the past 30 days.</p>
+<p>Predicate for previous last 30 days:<br>
+<code>created_at BETWEEN now() - &apos;60 days&apos;::interval AND now() - &apos;30 days&apos;::interval</code></p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> last_30_and_60_days_signups <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> created_at <span class="token operator">BETWEEN</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;30 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token operator">AND</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-THEN">THEN</span> id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> last_30_days<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> created_at <span class="token operator">BETWEEN</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;60 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token operator">AND</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;30 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token keyword keyword-THEN">THEN</span> id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> last_60_days
+  <span class="token keyword keyword-FROM">FROM</span> users
 <span class="token punctuation">)</span>
 
 <span class="token keyword keyword-SELECT">SELECT</span> 
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
-    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
-    <span class="token function">ROUND</span><span class="token punctuation">(</span>gross_revenue1<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> gross_revenue1 <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><h3 class="mume-header" id="second-pass-27-05-2022">Second pass (27-05-2022)</h3>
+  last_30_days <span class="token keyword keyword-AS">AS</span> signups_count<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> <span class="token punctuation">(</span>last_30_days <span class="token operator">-</span> last_60_days<span class="token punctuation">)</span> <span class="token operator">/</span> last_60_days<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> uplift
+<span class="token keyword keyword-FROM">FROM</span> last_30_and_60_days_signups
+</pre><p>Note how there is an overlap between the two CASE WHEN conditions in our first query.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> last_30_and_60_days_signups <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> created_at <span class="token operator">&gt;</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;30 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token operator">AND</span> created_at <span class="token operator">&lt;=</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-THEN">THEN</span> id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> last_30_days<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> created_at <span class="token operator">&gt;</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;60 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token operator">AND</span> created_at <span class="token operator">&lt;=</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">&apos;30 days&apos;</span>::<span class="token keyword keyword-interval">interval</span> <span class="token keyword keyword-THEN">THEN</span> id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> last_60_days
+  <span class="token keyword keyword-FROM">FROM</span> users
+<span class="token punctuation">)</span>
 
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
- DATE_PART<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span> created_at<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
- <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
-<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
-<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
-<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
-<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-DESC">DESC</span>
-<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
-</pre><p>Although the rounded results make it seem like there is a tie, July 2019 is the month with the highest gross revenue historically.</p>
-<p>There&apos;s likely a problem with this question.</p>
-
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  last_30_days <span class="token keyword keyword-AS">AS</span> signups_count<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> <span class="token punctuation">(</span>last_30_days <span class="token operator">-</span> last_60_days<span class="token punctuation">)</span> <span class="token operator">/</span> last_60_days<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> uplift
+<span class="token keyword keyword-FROM">FROM</span> last_30_and_60_days_signups
+</pre><p>Also, <code>AND created_at &lt;= now()</code> is redundant because it&apos;s not possible for any record to have a created_at field with a future timestamp in our <code>users</code> table.</p>
+<div class="mermaid">erDiagram
+    CAR ||--o{ NAMED-DRIVER : allows
+    CAR { 
+      bigint id PK &quot;primary key&quot;
+      string name 
+      int registration_plate
+    }
+    PERSON   ||--o{ NAMED-DRIVER : is
+</div>
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</a>
-<ul>
-<li><a href="#second-pass-27-05-2022">Second pass (27-05-2022)</a></li>
-</ul>
-</li>
+<li><a href="#52-signups-in-the-last-30-days-with-an-uplift">52. Signups in the last 30 days with an uplift</a></li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>
     
     
-    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false
+  window['MERMAID_CONFIG'].theme = "default"
+}
+mermaid.initialize(window['MERMAID_CONFIG'] || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
     
     
     

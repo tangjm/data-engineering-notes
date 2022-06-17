@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 46. Number of days to make the first purchase 
 
 Calculate the number of days it takes for a user to make their first purchase.
@@ -47,6 +51,7 @@ INNER JOIN purchases_ordered p
 We run a window function over days_to_buy to determine the number of users for each days_to_buy
 Then we invoke the distinct function for deduplication.
 
+### Solution
 
 ```sql
 WITH purchases_ordered AS (
@@ -66,6 +71,8 @@ INNER JOIN purchases_ordered p
 ORDER BY 1
 ```
 
+#### Shorter solution
+
 ```sql
 SELECT
     DISTINCT(p.created_at::date - u.created_at::date) AS days_to_buy,
@@ -74,4 +81,17 @@ FROM users u
 INNER JOIN purchases p
   ON p.user_id = u.id
 ORDER BY 1
+```
 
+#### Without refunded purchases
+
+```sql
+SELECT
+    DISTINCT(p.created_at::date - u.created_at::date) AS days_to_buy,
+    COUNT(*) OVER (PARTITION BY p.created_at::date - u.created_at::date) AS users_count
+FROM users u 
+INNER JOIN purchases p
+  ON p.user_id = u.id
+    AND refunded = FALSE
+ORDER BY 1
+```

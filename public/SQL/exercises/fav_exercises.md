@@ -9,14 +9,29 @@ Most instructive exercises
 - 12
 - 18
 - 19
+- 20 (case insensitive regex pattern matching with ~*)
 - 22
 - 23 
+- 24 (interesting alternative to the SQL Habit solution)
+- 27 - really neat solution)
+- 49 (good for window functions)
+- 54 (question is not the clearest but great for working with time stamps and time zones)
 
-20 - stuck
-24 - interesting alternative to the SQLHabit solution
-25 - stuck
-26 - not sure what the question is asking for
-27 - really neat solution
+Blocked
+
+25
+26
+31
+32
+36
+44
+46 (How do we subtract timestamps?)
+47 (How do we subtract timestamps?)
+48 (unattempted)
+50 (2 attempts - there's probably an error with the solution)
+55
+
+
 
 
 ```latex {cmd=true hide=true}
