@@ -3,11 +3,12 @@ import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/getNotes.js'
+import { removeExtension } from '../lib/removeExtension.js';
 
 function createLinksNotes(subdir, notes) {
   return notes.map(note => {
     return <li key={note}>
-      <Link href={`/AWS/${subdir}/${note}`}>{note.slice(0, note.length - 5)}</Link>
+      <Link href={`/AWS/${subdir}/${note}`}>{removeExtension(note)}</Link>
     </li>
   })
 }

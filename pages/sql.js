@@ -3,10 +3,7 @@ import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/getNotes';
-
-function removeExtension(note) {
-  return note.slice(0, note.length - 5);
-}
+import { removeExtension } from '../lib/removeExtension.js'
 
 function createLinksNotes(subdir, notes) {
   return notes.map(note => {
