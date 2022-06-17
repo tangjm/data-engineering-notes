@@ -20,17 +20,20 @@ export async function getStaticProps() {
   const generalNotes = getNotes(...['SQL', 'notes'])
   const chapterNotes = getNotes(...['SQL', 'chapters'])
   const exerciseNotes = getNotes(...['SQL', 'exercises'])
+  const postgresNotes = getNotes(...['SQL', 'postgres'])
+
   return {
     props: {
       generalNotes,
       chapterNotes,
-      exerciseNotes
+      exerciseNotes,
+      postgresNotes
     }
   }
 }
 
 
-export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes }) {
+export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, postgresNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -48,15 +51,23 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes }) 
         <ul>
           {createLinksNotes('exercises', exerciseNotes)}
         </ul>
+
         <h2>General SQL notes</h2>
         <p>Mostly covering high-level concepts, syntax and selected topics</p>
         <ul>
           {createLinksNotes('notes', generalNotes)}
         </ul>
+
         <h2>SQLHabit chapter notes</h2>
         <p>A learning log on selected chapters from the SQLHabit course</p>
         <ul>
           {createLinksNotes('chapters', chapterNotes)}
+        </ul>
+
+        <h2>Postgres notes</h2>
+        <p>Some useful notes on working with Postgres</p>
+        <ul>
+          {createLinksNotes('postgres', postgresNotes)}
         </ul>
       </main>
 
