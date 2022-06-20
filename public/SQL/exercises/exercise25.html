@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>exercise6</title>
+      <title>exercise25</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -261,34 +261,70 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h3 class="mume-header" id="6-distribution-of-users-email-domains">6. Distribution of users email domains</h3>
+      <h1 class="mume-header" id="25-e-commerce-power-users">25. E-commerce power users</h1>
 
-<p>Topics: Regex, LIKE</p>
-<p>Number of users from a specific company</p>
-<p>Calculate the number of users with an email from <a href="http://boogle.com">boogle.com</a> domain like <a href="mailto:alex@boogle.com">alex@boogle.com</a> or <a href="mailto:vanessa@boogle.com">vanessa@boogle.com</a>.</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
-    <span class="token function">COUNT</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
-<span class="token keyword keyword-FROM">FROM</span> users
-<span class="token keyword keyword-WHERE">WHERE</span> email <span class="token operator">LIKE</span> <span class="token string">&apos;%@boogle.com&apos;</span>
-</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-SELECT">SELECT</span> 
-    <span class="token function">COUNT</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
-<span class="token keyword keyword-FROM">FROM</span> users
-<span class="token keyword keyword-WHERE">WHERE</span> email <span class="token operator">~</span> <span class="token string">&apos;^.+@boogle.com$&apos;</span>
-</pre><p>For case-insensitive matching, use ILIKE or first lowercase the email before matching if using regex.</p>
-<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- ignoring case</span>
+<p>Calculate the percentage of users who purchased 5 or more times during one month</p>
+<p>Tables: purchases and carts</p>
+<p>left join purchases to carts</p>
+<p>group by the user_id from the cart, the total number of groups corresponds to the total number of users</p>
+<p>sort each user_id group by the created_at field from the purchases table, then count cart_id of the purchases table where the number of cart_id&apos;s is greater than or equal to 5 and at least 5 card_id&apos;s have the same TO_CHAR(created_at, &apos;yyyy-mm&apos;) value.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- example user with more than five purchases in a month</span>
+<span class="token keyword keyword-SELECT">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword keyword-FROM">FROM</span> carts c 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>cart_id <span class="token operator">=</span> c<span class="token punctuation">.</span>id
+<span class="token keyword keyword-WHERE">WHERE</span> user_id <span class="token operator">=</span> <span class="token number">17670</span> 
+</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- ordered purchases for each user</span>
 <span class="token keyword keyword-SELECT">SELECT</span> 
-    <span class="token function">COUNT</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
-<span class="token keyword keyword-FROM">FROM</span> users
-<span class="token keyword keyword-WHERE">WHERE</span> email <span class="token operator">ILIKE</span> <span class="token string">&apos;%@boogle.com&apos;</span>
-</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- ignoring case</span>
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+  ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-over">over</span> <span class="token punctuation">(</span><span class="token keyword keyword-PARTITION">PARTITION</span> <span class="token keyword keyword-BY">BY</span> user_id <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> p<span class="token punctuation">.</span>created_at<span class="token punctuation">)</span>
+<span class="token keyword keyword-FROM">FROM</span> carts c 
+<span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+  <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>cart_id <span class="token operator">=</span> c<span class="token punctuation">.</span>id
+</pre><p>We group by <code>user_id</code> and <code>created_at</code> date of purchased carts that have a purchase date in the same month.<br>
+By counting the number of records per group, we are able to calculate the total purchases that each user made for each month they made a purchase.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> purchase_stats <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    user_id<span class="token punctuation">,</span>
+    TO_CHAR<span class="token punctuation">(</span>p<span class="token punctuation">.</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> purchases
+  <span class="token keyword keyword-FROM">FROM</span> carts c 
+  <span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+    <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>cart_id <span class="token operator">=</span> c<span class="token punctuation">.</span>id
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
+  <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">3</span> <span class="token keyword keyword-DESC">DESC</span>
+<span class="token punctuation">)</span>
+
 <span class="token keyword keyword-SELECT">SELECT</span> 
-    <span class="token function">COUNT</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_count
-<span class="token keyword keyword-FROM">FROM</span> users
-<span class="token keyword keyword-WHERE">WHERE</span> LOWER<span class="token punctuation">(</span>email<span class="token punctuation">)</span> <span class="token operator">~</span> <span class="token string">&apos;^.+@boogle.com$&apos;</span>
-</pre>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_users<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> purchases <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token keyword keyword-THEN">THEN</span> user_id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_with_5_or_more_purchases<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100.0</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span><span class="token keyword keyword-CASE">CASE</span> <span class="token keyword keyword-WHEN">WHEN</span> purchases <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token keyword keyword-THEN">THEN</span> user_id <span class="token keyword keyword-END">END</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> percentage
+<span class="token keyword keyword-FROM">FROM</span> purchase_stats
+</pre><pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token comment">-- users with at least 5 purchases in multiple months</span>
+<span class="token keyword keyword-WITH">WITH</span> purchase_stats <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword keyword-SELECT">SELECT</span> 
+    user_id<span class="token punctuation">,</span>
+    TO_CHAR<span class="token punctuation">(</span>p<span class="token punctuation">.</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> purchases
+  <span class="token keyword keyword-FROM">FROM</span> carts c 
+  <span class="token keyword keyword-LEFT">LEFT</span> <span class="token keyword keyword-JOIN">JOIN</span> purchases p
+    <span class="token keyword keyword-ON">ON</span> p<span class="token punctuation">.</span>cart_id <span class="token operator">=</span> c<span class="token punctuation">.</span>id
+  <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
+  <span class="token keyword keyword-HAVING">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">5</span>
+  <span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">3</span> <span class="token keyword keyword-DESC">DESC</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+  <span class="token function">COUNT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> total_groups<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_with_at_least_5_purchases<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword keyword-DISTINCT">DISTINCT</span><span class="token punctuation">(</span>user_id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> users_with_at_least_5_purchases_in_multiple_months
+<span class="token keyword keyword-FROM">FROM</span> purchase_stats
+</pre><p>Maybe we&apos;re misinterpreting &apos;in a month&apos; to mean &apos;in a calendar month&apos; when should take it to denote a timeframe of a month.</p>
+<p>So purchases that occur within a period of a month that span multiple calendar months should also be counted. This will result in greater numbers of users with at least 5 purchases.</p>
+
       </div>
       <div class="md-sidebar-toc"><ul>
-<li><a href="#6-distribution-of-users-email-domains">6. Distribution of users email domains</a></li>
+<li><a href="#25-e-commerce-power-users">25. E-commerce power users</a></li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">&#x2261;</a>

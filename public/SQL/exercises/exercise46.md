@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 # 46. Number of days to make the first purchase 
 
 Calculate the number of days it takes for a user to make their first purchase.
