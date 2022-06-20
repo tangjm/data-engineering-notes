@@ -43,6 +43,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+  margin-bottom: 1rem;
 }
 
 .title,
@@ -51,7 +52,7 @@
 }
 
 .description {
-  margin: 4rem 0;
+  margin: 4rem 3rem;  
   line-height: 1.5;
   font-size: 1.5rem;
 }
@@ -88,8 +89,9 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: white;
+  border-color:#25003e;
+  background:#8000d7;
 }
 
 .card h2 {
@@ -113,4 +115,23 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+
+
+/* Custom css styles */
+
+/* Flex container */
+.containerFlex {
+  display: flex;
+}
+
+.item2 {
+  width: 15rem;
+  margin: 0.5rem;
+}
+
+.item3 {
+  width: 20rem;
+  margin: 1rem;
 }
