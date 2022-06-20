@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ## Data Modelling Patterns
 
 1. Which 3 concerns should you take into account when choosing a pattern to apply to your schema?
@@ -10,9 +14,9 @@
 
 2. Would the problem of keeping relations between documents across different collections up to date be a Data Staleness or Data Integrity consideration? Why?
 
-- [_] Data Integrity
+- [ ] Data Integrity
 - [x] Data Staleness
-- [_] Data Duplication
+- [ ] Data Duplication
 
 3. In what sort of data environment would it be useful to use one-to-zillions notation?
 ![many to many](/images/many_to_many.png)
