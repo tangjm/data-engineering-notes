@@ -4,14 +4,9 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { getNotes } from '../lib/getNotes.js'
 import { removeExtension } from '../lib/removeExtension.js'
+import { createNotesLinks } from '../lib/createNotesLinks.js'
 
-function createLinksNotes(subdir, notes) {
-  return notes.map(note => {
-    return <li key={note}>
-      <Link href={`/Talend/${subdir}/${note}`}>{removeExtension(note)}</Link>
-    </li>
-  })
-}
+const createLinks = createNotesLinks('Talend', removeExtension);
 
 export async function getStaticProps() {
   const basicsNotes = getNotes(...['Talend', 'basics'])
@@ -41,13 +36,13 @@ export default function talendNotes({ basicsNotes, advancedNotes }) {
           <div className={styles.item3}>
             <h2>Data Integration Basics</h2>
             <ul>
-              {createLinksNotes('basics', basicsNotes)}
+              {createLinks('basics', basicsNotes)}
             </ul>
           </div>
           <div className={styles.item3}>
             <h2>Data Integration Advanced</h2>
             <ul>
-              {createLinksNotes('advanced', advancedNotes)}
+              {createLinks('advanced', advancedNotes)}
             </ul>
           </div>
 

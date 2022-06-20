@@ -4,14 +4,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/getNotes.js'
 import { removeExtension } from '../lib/removeExtension.js'
+import { createNotesLinks } from '../lib/createNotesLinks.js'
 
-function createLinksNotes(parentDir, subdir, notes) {
-  return notes.map(note => {
-    return <li key={note}>
-      <Link href={`/${parentDir}/${subdir}/${note}`}>{removeExtension(note)}</Link>
-    </li>
-  })
-}
+const createLinks = createNotesLinks('NoSQL', removeExtension);
+const createLinksWeek3Quiz = createNotesLinks('Week3_quiz', removeExtension);
 
 export async function getStaticProps() {
   const mongodbNotes = getNotes(...['NoSQL', 'MongoDB'])
@@ -41,7 +37,7 @@ export default function awsNotes({ mongodbNotes, week3quizNotes }) {
           <h2>MongoDB</h2>
           <p>Notes on MongoDB</p>
           <ol>
-            {createLinksNotes('NoSQL', 'MongoDB', mongodbNotes)}
+            {createLinks('MongoDB', mongodbNotes)}
           </ol>
 
           <br></br>
@@ -49,7 +45,7 @@ export default function awsNotes({ mongodbNotes, week3quizNotes }) {
           <h2>Week 3 Quiz</h2>
           <p>A quiz on SQL, MongoDB and Cloud computing</p>
           <ol>
-            {createLinksNotes('Week3_quiz', 'quiz', week3quizNotes)}
+            {createLinksWeek3Quiz('quiz', week3quizNotes)}
           </ol>
         </div>
 

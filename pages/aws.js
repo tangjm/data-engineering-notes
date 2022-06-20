@@ -1,17 +1,11 @@
-import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
 import { getNotes } from '../lib/getNotes.js'
-import { removeExtension } from '../lib/removeExtension.js';
+import { removeExtension } from '../lib/removeExtension.js'
+import { createNotesLinks } from '../lib/createNotesLinks.js'
 
-function createLinksNotes(subdir, notes) {
-  return notes.map(note => {
-    return <li key={note}>
-      <Link href={`/AWS/${subdir}/${note}`}>{removeExtension(note)}</Link>
-    </li>
-  })
-}
+const createLinks = createNotesLinks('AWS', removeExtension);
 
 const moduleNames = [
   null,
@@ -89,7 +83,7 @@ export default function awsNotes(props) {
             return <>
               <h2>{moduleNames[module.id]}</h2>
               <ul>
-                {createLinksNotes(module.subdir, module.fileHTML)}
+                {createLinks(module.subdir, module.fileHTML)}
               </ul>
             </>
           })}
