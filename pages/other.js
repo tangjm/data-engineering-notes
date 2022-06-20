@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
-import { getNotes } from '../lib/getNotes.jsgit '
+import { getNotes } from '../lib/getNotes.js'
 import { removeExtension } from '../lib/removeExtension.js'
 
 function createLinksNotes(parentDir, subdir, notes) {
@@ -24,7 +24,7 @@ export async function getStaticProps() {
   }
 }
 
-export default function awsNotes({ mongodbNotes,week3quizNotes }) {
+export default function awsNotes({ mongodbNotes, week3quizNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -49,7 +49,7 @@ export default function awsNotes({ mongodbNotes,week3quizNotes }) {
           <h2>Week 3 Quiz</h2>
           <p>A quiz on SQL, MongoDB and Cloud computing</p>
           <ol>
-            {createLinksNotes('Week3_quiz','quiz', week3quizNotes)}
+            {createLinksNotes('Week3_quiz', 'quiz', week3quizNotes)}
           </ol>
         </div>
 
