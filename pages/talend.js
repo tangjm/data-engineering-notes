@@ -37,14 +37,22 @@ export default function talendNotes({ basicsNotes, advancedNotes }) {
           Talend notes
         </h1>
 
-        <h2>Data Integration Basics</h2>
-        <ul>
-          {createLinksNotes('basics', basicsNotes)}
-        </ul>
-        <h2>Data Integration Advanced</h2>
-        <ul>
-          {createLinksNotes('advanced', advancedNotes)}
-        </ul>
+        <div className={styles.containerFlex}>
+          <div className={styles.item3}>
+            <h2>Data Integration Basics</h2>
+            <ul>
+              {createLinksNotes('basics', basicsNotes)}
+            </ul>
+          </div>
+          <div className={styles.item3}>
+            <h2>Data Integration Advanced</h2>
+            <ul>
+              {createLinksNotes('advanced', advancedNotes)}
+            </ul>
+          </div>
+
+        </div>
+
         <p className={styles.description}>
         </p>
 

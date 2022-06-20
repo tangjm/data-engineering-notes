@@ -43,29 +43,39 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, po
           SQL Notes
         </h1>
 
-        <h2>SQLHabit Exercises</h2>
-        <p>Solutions and plans to SQLHabit practice questions with detailed explanations where appropriate</p>
-        <ul>
-          {createLinksNotes('exercises', exerciseNotes)}
-        </ul>
+        <div className={styles.containerFlex}>
+          <div className={styles.item2}>
+            <h2>SQLHabit Exercises</h2>
+            <p>Solutions and plans to SQLHabit practice questions with detailed explanations where appropriate</p>
+            <ul>
+              {createLinksNotes('exercises', exerciseNotes)}
+            </ul>
+          </div>
 
-        <h2>General SQL notes</h2>
-        <p>Mostly covering high-level concepts, syntax and selected topics</p>
-        <ul>
-          {createLinksNotes('notes', generalNotes)}
-        </ul>
+          <div className={styles.item2}>
+            <h2>General SQL notes</h2>
+            <p>Mostly covering high-level concepts, syntax and selected topics</p>
+            <ul>
+              {createLinksNotes('notes', generalNotes)}
+            </ul>
+          </div>
 
-        <h2>SQLHabit chapter notes</h2>
-        <p>A learning log on selected chapters from the SQLHabit course</p>
-        <ul>
-          {createLinksNotes('chapters', chapterNotes)}
-        </ul>
+          <div className={styles.item2}>
+            <h2>SQLHabit chapter notes</h2>
+            <p>A learning log on selected chapters from the SQLHabit course</p>
+            <ul>
+              {createLinksNotes('chapters', chapterNotes)}
+            </ul>
+          </div>
 
-        <h2>Postgres notes</h2>
-        <p>Some useful notes on working with Postgres</p>
-        <ul>
-          {createLinksNotes('postgres', postgresNotes)}
-        </ul>
+          <div className={styles.item2}>
+            <h2>Postgres notes</h2>
+            <p>Some useful notes on working with Postgres</p>
+            <ul>
+              {createLinksNotes('postgres', postgresNotes)}
+            </ul>
+          </div>
+        </div>
       </main>
 
       <footer className={styles.footer}>
