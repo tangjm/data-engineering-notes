@@ -12,11 +12,23 @@ Most instructive exercises
 - 22
 - 23 
 
-20 - stuck
 24 - interesting alternative to the SQLHabit solution
+27 - really neat solution
+
+**11 unsolved**
+
 25 - stuck
 26 - not sure what the question is asking for
-27 - really neat solution
+31
+32
+36
+44
+46
+47 (unattempted)
+48 (unattempd)
+50 (unattempd)
+55 (unattempted)
+
 
 
 ```latex {cmd=true hide=true}
