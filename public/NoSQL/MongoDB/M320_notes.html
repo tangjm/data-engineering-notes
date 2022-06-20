@@ -1,0 +1,465 @@
+<!DOCTYPE html><html><head>
+      <title>M320_notes</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="mongodb-data-modelling">MongoDB Data Modelling</h1>
+
+<h3 class="mume-header" id="ch1">ch1</h3>
+
+<p>What&apos;s the difference between databases, collections and documents?<br>
+Data modelling methodology</p>
+<ol>
+<li>Identity workload &#x2013; important operations and quantify and quality operations</li>
+<li>Identify and model relationships between entities</li>
+<li>Apply design patterns</li>
+</ol>
+<p>MongoDB stores data as ____. (Documents)</p>
+<p>MongoDB is a flexible schema database.<br>
+Explain what is a flexible schema database.</p>
+<p>Answer:  Documents in the same collection don&apos;t need to have the exact same list of fields. Furthermore, the data type in any given field can vary across documents. You can have multiple versions of your schema as your application develops over time and all the schema versions can coexist in the same collection. MongoDB supports enforcing the schema shape from no rules, rules in a few fields, to rules on all the fields of the documents.</p>
+<p>Question. In the case of MongoDB, a document can&apos;t be larger than ___ MB.<br>
+Answer. 16MB</p>
+<p>Keep the frequently used ___ and ___ in ____(memory/storage). They are what we described as a ___. Prefer ___ drives to ___ drives. If you have a ton of historical data, data you don&apos;t use very often, ___ drives are cheaper and may work just fine.</p>
+<ul>
+<li>memory</li>
+<li>storage</li>
+<li>data</li>
+<li>indexes</li>
+<li>working set</li>
+<li>solid state</li>
+<li>hard disk</li>
+</ul>
+<p>The nature of your ___ and ____define the need to model your data. It is important to identify those exact constraints and their impact to create a better model. As your software and the technological landscape change, your model should be ___ and ___ accordingly.<br>
+&#x2022;	data set<br>
+&#x2022;	hardware<br>
+&#x2022;	re-evaluated<br>
+&#x2022;	updated<br>
+&#x2022;	documents<br>
+&#x2022;	indexes<br>
+&#x2022;	working set</p>
+<h4 class="mume-header" id="embedding-vs-linking-documents">Embedding vs Linking documents</h4>
+
+<p>If I want to optimise for simplicity, should I go for fewer collections with lots of embedded sub-documents or more collections with references to different documents?</p>
+<h4 class="mume-header" id="simplicity-vs-performance">Simplicity vs Performance</h4>
+
+<p>To keep the model simple, you are likely to group a lot of those pieces inside a few collections using sub-documents or arrays to represent the one-to-one, one-to-many, too many-to-many many relationships.</p>
+<p>By keeping the modeling steps to the minimum, we can remain very agile, with the ability to quickly iterate on our application, reflecting these changes back into the model if needed.</p>
+<p>If you model for simplicity, as a result, you will likely see fewer collection in your design where each document contains more information and maps very well to the object you have in your application code-- the objects being represented in your favorite language as hashes, maps, dictionary, or nested objects.</p>
+<p>Finally, as a result of having larger documents with embedded documents in them, the application is likely to do less disk accesses to retrieve the information.</p>
+<p>Again, you start by identifying the important operations, but also quantify those in terms of metrics like operation per second, required latency, and pinning some quality attributes on those queries such as-- can the application work with data that&apos;s a little stale, are those operations parts of the large analytic query?</p>
+<p>If you model for performance you will often see more collection in your design.</p>
+<p>You will also need to apply a series of schema design patterns to ensure the best usage of resources like CPU, disk, bandwidth.</p>
+<h3 class="mume-header" id="ch2">ch2</h3>
+
+<p>1-1 relationships<br>
+Many-Many relationships<br>
+One-Many relationships<br>
+When might it be useful to use one-to-zillions notation?</p>
+<p>What does the &#x201C;[0, 1000]&#x201D; notation denote?</p>
+<h3 class="mume-header" id="ch3">ch3</h3>
+
+<p>For example, duplicating data across documents, accepting staleness in some pieces of data, writing extra application side logic to ensure referential integrity.</p>
+<p>Choosing a pattern to be applied to your schema requires taking into account which 3 concerns?<br>
+&#x2022;	Duplication<br>
+&#x2022;	Data Staleness<br>
+&#x2022;	Data Integrity Issues<br>
+&#x2022;	Data Structure<br>
+&#x2022;	Data Size</p>
+<h3 class="mume-header" id="the-attribute-pattern">The Attribute Pattern</h3>
+
+<pre class="language-text">&lt;key, value&gt; -&gt; {&#x201C;k&#x201D;: key, &#x201C;v&#x201D;: value&#x201D;} []
+</pre>
+<p>Transform a <code>&lt;key, value&gt;</code> pair into a sub-document with two fields: &#x201C;k&#x201D; and &#x201C;v&#x201D; that denote &#x201C;key&#x201D; and &#x201C;value&#x201D;. This enables you to create a single index for multiple fields, by indexing over the <code>{&#x201C;k&#x201D;: &lt;string&gt;, &#x201C;v&#x201D;: &lt;value data type&gt; }</code> schema.</p>
+<p>Advantages<br>
+Simpler indexing, as we are indexing over schemas, we don&#x2019;t need to know the exactly <code>&lt;key, value&gt;</code> values beforehand. Newly added instances of the schema are automatically indexed.</p>
+<p>We can qualify the relationship between key and value.<br>
+The attribute pattern addresses the problem of having a lot of similar fields in a document. Often, those fields have similar value types. Or there&apos;s a need to search across many of those fields at once. This pattern is also helpful when only a subset of the documents have many similar fields.</p>
+<h3 class="mume-header" id="the-extended-reference-pattern">The Extended Reference Pattern</h3>
+
+<p>The Extended Reference Pattern is used to aovid doing additional joins/lookups.</p>
+<p>The problem the extended reference pattern addresses is avoiding joining too many pieces of data at query time.</p>
+<p>If the query is frequent enough and generates a considerable amount of lookups, pre-joining the data can be done by applying this pattern.</p>
+<p>The solution is to identify the fields you are interested in on the looked up side and make a copy of those fields in the main object.</p>
+<p>You will see this pattern often used in catalogs, mobile applications, and real-time analytics.</p>
+<p>The common thread here is to reduce the latency of your read operations or avoid round trips or avoid touching too many pieces of data.</p>
+<p>You will get faster reads, due to the reduced number of joints and lookups.</p>
+<p>The price you will pay for the improvement in performance is the fact that you may have to manage a fair amount of duplication, especially if you embed Many-to-One relationships, where the fields change or mutate a lot.</p>
+<h3 class="mume-header" id="the-subset-pattern">The Subset Pattern</h3>
+
+<p>Reduce the size of documents brought into the working set by diving the document into two collections: a frequently used part and a less used part. Only duplicate parts of a 1-N N-N relationship that more frequently used.</p>
+<h1 class="mume-header" id="ch4">ch4</h1>
+
+<h3 class="mume-header" id="the-computed-pattern-cf-memoization">The Computed Pattern (cf. memoization)</h3>
+
+<p>&#x2022;	Costly computation/manipulation of data executed frequently on the same data producing the same result.<br>
+&#x2022;	Avoid performing similar operations many times.</p>
+<p>Solution<br>
+Perform the operation and store the result in the appropriate document and collection</p>
+<p>Mathematical operations<br>
+If I read more often than I write to my database and each of my reads involves some expensive mathematical computation, then I might want to consider using the computed pattern.<br>
+Rather than running an expensive computation for each read, I run a computation for each write and store the result so that it can be retrieved by subsequent reads.</p>
+<ul>
+<li>Fan Out Operations</li>
+<li>Roll Up Operations (vs drill down)<br>
+Grouping data together. (seeing data at higher-levels)</li>
+</ul>
+<h3 class="mume-header" id="bucket-pattern">Bucket Pattern</h3>
+
+<p>When we have documents that are too large or too numerous<br>
+When we can&#x2019;t embed a 1-N relationship. Alternative to fully embedding or linking a 1-N relationship.<br>
+Define an optimal amount of data to group together and store the information in the main document under an array field.</p>
+<p>We group data together according to a user-defined level of granularity. For instance, we can decide whether to group data by the minute, hour, month, year.</p>
+<p>It&#x2019;s essentially an embedded 1-to-many relationship.</p>
+<h3 class="mume-header" id="schema-versioning-pattern">Schema Versioning Pattern</h3>
+
+<p>Avoids downtime when doing schema updates.<br>
+Each document gets a schema_version.</p>
+<h3 class="mume-header" id="tree-patterns">Tree Patterns</h3>
+
+<p>&#x2022;	Parent References<br>
+&#x2022;	Child References<br>
+&#x2022;	Array of Ancestors<br>
+&#x2022;	Materialised Paths</p>
+<pre class="language-text">{
+    &quot;name&quot;: &quot;parent reference&quot;,
+    &quot;parent&quot;: &quot;&lt;string&gt;&quot;
+}
+
+
+{
+    &quot;name&quot;: &quot;array of children&quot;
+    &quot;children&quot;: [&quot;&lt;string&gt;&quot;]
+}
+
+
+{
+    &quot;name&quot;: &quot;array of ancestors&quot;
+    &quot;ancestors&quot;: [&quot;&lt;string&gt;&quot;]
+}
+
+
+{
+    &quot;name&quot;: &quot;materialised path&quot;
+    &quot;ancestors&quot;: &quot;.&lt;string&gt;.&lt;string&gt;&quot;
+}
+</pre>
+<h3 class="mume-header" id="polymorphic-pattern">Polymorphic Pattern</h3>
+
+<p>When we want to keep similar objects in the same collection.</p>
+<ul>
+<li>Add a field to keep track of the document/sub-document type</li>
+</ul>
+<p>Easy to implement<br>
+Allows queries across collections</p>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#mongodb-data-modelling">MongoDB Data Modelling</a>
+<ul>
+<li><a href="#ch1">ch1</a>
+<ul>
+<li><a href="#embedding-vs-linking-documents">Embedding vs Linking documents</a></li>
+<li><a href="#simplicity-vs-performance">Simplicity vs Performance</a></li>
+</ul>
+</li>
+<li><a href="#ch2">ch2</a></li>
+<li><a href="#ch3">ch3</a></li>
+<li><a href="#the-attribute-pattern">The Attribute Pattern</a></li>
+<li><a href="#the-extended-reference-pattern">The Extended Reference Pattern</a></li>
+<li><a href="#the-subset-pattern">The Subset Pattern</a></li>
+</ul>
+</li>
+<li><a href="#ch4">ch4</a>
+<ul>
+<li><a href="#the-computed-pattern-cf-memoization">The Computed Pattern (cf. memoization)</a></li>
+<li><a href="#bucket-pattern">Bucket Pattern</a></li>
+<li><a href="#schema-versioning-pattern">Schema Versioning Pattern</a></li>
+<li><a href="#tree-patterns">Tree Patterns</a></li>
+<li><a href="#polymorphic-pattern">Polymorphic Pattern</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">&#x2261;</a>
+    
+    
+    
+    
+    
+    
+    
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  
+    </body></html>
