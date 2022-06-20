@@ -1,0 +1,14 @@
+db.listingsAndReviews.aggregate(
+[
+{"$project": {"room_type": 1 }}, 
+{"$group": { "_id": "$room_type"}}
+]
+)
+
+Return the name and founding year for the 5 oldest companies in the sample_training.companies collection
+
+db.companies.find({"founded_year": {$ne: null}}, {"name": 1, "founded_year": 1}).sort({"founded_year": 1}).limit(5)
+
+In what year was the youngest bike rider from the sample_training.trips collection born?
+
+db.trips.find({"birth year": {$ne: ""}}, {"birth year": 1}).sort({"birth year": -1}).limit(1)

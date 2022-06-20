@@ -1,0 +1,45 @@
+Connect to mongo atlas cluster:
+mongo "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.s27an.mongodb.net/myFirstDatabase"
+
+Data Explorer Quiz:
+
+In the sample_training.trips collection a person with birth year 1961 took a
+trip that started at "Howard St & Centre St". What was the end station name for
+that trip?
+
+ANSWER 
+use sample_training
+db.trips.findOne({"birth year": 1961, "start station name": "Howard St & Centre St"})
+
+"South End Ave & Liberty St"
+
+Find All the Documents Exercise:
+
+Using the sample_training.inspections collection find out how many inspections
+were conducted on Feb 20 2015.
+
+ANSWER
+use sample_training
+db.inspections.find({"date": "Feb 20 2015"}).count()
+
+
+find() command
+
+1. Query the zips collection from the sample_training database to find all
+   documents where the state is NY.
+2. Iterate through the query results.
+3. Find out how many ZIP codes there are in NY state. (1596)
+4. What about the ZIP codes that are in NY but also in the city of ALBANY? (7)
+5. Make the cursor look more readable.
+
+ANSWER
+
+show dbs
+use sample_training
+show collections
+db.zips.find({"state": "NY"})
+db.zips.find({"state": "NY"}).count()
+db.zips.find({"state": "NY", "city": "ALBANY"}).count()
+
+
+

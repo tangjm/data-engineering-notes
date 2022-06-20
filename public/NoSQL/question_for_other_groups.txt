@@ -1,0 +1,13 @@
+Test question
+db.posts.find({"tags": "mall"}, {"comments": {"$size": 17} })
+
+Tests your knowledge in 3 areas.
+Related topics: Access nested documents; Projection function; How to query array fields. 
+
+In the sample_training.posts collection, find the post that contains the "mall" tag and where the author of the 19th comment is Malisa Jeanes. Your query result should only include the permalink and title fields. Give your answer by pasting a screenshot of your query and query result.
+
+Query: 
+db.posts.find({"tags": "net", "comments.19.author": "Malisa Jeanes"}, {"_id": 0, "permalink": 1, "title": 1})
+
+Answer:
+[ { permalink: 'QwpVzPxtpRDVyxmTTNdC', title: 'US Constitution' } ]

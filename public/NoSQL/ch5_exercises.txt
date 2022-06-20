@@ -1,0 +1,25 @@
+Aggregation Framework
+
+1. Using the aggregation framework find all documents that have Wifi as one
+   of the amenities. Only include price and address in the resulting cursor.
+
+2. Which countries have listings in the sample_airbnb database?
+3. How many countries have listings in the sample_airbnb database?
+
+sort() and limit()
+
+1. Find the least populated ZIP code in the zips collection.
+2. Find the most populated ZIP code in the zips collection.
+3. Find the top ten most populated ZIP codes.
+4. Get results sorted in increasing order by population, and decreasing
+   order by city name.
+
+Introduction to Indexes
+
+Create two separate indexes to support the following queries:
+
+db.trips.find({"birth year": 1989})
+
+db.trips.find({"start station id": 476}).sort("birth year": 1)
+
+db.trips.createIndex({"start station id": 1, "birth year": 1})

@@ -1,0 +1,33 @@
+db.companies.find({ $expr: {$eq: ["$permalink", "$twitter_username"]}}).count()
+
+Normal syntax for equality operator
+
+{"field": {$eq: "value"}}
+
+Aggregation syntax for when nested inside $expr
+
+{ $eq: [expression1, expression2] }
+
+number_of_reviews
+
+db.listingsAndReviews.find({"accommodates": { $gt: 6},  "number_of_reviews": 50})
+
+Using the sample_airbnb.listingsAndReviews collection find out how many documents have the "property_type" "House", and include "Changing table" as one of the "amenities"?
+
+db.listingsAndReviews.find({"property_type": "House", "amenities": { $all: ["Changing table"] } }).count()
+
+or 
+
+db.listingsAndReviews.find({"property_type": "House", "amenities": "Changing table" }).count()
+
+How many companies in the sample_training.companies collection have offices in the city of Seattle?
+
+db.companies.find({ "offices": { $elemMatch: {"city": "Seattle"}}}, {"offices": 1}).count();
+
+How many trips in the sample_training.trips collection started at stations that are to the west of the -74 longitude coordinate?
+
+db.trips.find({"start station location.coordinates.0": {$lt: -74}}).count()
+
+How many inspections from the sample_training.inspections collection were conducted in the city of NEW YORK?
+
+db.inspections.find({ "address.city": "NEW YORK"}).count()
