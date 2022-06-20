@@ -2,8 +2,27 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
+import { getNotes } from '../lib/getNotes.js'
+import { removeExtension } from '../lib/removeExtension.js'
 
-export default function awsNotes() {
+function createLinksNotes(subdir, notes) {
+  return notes.map(note => {
+    return <li key={note}>
+      <Link href={`/NoSQL/${subdir}/${note}`}>{removeExtension(note)}</Link>
+    </li>
+  })
+}
+
+export async function getStaticProps() {
+  const mongodbNotes = getNotes(...['NoSQL', 'MongoDB'])
+  return {
+    props: {
+      mongodbNotes
+    }
+  }
+}
+
+export default function awsNotes({ mongodbNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -16,9 +35,15 @@ export default function awsNotes() {
           Other notes
         </h1>
 
-        <p className={styles.description}>
+        <div className={styles.description}>
 
-        </p>
+          {/* <h2>Week 3 Quiz</h2>
+          <p>Quiz on SQL, MongoDB and Cloud computing</p> */}
+          <h2>MongoDB</h2>
+          <ul>
+            {createLinksNotes('MongoDB', mongodbNotes)}
+          </ul>
+        </div>
 
       </main>
 
