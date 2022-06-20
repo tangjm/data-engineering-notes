@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
+import Layout from '../components/layout.js'
 import { getNotes } from '../lib/getNotes';
 import { removeExtension } from '../lib/removeExtension.js'
 import { createNotesLinks } from '../lib/createNotesLinks.js'
@@ -39,12 +39,13 @@ export async function getStaticProps() {
 
 export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, postgresNotes }) {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>SQL Notes</title>
         <meta name="description" content="SQL Notes" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <main className={styles.main}>
         <h1 className={styles.title}>
           SQL Notes
@@ -84,19 +85,14 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, po
           </div>
         </div>
       </main>
+    </>
+  )
+}
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+sqlNotes.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }

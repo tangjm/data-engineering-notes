@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
+import Layout from '../components/layout.js'
 import styles from '../styles/Home.module.css'
 import { getNotes } from '../lib/getNotes.js'
 import { removeExtension } from '../lib/removeExtension.js'
@@ -21,7 +21,7 @@ export async function getStaticProps() {
 
 export default function talendNotes({ basicsNotes, advancedNotes }) {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Talend notes</title>
         <meta name="description" content="Talend notes" />
@@ -52,19 +52,14 @@ export default function talendNotes({ basicsNotes, advancedNotes }) {
         </p>
 
       </main>
+    </>
+  )
+}
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+talendNotes.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }
