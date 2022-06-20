@@ -135,3 +135,10 @@
   width: 20rem;
   margin: 1rem;
 }
+
+.itemFont {
+  /* font-size: 1rem; */
+  /* font-family: Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace; */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
