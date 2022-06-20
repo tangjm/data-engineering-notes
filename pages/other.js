@@ -2,27 +2,29 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
-import { getNotes } from '../lib/getNotes.js'
+import { getNotes } from '../lib/getNotes.jsgit '
 import { removeExtension } from '../lib/removeExtension.js'
 
-function createLinksNotes(subdir, notes) {
+function createLinksNotes(parentDir, subdir, notes) {
   return notes.map(note => {
     return <li key={note}>
-      <Link href={`/NoSQL/${subdir}/${note}`}>{removeExtension(note)}</Link>
+      <Link href={`/${parentDir}/${subdir}/${note}`}>{removeExtension(note)}</Link>
     </li>
   })
 }
 
 export async function getStaticProps() {
   const mongodbNotes = getNotes(...['NoSQL', 'MongoDB'])
+  const week3quizNotes = getNotes(...['Week3_quiz', 'quiz'])
   return {
     props: {
-      mongodbNotes
+      mongodbNotes,
+      week3quizNotes
     }
   }
 }
 
-export default function awsNotes({ mongodbNotes }) {
+export default function awsNotes({ mongodbNotes,week3quizNotes }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -36,13 +38,19 @@ export default function awsNotes({ mongodbNotes }) {
         </h1>
 
         <div className={styles.description}>
-
-          {/* <h2>Week 3 Quiz</h2>
-          <p>Quiz on SQL, MongoDB and Cloud computing</p> */}
           <h2>MongoDB</h2>
-          <ul>
-            {createLinksNotes('MongoDB', mongodbNotes)}
-          </ul>
+          <p>Notes on MongoDB</p>
+          <ol>
+            {createLinksNotes('NoSQL', 'MongoDB', mongodbNotes)}
+          </ol>
+
+          <br></br>
+
+          <h2>Week 3 Quiz</h2>
+          <p>A quiz on SQL, MongoDB and Cloud computing</p>
+          <ol>
+            {createLinksNotes('Week3_quiz','quiz', week3quizNotes)}
+          </ol>
         </div>
 
       </main>
