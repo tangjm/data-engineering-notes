@@ -7,9 +7,10 @@ node_modules/
 *.zip
 *.xlsx
 *.csv
-/Tableau
 json_playground.json
 /NoSQL
 /Titanic_data
 /Udemy
+/PechaKucha
+/Tableau
 
