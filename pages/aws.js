@@ -66,7 +66,7 @@ export async function getStaticProps() {
 
 export default function awsNotes(props) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>AWS Notes</title>
         <meta name="description" content="AWS Notes" />
@@ -90,14 +90,6 @@ export default function awsNotes(props) {
           })}
         </div>
       </main>
-    </>
-  )
-}
-
-awsNotes.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }

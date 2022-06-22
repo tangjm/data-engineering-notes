@@ -23,7 +23,7 @@ export async function getStaticProps() {
 
 export default function otherNotes({ mongodbNotes, week3quizNotes }) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Other notes</title>
         <meta name="description" content="Other notes" />
@@ -50,14 +50,6 @@ export default function otherNotes({ mongodbNotes, week3quizNotes }) {
           </ol>
         </div>
       </main>
-    </>
-  )
-}
-
-otherNotes.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }

@@ -7,7 +7,7 @@ import Layout from '../components/layout.js'
 
 export default function Home() {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Data Engineering Notes</title>
         <meta name="description" content="Notes on data engineering" />
@@ -53,15 +53,6 @@ export default function Home() {
           </Link>
         </div>
       </main>
-
-    </>
-  )
-}
-
-Home.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }

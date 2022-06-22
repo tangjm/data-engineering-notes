@@ -21,7 +21,7 @@ export async function getStaticProps() {
 
 export default function talendNotes({ basicsNotes, advancedNotes }) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Talend notes</title>
         <meta name="description" content="Talend notes" />
@@ -52,14 +52,6 @@ export default function talendNotes({ basicsNotes, advancedNotes }) {
         </p>
 
       </main>
-    </>
-  )
-}
-
-talendNotes.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }

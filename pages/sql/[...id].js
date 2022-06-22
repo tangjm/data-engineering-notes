@@ -1,6 +1,5 @@
 import styles from '../../styles/Home.module.css'
 import Head from 'next/head'
-import Image from 'next/image'
 import Layout from '../../components/layout.js'
 import { removeExtension } from '../../lib/removeExtension.js'
 import { createNotesLinks } from '../../lib/createNotesLinks.js'
@@ -83,10 +82,10 @@ export async function getStaticProps({ params }) {
 
 export default function sqlNotes({ notes }) {
   return (
-    <>
+    <Layout>
       <Head>
-        <title>SQL Notes</title>
-        <meta name="description" content="SQL Notes" />
+        <title>{notes.id}</title>
+        <meta name="description" content={notes.id} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -96,14 +95,6 @@ export default function sqlNotes({ notes }) {
         </h1>
         <div dangerouslySetInnerHTML={{__html: notes.contentHtml}}/>
       </main>
-    </>
-  )
-}
-
-sqlNotes.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }
