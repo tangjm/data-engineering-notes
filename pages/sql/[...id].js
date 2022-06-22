@@ -1,10 +1,10 @@
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
-import Layout from '../components/layout.js'
-import { getNotes } from '../lib/getNotes';
-import { removeExtension } from '../lib/removeExtension.js'
-import { createNotesLinks } from '../lib/createNotesLinks.js'
+import Layout from '../../components/layout.js'
+import { removeExtension } from '../../lib/removeExtension.js'
+import { createNotesLinks } from '../../lib/createNotesLinks.js'
+import { getNotes, getNotesData } from '../../lib/notes';
 
 function helper(str) {
   let num = str.split('exercise')[1];
@@ -26,6 +26,7 @@ export async function getStaticPaths() {
   const chapterNotes = getNotes(["SQL", "chapters"]);
   const exerciseNotes = getNotes(["SQL", "exercises"]);
   const postgresNotes = getNotes(["SQL", "postgres"]);
+
 
   // We need to return an array that looks like this
   // [
@@ -58,31 +59,29 @@ export async function getStaticPaths() {
     });
   }
 
-  return [
-    ...createPaths("notes", generalNotes),
-    ...createPaths("chapters", chapterNotes),
-    ...createPaths("exercises", exerciseNotes),
-    ...createPaths("postgres", postgresNotes)
-  ]
+  return {
+    paths: [
+      ...createPaths("notes", generalNotes),
+      ...createPaths("chapters", chapterNotes),
+      ...createPaths("exercises", exerciseNotes),
+      ...createPaths("postgres", postgresNotes)
+    ],
+    fallback: false
+  }
 }
 
-// export async function getStaticProps() {
-//   const generalNotes = getNotes(...['SQL', 'notes'])
-//   const chapterNotes = getNotes(...['SQL', 'chapters']).sort()
-//   const exerciseNotes = getNotes(...['SQL', 'exercises']).sort(sortNumerical)
-//   const postgresNotes = getNotes(...['SQL', 'postgres'])
+export async function getStaticProps({ params }) {
+  const subpaths = params.id;
+  const notes = await getNotesData("SQL", subpaths);
 
-//   return {
-//     props: {
-//       generalNotes,
-//       chapterNotes,
-//       exerciseNotes,
-//       postgresNotes
-//     }
-//   }
-// }
+  return {
+    props: {
+      notes
+    }
+  }
+}
 
-export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, postgresNotes }) {
+export default function sqlNotes({ notes }) {
   return (
     <>
       <Head>
@@ -95,40 +94,7 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, po
         <h1 className={styles.title}>
           SQL Notes
         </h1>
-
-        <div className={styles.containerFlex}>
-          <div className={styles.item2}>
-            <h2>SQLHabit Exercises</h2>
-            <p>Solutions and plans to SQLHabit practice questions with detailed explanations where appropriate</p>
-            <ul>
-              {createLinks('exercises', exerciseNotes)}
-            </ul>
-          </div>
-
-          <div className={styles.item2}>
-            <h2>General SQL notes</h2>
-            <p>Mostly covering high-level concepts, syntax and selected topics</p>
-            <ul>
-              {createLinks('notes', generalNotes)}
-            </ul>
-          </div>
-
-          <div className={styles.item2}>
-            <h2>SQLHabit chapter notes</h2>
-            <p>A learning log on selected chapters from the SQLHabit course</p>
-            <ul>
-              {createLinks('chapters', chapterNotes)}
-            </ul>
-          </div>
-
-          <div className={styles.item2}>
-            <h2>Postgres notes</h2>
-            <p>Some useful notes on working with Postgres</p>
-            <ul>
-              {createLinks('postgres', postgresNotes)}
-            </ul>
-          </div>
-        </div>
+        <div dangerouslySetInnerHTML={{__html: notes.contentHtml}}/>
       </main>
     </>
   )

@@ -18,7 +18,7 @@ function sortNumerical(x, y) {
   else return 1;
 }
 
-const createLinks = createNotesLinks('SQL', removeExtension);
+const createLinks = createNotesLinks('sql', removeExtension);
 
 export async function getStaticProps() {
   const generalNotes = getNotes(["SQL", "notes"]);
