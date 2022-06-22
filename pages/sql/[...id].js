@@ -21,21 +21,66 @@ function sortNumerical(x, y) {
 
 const createLinks = createNotesLinks('SQL', removeExtension);
 
-export async function getStaticProps() {
-  const generalNotes = getNotes(...['SQL', 'notes'])
-  const chapterNotes = getNotes(...['SQL', 'chapters']).sort()
-  const exerciseNotes = getNotes(...['SQL', 'exercises']).sort(sortNumerical)
-  const postgresNotes = getNotes(...['SQL', 'postgres'])
+export async function getStaticPaths() {
+  const generalNotes = getNotes(["SQL", "notes"]);
+  const chapterNotes = getNotes(["SQL", "chapters"]);
+  const exerciseNotes = getNotes(["SQL", "exercises"]);
+  const postgresNotes = getNotes(["SQL", "postgres"]);
 
-  return {
-    props: {
-      generalNotes,
-      chapterNotes,
-      exerciseNotes,
-      postgresNotes
-    }
+  // We need to return an array that looks like this
+  // [
+  //   {
+  //     params: {
+  //       id: ['notes', generalNotes[i]]
+  //     }
+  //   }, 
+  //   {
+  //     params: {
+  //       id: ['notes', generalNotes[i + 1]]
+  //     }
+  //   },
+  //   {
+  //     params: {
+  //       id: ['chapters', chaptersNotes[i]]
+  //     }
+  //   },
+  //   ...
+  // ]
+
+
+  function createPaths(subdir, notes) {
+    return notes.map(note => {
+      return {
+        params: {
+          id: [subdir, note]
+        }
+      }
+    });
   }
+
+  return [
+    ...createPaths("notes", generalNotes),
+    ...createPaths("chapters", chapterNotes),
+    ...createPaths("exercises", exerciseNotes),
+    ...createPaths("postgres", postgresNotes)
+  ]
 }
+
+// export async function getStaticProps() {
+//   const generalNotes = getNotes(...['SQL', 'notes'])
+//   const chapterNotes = getNotes(...['SQL', 'chapters']).sort()
+//   const exerciseNotes = getNotes(...['SQL', 'exercises']).sort(sortNumerical)
+//   const postgresNotes = getNotes(...['SQL', 'postgres'])
+
+//   return {
+//     props: {
+//       generalNotes,
+//       chapterNotes,
+//       exerciseNotes,
+//       postgresNotes
+//     }
+//   }
+// }
 
 export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, postgresNotes }) {
   return (
