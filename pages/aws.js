@@ -1,14 +1,14 @@
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
-import Image from 'next/image'
-import Layout from '../components/layout.js'
-import { getNotes } from '../lib/getNotes.js'
-import { removeExtension } from '../lib/removeExtension.js'
-import { createNotesLinks } from '../lib/createNotesLinks.js'
+import Layout from '../components/layout'
+import { getNotes } from '../lib/notes'
+import { removeExtension } from '../lib/removeExtension'
+import { createNotesLinks } from '../lib/createNotesLinks'
+import React from 'react'
 
-const createLinks = createNotesLinks('AWS', removeExtension);
+const createLinks = createNotesLinks('aws', removeExtension);
 
-const moduleNames = [
+const moduleNamesAws = [
   null,
   "Module 1: The Cloud",
   "Module 2: Economics",
@@ -44,27 +44,23 @@ export async function getStaticProps() {
   }
 
   // map integers to objects containing subdirectory name and html file name
-  let fileArr = moduleArr.map(n => {
-    let subdir = subdirs["module" + n]
+  let awsNotes = moduleArr.map(n => {
+    let subdir = subdirs["module" + n];
     return {
-      "id": n,
-      "subdir": subdir,
-      "fileHTML": getNotes(...["AWS", subdir])
+      id: n,
+      subdir,
+      fileName: getNotes(['AWS', subdir])
     }
   })
 
-  // declare and initialise variables for our html files
-  let m1, m2, m3, m4, m5, m6, m7, m8, m9, m10
-  [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10] = fileArr
-
   return {
     props: {
-      modules: [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10]
+      modules: awsNotes
     }
   }
 }
 
-export default function awsNotes(props) {
+export default function awsNotes({ modules }) {
   return (
     <Layout>
       <Head>
@@ -77,16 +73,14 @@ export default function awsNotes(props) {
           AWS Notes
         </h1>
         <h2>AWS Academy Cloud Foundations</h2>
-        {/* <div className={styles.description}> */}
         <div>
-          {props.modules.map(module => {
-
-            return <>
-              <h2>{moduleNames[module.id]}</h2>
+          {modules.map(module => {
+            return <React.Fragment key={module.id}>
+              <h2>{moduleNamesAws[module.id]}</h2>
               <ul>
-                {createLinks(module.subdir, module.fileHTML)}
+                {createLinks(module.subdir, module.fileName)}
               </ul>
-            </>
+            </React.Fragment>
           })}
         </div>
       </main>
