@@ -92,7 +92,7 @@ export default function sqlNotes({ notes }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          SQL Notes
+          {notes.id}
         </h1>
         <div dangerouslySetInnerHTML={{__html: notes.contentHtml}}/>
       </main>
