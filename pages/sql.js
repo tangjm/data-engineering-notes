@@ -1,10 +1,9 @@
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
-import Image from 'next/image'
 import Layout from '../components/layout.js'
 import { removeExtension } from '../lib/removeExtension.js'
 import { createNotesLinks } from '../lib/createNotesLinks.js'
-import { getNotesData } from '../../lib/getNotes';
+import { getNotes } from '../lib/notes'
 
 function helper(str) {
   let num = str.split('exercise')[1];
@@ -39,7 +38,7 @@ export async function getStaticProps() {
 
 export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, postgresNotes }) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>SQL Notes</title>
         <meta name="description" content="SQL Notes" />
@@ -85,14 +84,6 @@ export default function sqlNotes({ generalNotes, chapterNotes, exerciseNotes, po
           </div>
         </div>
       </main>
-    </>
-  )
-}
-
-sqlNotes.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      {page}
     </Layout>
   )
 }
