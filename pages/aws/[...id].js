@@ -1,6 +1,7 @@
+import styles from '../../styles/Home.module.css';
 import Layout from "../../components/layout";
 import Head from "next/head";
-import { getNotes } from "../../lib/notes";
+import { getNotes, getNotesData } from "../../lib/notes";
 
 const subdirs = {
   "module1": "module1_cloud_concepts",
@@ -30,8 +31,8 @@ export async function getStaticPaths() {
     const files = getNotes(['AWS', subdir]);
     return files.map(file => {
       return {
-        props: {
-          id: ['AWS', subdir, file]
+        params: {
+          id: [subdir, file]
         }
       }
     });
@@ -41,35 +42,41 @@ export async function getStaticPaths() {
   // We need to return an array that looks like this:
   // [
   //   {
-  //     props: {
-  //       id: ['aws', 'moduleName', 'fileName']
+  //     params: {
+  //       id: ['moduleName', 'fileName']
   //     }
   //   }
   // ]
   return {
-    paths: filePaths2DArray,
+    paths: filePaths2DArray.flat(),
     fallback: false
   }
 }
 
-export async function getStaticProps() {
-
+export async function getStaticProps({ params }) {
+  const subpaths = params.id;
+  const note = await getNotesData("AWS", subpaths);
+  return {
+    props: {
+      note
+    }
+  }
 }
 
-export default function awsNote({ notes }) {
+export default function awsNote({ note }) {
   return (
     <Layout>
       <Head>
-        <title>{notes.id}</title>
-        <meta name="description" content={notes.id} />
+        <title>{note.id}</title>
+        <meta name="description" content={note.id} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {notes.id}
+          {note.id}
         </h1>
-        <div dangerouslySetInnerHTML={{ __html: notes.contentHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
       </main>
     </Layout>
   )
