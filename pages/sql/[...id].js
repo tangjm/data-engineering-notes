@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Layout from '../../components/layout.js'
 import { removeExtension } from '../../lib/removeExtension.js'
 import { createNotesLinks } from '../../lib/createNotesLinks.js'
-import { getNotes, getNotesData } from '../../lib/notes';
+import { getNotes, getNoteData } from '../../lib/notes';
 
 function helper(str) {
   let num = str.split('exercise')[1];
@@ -71,29 +71,29 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const subpaths = params.id;
-  const notes = await getNotesData("SQL", subpaths);
+  const note = await getNoteData("SQL", subpaths);
 
   return {
     props: {
-      notes
+      note
     }
   }
 }
 
-export default function sqlNotes({ notes }) {
+export default function sqlNotes({ note }) {
   return (
     <Layout>
       <Head>
-        <title>{notes.id}</title>
-        <meta name="description" content={notes.id} />
+        <title>{note.id}</title>
+        <meta name="description" content={note.id} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {notes.id}
+          {note.id}
         </h1>
-        <div dangerouslySetInnerHTML={{__html: notes.contentHtml}}/>
+        <div dangerouslySetInnerHTML={{__html: note.contentHtml}}/>
       </main>
     </Layout>
   )

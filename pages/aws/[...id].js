@@ -1,7 +1,7 @@
 import styles from '../../styles/Home.module.css';
 import Layout from "../../components/layout";
 import Head from "next/head";
-import { getNotes, getNotesData } from "../../lib/notes";
+import { getNotes, getNoteData } from "../../lib/notes";
 
 const subdirs = {
   "module1": "module1_cloud_concepts",
@@ -55,7 +55,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const subpaths = params.id;
-  const note = await getNotesData("AWS", subpaths);
+  const note = await getNoteData("AWS", subpaths);
   return {
     props: {
       note
