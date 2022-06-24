@@ -1,16 +1,15 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Layout from '../components/layout.js'
+import Layout from '../components/layout'
 import styles from '../styles/Home.module.css'
-import { getNotes } from '../lib/getNotes.js'
-import { removeExtension } from '../lib/removeExtension.js'
-import { createNotesLinks } from '../lib/createNotesLinks.js'
+import { getNotes } from '../lib/notes'
+import { removeExtension } from '../lib/removeExtension'
+import { createNotesLinks } from '../lib/createNotesLinks'
 
-const createLinks = createNotesLinks('Talend', removeExtension);
+const createLinks = createNotesLinks('talend', removeExtension);
 
 export async function getStaticProps() {
-  const basicsNotes = getNotes(...['Talend', 'basics'])
-  const advancedNotes = getNotes(...['Talend', 'advanced'])
+  const basicsNotes = getNotes(['Talend', 'basics'])
+  const advancedNotes = getNotes(['Talend', 'advanced'])
   return {
     props: {
       basicsNotes,
