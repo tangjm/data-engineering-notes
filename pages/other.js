@@ -37,26 +37,30 @@ export default function otherNotes({ mongodbNotes, week3quizNotes, hmrcNotes }) 
           Other notes
         </h1>
 
-        <div className={styles.description}>
-          <h2>Brexit and GVMS</h2>
-          <p>Notes on Brexit and GVMS</p>
-          <ol>
-            {createLinksHMRC(hmrcNotes)}
-          </ol>
+        <div className={styles.containerFlex}>
+          <div className={styles.item2}>
+            <h2>Brexit and GVMS</h2>
+            <p>Notes on Brexit and GVMS</p>
+            <ol>
+              {createLinksHMRC(hmrcNotes)}
+            </ol>
+          </div>
 
-          <h2>MongoDB</h2>
-          <p>Notes on MongoDB</p>
-          <ol>
-            {createLinksMongoDb('MongoDB', mongodbNotes)}
-          </ol>
+          <div className={styles.item2}>
+            <h2>MongoDB</h2>
+            <p>Notes on MongoDB</p>
+            <ol>
+              {createLinksMongoDb('MongoDB', mongodbNotes)}
+            </ol>
+          </div>
 
-          <br></br>
-
-          <h2>Week 3 Quiz</h2>
-          <p>A quiz on SQL, MongoDB and Cloud computing</p>
-          <ol>
-            {createLinksWeek3Quiz('quiz', week3quizNotes)}
-          </ol>
+          <div className={styles.item2}>
+            <h2>Week 3 Quiz</h2>
+            <p>A quiz on SQL, MongoDB and Cloud computing</p>
+            <ol>
+              {createLinksWeek3Quiz('quiz', week3quizNotes)}
+            </ol>
+          </div>
         </div>
       </main>
     </Layout>
