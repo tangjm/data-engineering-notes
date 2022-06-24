@@ -1,27 +1,30 @@
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
-import Image from 'next/image'
-import Layout from '../components/layout.js'
-import { getNotes } from '../lib/getNotes.js'
-import { removeExtension } from '../lib/removeExtension.js'
-import { createNotesLinks } from '../lib/createNotesLinks.js'
+import Layout from '../components/layout'
+import { getNotes } from '../lib/notes'
+import { removeExtension } from '../lib/removeExtension'
+import { createNotesLinks, createNotesLinksSingleParent } from '../lib/createNotesLinks'
 
-const createLinks = createNotesLinks('NoSQL', removeExtension);
+const createLinksMongoDb = createNotesLinks('NoSQL', removeExtension);
 const createLinksWeek3Quiz = createNotesLinks('Week3_quiz', removeExtension);
+const createLinksHMRC = createNotesLinksSingleParent('hmrc', removeExtension);
 
 export async function getStaticProps() {
-  const mongodbNotes = getNotes(...['NoSQL', 'MongoDB'])
-  const week3quizNotes = getNotes(...['Week3_quiz', 'quiz'])
+  const mongodbNotes = getNotes(['NoSQL', 'MongoDB'])
+  const week3quizNotes = getNotes(['Week3_quiz', 'quiz'])
+  const hmrcNotes = getNotes(['HMRC'])
+
   return {
     props: {
       mongodbNotes,
-      week3quizNotes
+      week3quizNotes,
+      hmrcNotes
     }
   }
 }
 
-export default function otherNotes({ mongodbNotes, week3quizNotes }) {
+export default function otherNotes({ mongodbNotes, week3quizNotes, hmrcNotes }) {
   return (
     <Layout>
       <Head>
@@ -35,10 +38,16 @@ export default function otherNotes({ mongodbNotes, week3quizNotes }) {
         </h1>
 
         <div className={styles.description}>
+          <h2>Brexit and GVMS</h2>
+          <p>Notes on Brexit and GVMS</p>
+          <ol>
+            {createLinksHMRC(hmrcNotes)}
+          </ol>
+
           <h2>MongoDB</h2>
           <p>Notes on MongoDB</p>
           <ol>
-            {createLinks('MongoDB', mongodbNotes)}
+            {createLinksMongoDb('MongoDB', mongodbNotes)}
           </ol>
 
           <br></br>
