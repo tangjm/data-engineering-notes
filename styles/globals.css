@@ -36,13 +36,13 @@ a:visited {
 
 a:focus {
   border-bottom: 1px solid;
-  background:#dfcfff;
+  background:#9b65ff30
   /* background: #C0AAFE; */  
 }
 
 a:hover {
   border-bottom: 1px solid;
-  background:#dfcfff;
+  background: #9b65ff30 
   /* background: #C0AAFE; */
 }
 
