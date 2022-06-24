@@ -22,8 +22,8 @@ const createLinks = createNotesLinks('sql', removeExtension);
 
 export async function getStaticProps() {
   const generalNotes = getNotes(["SQL", "notes"]);
-  const chapterNotes = getNotes(["SQL", "chapters"]);
-  const exerciseNotes = getNotes(["SQL", "exercises"]);
+  const chapterNotes = getNotes(["SQL", "chapters"]).sort(sortNumerical);
+  const exerciseNotes = getNotes(["SQL", "exercises"]).sort(sortNumerical);
   const postgresNotes = getNotes(["SQL", "postgres"]);
 
   return {
