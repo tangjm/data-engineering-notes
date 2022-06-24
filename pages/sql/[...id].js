@@ -1,32 +1,12 @@
-import styles from '../../styles/Home.module.css'
-import noteStyles from '../../styles/Note.module.css'
-import Head from 'next/head'
 import Layout from '../../components/layout.js'
-import { removeExtension } from '../../lib/removeExtension.js'
-import { createNotesLinks } from '../../lib/createNotesLinks.js'
+import Note from '../../components/note'
 import { getNotes, getNoteData } from '../../lib/notes';
-
-function helper(str) {
-  let num = str.split('exercise')[1];
-  return num;
-}
-
-function sortNumerical(x, y) {
-  let x1 = parseInt(helper(x));
-  let y1 = parseInt(helper(y));
-  if (x1 < y1) return -1;
-  else if (x1 === y1) return 0;
-  else return 1;
-}
-
-const createLinks = createNotesLinks('SQL', removeExtension);
 
 export async function getStaticPaths() {
   const generalNotes = getNotes(["SQL", "notes"]);
-  const chapterNotes = getNotes(["SQL", "chapters"]);
-  const exerciseNotes = getNotes(["SQL", "exercises"]);
+  const chapterNotes = getNotes(["SQL", "chapters"])
+  const exerciseNotes = getNotes(["SQL", "exercises"])
   const postgresNotes = getNotes(["SQL", "postgres"]);
-
 
   // We need to return an array that looks like this
   // [
@@ -47,7 +27,6 @@ export async function getStaticPaths() {
   //   },
   //   ...
   // ]
-
 
   function createPaths(subdir, notes) {
     return notes.map(note => {
@@ -84,27 +63,7 @@ export async function getStaticProps({ params }) {
 export default function sqlNotes({ note }) {
   return (
     <Layout>
-      <Head>
-        <title>{note.id}</title>
-        <meta name="description" content={note.id} />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/prismjs@1.28.0/themes/prism-coy.min.css"
-          // href="https://unpkg.com/prismjs@0.0.1/themes/prism.css"
-          // href="https://unpkg.com/prismjs@0.0.1/themes/prism-tomorrow.css"
-          // href="https://unpkg.com/prismjs@0.0.1/themes/prism-okaidia.css"
-          // href="https://unpkg.com/prismjs@1.28.0/themes/prism-solarizedlight.min.css"
-          // href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css"
-        />      
-        </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          {note.id}
-        </h1>
-        <div className={noteStyles.container} dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
-      </main>
+      <Note note={note} />
     </Layout>
   )
 }

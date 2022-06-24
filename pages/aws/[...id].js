@@ -1,6 +1,5 @@
-import styles from '../../styles/Home.module.css';
 import Layout from "../../components/layout";
-import Head from "next/head";
+import Note from '../../components/note';
 import { getNotes, getNoteData } from "../../lib/notes";
 
 const subdirs = {
@@ -66,18 +65,7 @@ export async function getStaticProps({ params }) {
 export default function awsNote({ note }) {
   return (
     <Layout>
-      <Head>
-        <title>{note.id}</title>
-        <meta name="description" content={note.id} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          {note.id}
-        </h1>
-        <div dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
-      </main>
+      <Note note={note} />
     </Layout>
   )
 }
