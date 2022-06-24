@@ -15,7 +15,7 @@ dropdb <db_name>
 ```
 
 `createdb -U <role> <db_name>`
-lets you create a database called <db_name> in your capacity as <role>
+lets you create a database called <db_name> in your capacity as `<role>`
 
 The default superuser is called `postgres`
 
