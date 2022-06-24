@@ -3,21 +3,20 @@ title: How data is generated from the Goods Vehicle Movement Service (GVMS)
 date: 23/06/2022
 source: https://www.youtube.com/watch?v=S1i-FW7EpXU
 ---
-
 # Goods Vehicle Movement Service
 
 1. What is GVMS?
 2. Registering for GVMS
 3. Creating a Goods Movement Reference (GMR)
 4. How to check if you need to report for an inspection
-5. How to avoid and correct common erros
+5. How to avoid and correct common errors
 6. Help and Support available
 
 ### 1. What is GVMS?
 
 31st December 2020, the UK Government introduced a new IT platform called GVMS to support the Pre-Lodgement model for both imports and exports and to facilitate Transit movements.
 
-Pre-lodgement model supports RoRo (Roll on Roll off) locations.
+Pre-lodgement model will be especially helpful to RoRo (Roll on Roll off) locations.
 
 - bundles declaration references for goods together so the person moving them only has to present a single reference at the frontier
 - links the movement of goods to declarations
@@ -93,7 +92,7 @@ Three possible responses:
    1. Report to the nearest Customs Inspection Site or Inland Border Facilities (IBF)
    2. Information on what to do if you're ending a transit movement
 
-### 5. How to avoid and correct common erros
+### 5. How to avoid and correct common errors
 
 On the GVMS dashboard page, clicking a GMR id will take you to a page where you can correct errors.
 

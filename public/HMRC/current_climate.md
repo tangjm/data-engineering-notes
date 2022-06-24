@@ -53,7 +53,7 @@ VAT on energy costs has also generated a huge tax revenue for the government. La
 
 ### Taxes
 
-- There has been fewer than expected tax cuts mainly because the government needs to budget for the prime minister's spending projects.
+- There have been fewer than expected tax cuts mainly because the government needs to budget for the prime minister's spending projects.
 
 #### Details
 
