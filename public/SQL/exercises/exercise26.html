@@ -283,6 +283,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
 <span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
 <span class="token punctuation">)</span>
+<<<<<<< HEAD
 
 <span class="token keyword keyword-SELECT">SELECT</span>
     m<span class="token punctuation">,</span>
@@ -319,7 +320,32 @@ pre[data-line] .line-highlight[data-end]:after {
 <span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
 </pre><p>Although the rounded results make it seem like there is a tie, July 2019 is the month with the highest gross revenue historically.</p>
 <p>There&apos;s likely a problem with this question.</p>
+=======
+>>>>>>> v2
 
+<span class="token keyword keyword-SELECT">SELECT</span>
+    m<span class="token punctuation">,</span>
+    
+<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
+<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+</pre><p>Alternative solution</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword keyword-WITH">WITH</span> gross_revenue_per_month <span class="token keyword keyword-AS">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword keyword-SELECT">SELECT</span>
+    TO_CHAR<span class="token punctuation">(</span>created_at<span class="token punctuation">,</span> <span class="token string">&apos;yyyy-mm&apos;</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> year_month<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>amount_usd<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
+<span class="token keyword keyword-FROM">FROM</span> <span class="token keyword keyword-transactions">transactions</span>
+<span class="token keyword keyword-WHERE">WHERE</span> amount_usd <span class="token operator">&gt;</span> <span class="token number">0</span>
+<span class="token keyword keyword-GROUP">GROUP</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">1</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-SELECT">SELECT</span> 
+    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> y<span class="token punctuation">,</span>
+    SPLIT_PART<span class="token punctuation">(</span>year_month<span class="token punctuation">,</span> <span class="token string">&apos;-&apos;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> m<span class="token punctuation">,</span>
+    <span class="token function">ROUND</span><span class="token punctuation">(</span>gross_revenue<span class="token punctuation">)</span> <span class="token keyword keyword-AS">AS</span> gross_revenue
+<span class="token keyword keyword-FROM">FROM</span> gross_revenue_per_month
+<span class="token keyword keyword-ORDER">ORDER</span> <span class="token keyword keyword-BY">BY</span> <span class="token number">3</span> <span class="token keyword keyword-DESC">DESC</span>
+<span class="token keyword keyword-LIMIT">LIMIT</span> <span class="token number">1</span>
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#26-top-grossing-month-of-the-year-part-2">26. Top grossing month of the year. Part 2</a>

@@ -113,7 +113,7 @@ Account assistance
 3. Business
 4. Enterprise
 
-![technical support](technical_support_response_types.png)
+<img src="./images/technical_support_response_types.png" width=80%>
 
 Costs for services with reserved capacity:
 1. AURI (All up front)

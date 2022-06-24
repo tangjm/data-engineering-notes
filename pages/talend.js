@@ -1,22 +1,15 @@
-import Link from 'next/link'
 import Head from 'next/head'
-import Image from 'next/image'
+import Layout from '../components/layout'
 import styles from '../styles/Home.module.css'
-import { getNotes } from '../lib/getNotes.js'
+import { getNotes } from '../lib/notes'
+import { removeExtension } from '../lib/removeExtension'
+import { createNotesLinks } from '../lib/createNotesLinks'
 
-function createLinksNotes(subdir, notes) {
-  return function withLinkName(name) {
-    return notes.map(note => {
-      return <li key={note}>
-        <Link href={`/Talend/${subdir}/${note}`}>{name}</Link>
-      </li>
-    })
-  }
-}
+const createLinks = createNotesLinks('talend', removeExtension);
 
 export async function getStaticProps() {
-  const basicsNotes = getNotes(...['Talend', 'basics'])
-  const advancedNotes = getNotes(...['Talend', 'advanced'])
+  const basicsNotes = getNotes(['Talend', 'basics'])
+  const advancedNotes = getNotes(['Talend', 'advanced'])
   return {
     props: {
       basicsNotes,
@@ -27,7 +20,7 @@ export async function getStaticProps() {
 
 export default function talendNotes({ basicsNotes, advancedNotes }) {
   return (
-    <div className={styles.container}>
+    <Layout>
       <Head>
         <title>Talend notes</title>
         <meta name="description" content="Talend notes" />
@@ -38,31 +31,26 @@ export default function talendNotes({ basicsNotes, advancedNotes }) {
           Talend notes
         </h1>
 
-        <h2>Data Integration Basics</h2>
-        <ul>
-          {createLinksNotes('basics', basicsNotes)("advanced")}
-        </ul>
-        <h2>Data Integration Advanced</h2>
-        <ul>
-          {createLinksNotes('advanced', advancedNotes)}
-        </ul>
+        <div className={styles.containerFlex}>
+          <div className={styles.item3}>
+            <h2>Data Integration Basics</h2>
+            <ul>
+              {createLinks('basics', basicsNotes)}
+            </ul>
+          </div>
+          <div className={styles.item3}>
+            <h2>Data Integration Advanced</h2>
+            <ul>
+              {createLinks('advanced', advancedNotes)}
+            </ul>
+          </div>
+
+        </div>
+
         <p className={styles.description}>
         </p>
 
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+    </Layout>
   )
 }

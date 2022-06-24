@@ -32,6 +32,26 @@ Blocked
 55
 
 
+<<<<<<< HEAD
+=======
+24 - interesting alternative to the SQLHabit solution
+27 - really neat alternative solution
+
+**11 unsolved questions**
+
+25 - stuck
+26 - not sure what the question is asking for
+31 (certain that this works but the grader is unhappy)
+32 (problem with solution?)
+36 (problem with solution?)
+44 (problem with solution)
+46 (how can we get the difference between two timestamps?)
+47 (unattempted)
+48 (unattempted)
+50 (unattempted)
+55 (unattempted)
+
+>>>>>>> v2
 
 
 ```latex {cmd=true hide=true}

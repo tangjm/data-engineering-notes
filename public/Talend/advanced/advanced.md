@@ -6,7 +6,7 @@ html:
   embed_local_images: true
   embed_svg: true
   offline: false
-  toc: true
+  toc: false
 
 print_background: false
 ---
@@ -61,6 +61,7 @@ Multithreading is one way of achieving parallelisation. Talend has the option to
 The tParallelise component lets you have greater control over which subjobs to run in parallel.
 
 ![tParallelise](images/tParallelise.png)
+<!-- <img src="./images/tParallelise.png" alt="tParallelise" width=80%> -->
 
 Many components also have the option of enabling parallel execution.
 

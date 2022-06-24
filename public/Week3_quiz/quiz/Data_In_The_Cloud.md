@@ -1,3 +1,7 @@
+---
+export_on_save:
+  html: true
+---
 ### Cloud and Distributed Computing
 
 What does 'the cloud' denote in the context of cloud computing? (select 2)
