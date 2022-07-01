@@ -19,14 +19,14 @@ Most instructive exercises
 
 **11 unsolved questions**
 
-25 - stuck
-26 - not sure what the question is asking for
-31 (certain that this works but the grader is unhappy)
-32 (problem with solution?)
-36 (problem with solution?)
-44 (problem with solution?)
-46 (how can we get the difference between two time stamps?)
-47 (How do we subtract time stamps?)
-48 (unattempted)
-50 (2 attempts - there's probably an error with the solution)
-55 (3 attempts of no avail)
+- 25 - stuck
+- 26 - not sure what the question is asking for
+- 31 (certain that this works but the grader is unhappy)
+- 32 (problem with solution?)
+- 36 (problem with solution?)
+- 44 (problem with solution?)
+- 46 (how can we get the difference between two time stamps?)
+- 47 (How do we subtract time stamps?)
+- 48 (unattempted)
+- 50 (2 attempts - there's probably an error with the solution)
+- 55 (3 attempts of no avail)

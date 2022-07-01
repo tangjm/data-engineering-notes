@@ -281,6 +281,7 @@ AWS recommends numbering rules at 10 step intervals to allow for the insertion o
 ### Security groups vs Network ACLs
 
 <img src="images/security_groups_vs_network_acls.png" alt="security groups vs network ACLs" width=80%>
+
 ### Design a VPC
 
 VPC - 10.0.0.0/16
