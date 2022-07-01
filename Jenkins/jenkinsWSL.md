@@ -11,7 +11,5 @@ To view initialAdminPassword
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
-Admin user
+Then setup an admin user
 
-username: tangjm
-password: 
