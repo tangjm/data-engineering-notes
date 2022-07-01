@@ -2,7 +2,7 @@
 
 [Pipeline syntax](https://www.jenkins.io/doc/book/pipeline/syntax/#agent)
 
-Write declarative continuous integration/deployment pipelines.
+Write declarative continuous integration/deployment pipelines as code.
 
 Create a file called `Jenkinsfile` 
 
