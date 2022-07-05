@@ -1,12 +1,18 @@
 # Jenkins Pipelines
 
+[Pipeline concepts](https://www.jenkins.io/doc/book/pipeline/)
+
 [Pipeline syntax](https://www.jenkins.io/doc/book/pipeline/syntax/#agent)
 
 Write declarative continuous integration/deployment pipelines as code.
 
 Create a file called `Jenkinsfile` 
 
-The `agent` section is where you define the pipeline's execution environment.
+The `pipeline` block contains all content and instructions for executing the entire pipeline.
+
+The `agent` block allocates an executor on a node and a workspace for the entire pipeline. It defines the pipeline's execution environment. 
+
+A `node` is a machine in the Jenkins environment that can execute a pipeline.
 
 The `stages` section let's you setup different stages to your pipeline, such as testing, build stages as well as deployment and preprod and production.
 
@@ -16,7 +22,7 @@ The `environment` section let's you set global environment variables.
 
 In `post` section, you can configure what to do after going through the `stages` section of the pipline. You can perform actions based on how the `stages` section went. Notifications can be sent in this part of the pipeline.
 
-```j
+```groovy
 pipeline {
     agent any
 
@@ -81,3 +87,11 @@ pipeline {
     }
 }
 ```
+
+### Creating a Jenkinsfile
+
+[Defining a pipeline in SCM](https://www.jenkins.io/doc/book/pipeline/getting-started/#defining-a-pipeline-in-scm)
+
+1. Define a Jenkinsfile
+2. Commit the Jenkinsfile into source control
+
