@@ -22,7 +22,7 @@ The convention for naming container images is to have three parts:
 3. Tag
     - provides information specific to a version or variant of an image
     - usually the version number or operating system
-```
+```docker
 hostname/repository:tag
 ```
 

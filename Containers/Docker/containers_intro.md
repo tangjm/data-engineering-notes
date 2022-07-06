@@ -35,7 +35,7 @@ Furthermore, because containers share an operating system, the resources can be 
 
 ### Containers vs Virtual Machines
 
-![Containers vs Virtual machines](../Containers/images/containers_and_virtual_machines.png)
+![Containers vs Virtual machines](../images/containers_and_virtual_machines.png)
 
 Containers have a `container engine` that virtualises the underlying host operating system instead of a `hypervisor` that virtualises the underlying hardware.
 
