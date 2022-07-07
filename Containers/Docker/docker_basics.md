@@ -345,7 +345,7 @@ RUN yarn install --production
 CMD ["node", "src/index.js"]
 ```
 
-If we split the copy stage into two separate stages by first copying the `package.json` and installing packages before copying the rest of the contents, we won't need to re-install packages when building subsequent images in response to changes, so along as the `package.json` is unchanged. Any changes we make will affect the `COPY . .` step found below and since it comes after the package installation, we can make the most out of the cached underlying layers, which will include the layer of installed packages, when rebuilding the image.
+If we split the copy stage into two separate stages by first copying the `package.json` and installing packages before copying the rest of our source files, we won't need to re-install packages when building subsequent images in response to changes, so along as the `package.json` is unchanged. Any source file changes we make will affect the `COPY . .` step and since it comes after the package installation, we can make the most out of the cached underlying layers when rebuilding the image, which will now include the layer of installed packages.
 
 ```bash
  # syntax=docker/dockerfile:1
