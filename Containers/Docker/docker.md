@@ -75,3 +75,11 @@ COPY . /app
 RUN make /app
 CMD python /app/app.py
 ```
+
+
+### Docker Compose
+
+An alternative to Dockerfile using declarative YAML files to specify your container images. Can be used to define and share multi-container applications.
+
+cf. Declarative YAML files in kubectl.
+
