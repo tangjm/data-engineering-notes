@@ -149,7 +149,9 @@ Things to note are the following fields:
 - `template` - specifies the template of the pod that will be replicated
 - `selector` - specifies a reference to the template of pods that will run in the ReplicaSet. This allows the ReplicaSet to glean information about the state of its constituent pods.
 
-```yaml
+The `labels` field under the `template` field specifies the pods that the ReplicaSet will add or delete in order to bring the actual state of the cluster in line with the desired state.
+
+```yaml {.line-numbers, highlight=[14-15]}
 apiVersion: v1
 kind: ReplicaSet
 metadata:
