@@ -1,3 +1,5 @@
+# ConfigMaps and Secrets
+
 ConfigMaps and Secrets let you decouple your configuration variables from your deployments, letting you reuse them across multiple deployments.
 
 As the name suggests, ConfigMaps are hashmaps that map configuration variables to their values.
